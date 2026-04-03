@@ -1,5 +1,5 @@
 import Navbar from "@/Components/Navbar";
-import Home from "@/Pages/Landing/Home";
+import Home from "@/pages/Landing/Home";
 
 export default function Page() {
   return (
