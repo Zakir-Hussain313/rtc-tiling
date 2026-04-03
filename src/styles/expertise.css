@@ -1,0 +1,118 @@
+.expertise-main-section {
+    padding: 0 40px;
+}
+
+.title-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 48px 40px;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.title-container h1 {
+    font-size: 60px;
+    font-family: 'Playfair', serif;
+    font-weight: 400;
+    color: #000000;
+}
+
+.title-container p {
+    max-width: 60%;
+    font-size: 21px;
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    text-align: left;
+    color: #626262;
+    line-height: 1.6;
+}
+
+.marquee-outer {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 50px;
+}
+
+.marquee-track {
+    display: flex;
+    gap: 15px;
+    width: max-content;
+    animation: marquee 30s linear infinite;
+}
+
+.marquee-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-33.333%);
+    }
+}
+
+.service-card {
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: center;
+    font-family: "Jost", sans-serif;
+    color: #000;
+    transition: transform 0.3s;
+    white-space: nowrap;
+    flex-shrink: 0;
+    width: 300px;
+    padding: 0;
+}
+
+.image-slider-container {
+    position: relative;
+    width: 280px;
+    height: 400px;
+}
+
+.card-image {
+    object-fit: cover;
+    display: block;
+}
+
+.card-label {
+    margin: 0;
+    padding: 20px 16px;
+    font-size: 20px;
+    font-family: 'Jost', Jost-400;
+    font-weight: 400;
+    color: #626262;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+@media (max-width: 1024px) {
+    .title-container {
+        padding: 32px 10px;
+    }
+
+    .title-container p {
+        max-width: 80%;
+    }
+}
+
+@media (max-width: 768px) {
+    .expertise-main-section {
+        padding: 0 30px;
+        margin-top: 50px;
+    }
+
+    .title-container {
+        padding: 10px 0px;
+    }
+
+    .title-container p {
+        max-width: 100%;
+    }
+}

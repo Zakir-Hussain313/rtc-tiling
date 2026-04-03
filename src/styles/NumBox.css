@@ -1,0 +1,71 @@
+/* Base styles - keep all sizes the same */
+h1,
+span {
+    font-family: Jost, Jost-400;
+    font-weight: 400;
+    color: #000000;
+}
+
+.stats-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 125px;
+    flex-wrap: wrap; /* allow wrapping on smaller screens */
+}
+
+.stats {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 50px 0;
+    min-width: 200px; /* ensure spacing for one per row on mobile */
+}
+
+.stats-up {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stats-up h1 {
+    font-size: 85px;
+}
+
+.stats-up span {
+    font-size: 85px;
+    color: #c4a473;
+}
+
+.stats-down h1 {
+    font-size: 25px;
+    text-align: center;
+}
+
+/* ---------------- MEDIA QUERIES ---------------- */
+
+/* Tablet: 2 per row */
+@media (max-width: 1024px) {
+    .stats-container {
+        justify-content: center;
+        gap: 80px; /* smaller gap for tablet */
+    }
+
+    .stats {
+        flex: 0 0 45%; /* 2 per row */
+        margin: 30px 0;
+    }
+}
+
+/* Mobile: 1 per row */
+@media (max-width: 768px) {
+    .stats-container {
+        gap: 30px;
+    }
+
+    .stats {
+        flex: 0 0 100%; /* 1 per row */
+        margin: 20px 0;
+    }
+}

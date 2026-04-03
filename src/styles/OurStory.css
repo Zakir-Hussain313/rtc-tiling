@@ -1,0 +1,137 @@
+.section {
+    padding: 48px 40px;
+    background: #ffffff;
+    font-family: "Jost", sans-serif;
+}
+
+.heading {
+    font-family: "Playfair Display", serif;
+    font-size: 80px;
+    font-weight: 400;
+    color: #111;
+    margin: 0 0 24px 0;
+    letter-spacing: 0.02em;
+}
+
+.card {
+    display: flex;
+    gap: 60px;
+    align-items: center;
+}
+
+/* ── Left column ── */
+.imageCol {
+    position: relative;
+    flex-shrink: 0;
+    width: 560px;
+    height: 520px;
+}
+
+.imageWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 560px;
+    height: 490px;
+    clip-path: path("M 0,50 A 50,50 0,0,1 50,0 L 500,0 A 50,50 0,0,1 560,50 L 560,350 A 50,50 0,0,1 510,400 L 340,400 A 40,40 0,0,0 310,430 L 310,460 A 40,40 0,0,1 280,490 L 30,490 L 35,490 A 40,40 0,0,1 0,455 Z");
+}
+
+.image {
+    object-fit: cover;
+    border-radius: 0;
+}
+
+.socials {
+    position: absolute;
+    bottom: 45px;
+    right: 30px;
+    display: flex;
+    gap: 27px;
+    align-items: center;
+    z-index: 3;
+}
+
+.socials a {
+    color: #444;
+    transition: color 0.2s;
+}
+
+.socials a:hover {
+    color: #5b4630;
+}
+
+.icon {
+    width: 100%;
+    height: auto;
+    max-width: 50px;
+}
+
+/* ── Right column ── */
+.textCol {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 32px;
+    padding-top: 12px;
+}
+
+.body {
+    font-size: 35px;
+    font-weight: 500;
+    line-height: 1.65;
+    color: #111;
+    letter-spacing: 0.03em;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.highlight {
+    color: #b8862e;
+    font-weight: 600;
+}
+
+@media (max-width: 1022px) {
+    .card {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+}
+
+
+@media (max-width: 640px) {
+    .card {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .imageCol {
+        width: 100%;
+        height: 320px;
+    }
+
+    .imageWrapper {
+        width: 100%;
+        height: 280px;
+        clip-path: none;
+        border-radius: 18px;
+        overflow: hidden;
+    }                                      
+
+    .socials {
+        position: static;
+        transform: none;
+        margin-top: 12px;
+        justify-content: center;
+    }
+
+    .heading {
+        font-size: 32px;
+    }
+
+    .body {
+        font-size: 25px;
+    }
+}

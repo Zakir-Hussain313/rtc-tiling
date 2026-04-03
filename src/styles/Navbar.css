@@ -1,0 +1,146 @@
+
+html, body {
+  overflow-x: hidden;
+}
+
+.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+
+.navbar-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.logo > img {
+  max-width: 126px;
+}
+
+.nav-pill {
+  justify-self: center;
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.35rem;
+  background: #cfcfcf;
+  border-radius: 999px;
+}
+
+.nav-pill a {
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  font-family: jost;
+}
+
+.nav-pill a.active {
+  background: #ffffff;
+  color: #111;
+}
+
+.nav-pill a:hover {
+  background: rgba(255, 255, 255, 0.4);
+  color: #111;
+}
+
+.burger {
+  width: auto;
+  font-size: 15px;
+  font-family: jost;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  background-color: #5b4630;
+  border-radius: 999px;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  cursor: pointer;
+  position: relative;
+  z-index: 1000;
+}
+
+.menu {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  padding-top: 6rem;
+  z-index: 998;
+  transform: translateY(-100%);
+  transition: transform 0.4s ease;
+}
+
+.menu:not(.closed) {
+  transform: translateY(0);
+}
+
+.menu-text {
+  color: white;
+}
+
+.menu-links {
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.m-links {
+  color: black;
+  font-size: 30px;
+  font-family: jost;
+}
+
+@media (min-width: 1024px) {
+  .burger {
+    display: none;
+  }
+  .menu {
+    display: none;
+    transform: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .navbar-inner {
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-pill {
+    display: none;
+  }
+
+  .nav-cta {
+    display: none;
+  }
+
+  .logo > img {
+    max-width: 100px;
+  }
+}
