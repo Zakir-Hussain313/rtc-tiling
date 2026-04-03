@@ -18,7 +18,7 @@ code {
 /* Custom fonts */
 @font-face {
   font-family: 'Jost';
-  src: url(../styles/fonts/Jost-Regular.ttf) format('truetype');
+  src: url(../styles/Fonts/Jost-Regular.ttf) format('truetype');
   font-weight: 400;
   font-style: normal;
 }
