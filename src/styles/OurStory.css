@@ -1,7 +1,11 @@
 .section {
-    padding: 48px 40px;
+    padding: 0 16px;
     background: #ffffff;
     font-family: "Jost", sans-serif;
+}
+
+.section-inner {
+    padding: 48px 54px;
 }
 
 .heading {
@@ -19,7 +23,6 @@
     align-items: center;
 }
 
-/* ── Left column ── */
 .imageCol {
     position: relative;
     flex-shrink: 0;
@@ -66,7 +69,6 @@
     max-width: 50px;
 }
 
-/* ── Right column ── */
 .textCol {
     display: flex;
     flex-direction: column;
@@ -91,16 +93,52 @@
     font-weight: 600;
 }
 
+@media (max-width: 1024px) {
+    .section-inner {
+        padding: 36px 40px;
+    }
+
+    .heading {
+        font-size: 60px;
+    }
+
+    .body {
+        font-size: 28px;
+    }
+
+    .card {
+        gap: 40px;
+    }
+}
+
 @media (max-width: 1022px) {
     .card {
         flex-direction: column;
         align-items: center;
-        gap: 30px;
+        gap: 10px;
     }
 }
 
+@media (max-width: 768px) {
+    .section-inner {
+        padding: 32px 28px;
+    }
+
+    .heading {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+
+    .body {
+        font-size: 24px;
+    }
+}
 
 @media (max-width: 640px) {
+    .section-inner {
+        padding: 28px 20px;
+    }
+
     .card {
         flex-direction: column;
         align-items: center;
@@ -118,7 +156,7 @@
         clip-path: none;
         border-radius: 18px;
         overflow: hidden;
-    }                                      
+    }
 
     .socials {
         position: static;
@@ -128,10 +166,24 @@
     }
 
     .heading {
+        font-size: 40px;
+    }
+
+    .body {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 380px) {
+    .section-inner {
+        padding: 22px 16px;
+    }
+
+    .heading {
         font-size: 32px;
     }
 
     .body {
-        font-size: 25px;
+        font-size: 17px;
     }
 }

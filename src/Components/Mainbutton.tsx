@@ -12,6 +12,7 @@ type MainbuttonProps = {
   href?: string;
   padding?: string;
   arrowSize?: string;
+  border?: string; // <-- new optional prop
 };
 
 function Mainbutton({
@@ -23,6 +24,7 @@ function Mainbutton({
   href = "",
   padding,
   arrowSize,
+  border,
 }: MainbuttonProps) {
   return (
     <Link
@@ -35,6 +37,7 @@ function Mainbutton({
         "--btn-padding": padding,
         "--btn-arrow-bg": arrowColor,
         "--btn-arrow-size": arrowSize,
+        "--btn-border": border,
       } as React.CSSProperties}
     >
       {data}

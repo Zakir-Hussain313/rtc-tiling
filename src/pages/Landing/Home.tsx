@@ -5,6 +5,7 @@ import Expertise from "./expertise";
 import OurStory from "./OurStory";
 import Featured from "./featured";
 import "../../styles/Home.css";
+import Testimonials from "./Testimonials";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Expertise />
       <OurStory />
       <Featured />
+      <Testimonials />
     </div>
   );
 }

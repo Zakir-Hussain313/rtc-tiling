@@ -9,6 +9,7 @@
   background-color: var(--btn-bg, #5b4630);
   color: var(--btn-color, #fff);
   font-size: var(--btn-font-size, inherit);
+  border: var(--btn-border, none); /* <-- new line */
 }
 
 .main-button .arrow {

@@ -1,12 +1,13 @@
 .expertise-main-section {
-    padding: 0 40px;
+    padding: 0 16px;
+    font-family: 'Jost', sans-serif;
 }
 
 .title-container {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    padding: 48px 40px;
+    padding: 48px 54px;
     align-items: flex-start;
     text-align: left;
 }
@@ -32,6 +33,7 @@
     width: 100%;
     overflow: hidden;
     margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .marquee-track {
@@ -49,7 +51,6 @@
     0% {
         transform: translateX(0);
     }
-
     100% {
         transform: translateX(-33.333%);
     }
@@ -83,7 +84,7 @@
     margin: 0;
     padding: 20px 16px;
     font-size: 20px;
-    font-family: 'Jost', Jost-400;
+    font-family: 'Jost', sans-serif;
     font-weight: 400;
     color: #626262;
 }
@@ -94,25 +95,100 @@
 
 @media (max-width: 1024px) {
     .title-container {
-        padding: 32px 10px;
+        padding: 36px 40px;
+    }
+
+    .title-container h1 {
+        font-size: 48px;
     }
 
     .title-container p {
-        max-width: 80%;
+        max-width: 75%;
+        font-size: 19px;
     }
 }
 
 @media (max-width: 768px) {
-    .expertise-main-section {
-        padding: 0 30px;
-        margin-top: 50px;
+    .title-container {
+        padding: 32px 28px;
     }
 
+    .title-container h1 {
+        font-size: 38px;
+    }
+
+    .title-container p {
+        max-width: 90%;
+        font-size: 17px;
+    }
+
+    .image-slider-container {
+        width: 240px;
+        height: 340px;
+    }
+
+    .service-card {
+        width: 260px;
+    }
+
+    .card-label {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 540px) {
     .title-container {
-        padding: 10px 0px;
+        padding: 28px 20px;
+    }
+
+    .title-container h1 {
+        font-size: 40px;
     }
 
     .title-container p {
         max-width: 100%;
+        font-size: 18px;
+    }
+
+    .image-slider-container {
+        width: 200px;
+        height: 290px;
+    }
+
+    .service-card {
+        width: 220px;
+    }
+
+    .card-label {
+        font-size: 16px;
+        padding: 14px 12px;
+    }
+}
+
+@media (max-width: 380px) {
+    .title-container {
+        padding: 22px 16px;
+    }
+
+    .title-container h1 {
+        font-size: 28px;
+    }
+
+    .title-container p {
+        font-size: 14px;
+    }
+
+    .image-slider-container {
+        width: 170px;
+        height: 250px;
+    }
+
+    .service-card {
+        width: 190px;
+    }
+
+    .card-label {
+        font-size: 14px;
+        padding: 12px 10px;
     }
 }

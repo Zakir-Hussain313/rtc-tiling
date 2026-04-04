@@ -1,5 +1,6 @@
 import Home from "../pages/Landing/Home";
 import Navbar from "../Components/Navbar";
+import Footer from "@/Components/Footer";
 
 export default function Page() {
   return (
@@ -8,6 +9,7 @@ export default function Page() {
       <main className="page-content">
         <Home />
       </main>
+      <Footer />
     </div>
   );
 }

@@ -1,4 +1,3 @@
-
 import "../../styles/featured.css"
 import image1 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
 import image2 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
@@ -7,6 +6,7 @@ import image4 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
 import image5 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
 import image6 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
 import Image from "next/image"
+import Mainbutton from "@/Components/Mainbutton"
 
 export default function Featured() {
     return (
@@ -17,77 +17,34 @@ export default function Featured() {
             </section>
             <section className="image-section">
                 <div className="image-div image1">
-                    <Image
-                        src={image1}
-                        alt=""
-                        fill
-                        sizes="(max-width: 600px) 100vw,
-       (max-width: 1024px) 50vw,
-       33vw"
-                        className="object-cover"
-                    />
+                    <Image src={image1} alt="" fill sizes="(max-width: 540px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover" />
                 </div>
-
                 <div className="image-div image2">
-                    <Image
-                        src={image2}
-                        alt=""
-                        fill
-                        sizes="(max-width: 600px) 100vw,
-       (max-width: 1024px) 50vw,
-       33vw"
-                        className="object-cover"
-                    />
+                    <Image src={image2} alt="" fill sizes="(max-width: 540px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover" />
                 </div>
-
                 <div className="image-div image3">
-                    <Image
-                        src={image3}
-                        alt=""
-                        fill
-                        sizes="(max-width: 600px) 100vw,
-       (max-width: 1024px) 50vw,
-       33vw"
-                        className="object-cover"
-                    />
+                    <Image src={image3} alt="" fill sizes="(max-width: 540px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover" />
                 </div>
-
                 <div className="image-div image4">
-                    <Image
-                        src={image4}
-                        alt=""
-                        fill
-                        sizes="(max-width: 600px) 100vw,
-       (max-width: 1024px) 50vw,
-       33vw"
-                        className="object-cover"
-                    />
+                    <Image src={image4} alt="" fill sizes="(max-width: 540px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover" />
                 </div>
-
                 <div className="image-div image5">
-                    <Image
-                        src={image5}
-                        alt=""
-                        fill
-                        sizes="(max-width: 600px) 100vw,
-       (max-width: 1024px) 50vw,
-       33vw"
-                        className="object-cover"
-                    />
+                    <Image src={image5} alt="" fill sizes="(max-width: 540px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover" />
                 </div>
-
                 <div className="image-div image6">
-                    <Image
-                        src={image6}
-                        alt=""
-                        fill
-                        sizes="(max-width: 600px) 100vw,
-       (max-width: 1024px) 50vw,
-       33vw"
-                        className="object-cover"
-                    />
+                    <Image src={image6} alt="" fill sizes="(max-width: 540px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover" />
                 </div>
             </section>
+            <div className="button-section">
+                <Mainbutton
+                    data="View Gallery"
+                    backgroundColor="white"
+                    textColor="black"
+                    border="2px solid #777"
+                    fontSize="clamp(20px, 2.5vw, 25px)"
+                    arrowSize="clamp(38px, 4vw, 50px)"
+                />
+            </div>
         </main>
     )
 }
