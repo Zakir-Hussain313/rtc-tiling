@@ -1,61 +1,93 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import rtc from "../assets/images/Rtc.png";
 import "../styles/Navbar.css";
 import Mainbutton from "./Mainbutton";
 import CrossIcon from "./CrossIcon";
 
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/services", label: "Services" },
+  { href: "/projects", label: "Projects" },
+  { href: "/contact", label: "Contact" },
+];
+
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
+  const pathname = usePathname();
+  const navPillRef = useRef<HTMLElement>(null);
+  const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
-  const handleClick = () => {
-    setIsOpen(!isOpen);
+  const moveIndicatorTo = (el: HTMLAnchorElement | null) => {
+    if (!el || !navPillRef.current) return;
+    const pillRect = navPillRef.current.getBoundingClientRect();
+    const linkRect = el.getBoundingClientRect();
+    setIndicatorStyle({
+      left: linkRect.left - pillRect.left,
+      width: linkRect.width,
+    });
   };
 
-  /* ✅ NEW: close menu on link click */
-  const closeMenu = () => {
-    setIsOpen(false);
-  };
-
-  /* ✅ lock scroll when menu opens */
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+    const activeIndex = links.findIndex((l) => l.href === pathname);
+    const index = activeIndex !== -1 ? activeIndex : 0;
+    moveIndicatorTo(linkRefs.current[index]);
+  }, [pathname]);
+
+  const handleClick = () => setIsOpen(!isOpen);
+  const closeMenu = () => setIsOpen(false);
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "auto";
   }, [isOpen]);
 
   return (
     <header className="navbar">
       <div className="navbar-inner">
-        {/* Logo */}
         <div className="logo">
           <Image src={rtc} alt="RTC tiling" />
         </div>
 
-        {/* Center Nav */}
-        <nav className="nav-pill">
-          <Link href="/">Home</Link>
-          <Link href="/about">About</Link>
-          <Link href="/services">Services</Link>
-          <Link href="/projects">Projects</Link>
-          <Link href="/contact">Contact</Link>
+        <nav
+          className="nav-pill"
+          ref={navPillRef}
+          onMouseLeave={() => {
+            const activeIndex = links.findIndex((l) => l.href === pathname);
+            const index = activeIndex !== -1 ? activeIndex : 0;
+            moveIndicatorTo(linkRefs.current[index]);
+          }}
+        >
+          <div
+            className="nav-indicator"
+            style={{
+              left: indicatorStyle.left,
+              width: indicatorStyle.width,
+            }}
+          />
+          {links.map((link, i) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              ref={(el) => { linkRefs.current[i] = el; }}
+              className={pathname === link.href ? "active" : ""}
+              onMouseEnter={() => moveIndicatorTo(linkRefs.current[i])}
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
 
-        {/* CTA */}
         <div className="nav-cta">
           <Mainbutton data={"Get a free Quote"} />
         </div>
 
-        {/* Burger */}
-        <span
-          className={`burger ${isOpen ? "open" : ""}`}
-          onClick={handleClick}
-        >
+        <span className={`burger ${isOpen ? "open" : ""}`} onClick={handleClick}>
           {!isOpen ? (
             <span className="menu-text">Menu</span>
           ) : (
@@ -64,29 +96,13 @@ function Navbar() {
         </span>
       </div>
 
-      {/* Mobile Menu */}
       <div className={`menu ${isOpen ? "" : "closed"}`}>
         <div className="menu-links">
-          <Link className="m-links" href="/" onClick={closeMenu}>
-            Home
-          </Link>
-
-          <Link className="m-links" href="/about" onClick={closeMenu}>
-            About
-          </Link>
-
-          <Link className="m-links" href="/services" onClick={closeMenu}>
-            Services
-          </Link>
-
-          <Link className="m-links" href="/projects" onClick={closeMenu}>
-            Projects
-          </Link>
-
-          <Link className="m-links" href="/contact" onClick={closeMenu}>
-            Contact
-          </Link>
-
+          {links.map((link) => (
+            <Link key={link.href} className="m-links" href={link.href} onClick={closeMenu}>
+              {link.label}
+            </Link>
+          ))}
           <span onClick={closeMenu}>
             <Mainbutton data="About Us" href="/about" />
           </span>
