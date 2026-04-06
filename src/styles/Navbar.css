@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   overflow-x: hidden;
 }
 
@@ -8,6 +9,8 @@ html, body {
   top: 0;
   left: 0;
   z-index: 999;
+  background: #ffffff;
+  border-bottom: 1px solid #efefef;
 }
 
 .navbar-inner {
@@ -26,7 +29,7 @@ html, body {
   line-height: 1;
 }
 
-.logo > img {
+.logo>img {
   max-width: 126px;
 }
 
@@ -67,6 +70,10 @@ html, body {
 .nav-pill a.active,
 .nav-pill a:hover {
   color: #111;
+}
+
+.nav-pill:hover a.active {
+  color: #ffffff;
 }
 
 .burger {
@@ -127,6 +134,7 @@ html, body {
   .burger {
     display: none;
   }
+
   .menu {
     display: none;
     transform: none;
@@ -148,7 +156,7 @@ html, body {
     display: none;
   }
 
-  .logo > img {
+  .logo>img {
     max-width: 100px;
   }
 }

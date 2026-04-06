@@ -1,5 +1,5 @@
 import Image from "next/image";
-import "../../styles/expertise.css";
+import "../../styles/Landing/expertise.css";
 import image1 from '../../assets/images/Airport-crossville-copy.jpg.jpeg';
 import image2 from '../../assets/images/Airport-crossville-copy.jpg.jpeg';
 import image3 from '../../assets/images/Airport-crossville-copy.jpg.jpeg';

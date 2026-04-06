@@ -1,5 +1,4 @@
 .expertise-main-section {
-    padding: 0 16px;
     font-family: 'Jost', sans-serif;
 }
 
@@ -7,7 +6,7 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
-    padding: 48px 54px;
+    padding: 48px 70px;
     align-items: flex-start;
     text-align: left;
 }
@@ -83,7 +82,7 @@
 .card-label {
     margin: 0;
     padding: 20px 16px;
-    font-size: 20px;
+    font-size: 16px;
     font-family: 'Jost', sans-serif;
     font-weight: 400;
     color: #626262;
@@ -132,13 +131,13 @@
     }
 
     .card-label {
-        font-size: 18px;
+        font-size: 14px;
     }
 }
 
 @media (max-width: 540px) {
     .title-container {
-        padding: 28px 20px;
+        padding: 28px 24px;
     }
 
     .title-container h1 {
@@ -160,8 +159,8 @@
     }
 
     .card-label {
-        font-size: 16px;
-        padding: 14px 12px;
+        font-size: 13px;
+        padding: 12px 10px;
     }
 }
 
@@ -188,7 +187,7 @@
     }
 
     .card-label {
-        font-size: 14px;
-        padding: 12px 10px;
+        font-size: 12px;
+        padding: 10px 8px;
     }
 }

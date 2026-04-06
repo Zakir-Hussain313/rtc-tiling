@@ -12,7 +12,8 @@ type MainbuttonProps = {
   href?: string;
   padding?: string;
   arrowSize?: string;
-  border?: string; // <-- new optional prop
+  arrowImageSize?: string;
+  border?: string;
 };
 
 function Mainbutton({
@@ -24,6 +25,7 @@ function Mainbutton({
   href = "",
   padding,
   arrowSize,
+  arrowImageSize,
   border,
 }: MainbuttonProps) {
   return (
@@ -37,6 +39,7 @@ function Mainbutton({
         "--btn-padding": padding,
         "--btn-arrow-bg": arrowColor,
         "--btn-arrow-size": arrowSize,
+        "--btn-arrow-image-size": arrowImageSize,
         "--btn-border": border,
       } as React.CSSProperties}
     >

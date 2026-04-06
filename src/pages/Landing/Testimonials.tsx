@@ -1,5 +1,5 @@
 import Image from "next/image";
-import "../../styles/Testimonials.css";
+import "../../styles/Landing/Testimonials.css";
 import avatar1 from "../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg";
 import avatar2 from "../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg";
 import avatar3 from "../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg";

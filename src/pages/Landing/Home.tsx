@@ -4,7 +4,7 @@ import Stats from "./Stats";
 import Expertise from "./expertise";
 import OurStory from "./OurStory";
 import Featured from "./featured";
-import "../../styles/Home.css";
+import "../../styles/Landing/Home.css";
 import Testimonials from "./Testimonials";
 
 export default function Home() {

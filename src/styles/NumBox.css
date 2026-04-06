@@ -9,9 +9,9 @@ span {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 125px;
+    gap: 120px;
     flex-wrap: wrap;
-    padding: 48px 54px;
+    padding: 48px 3px;
 }
 
 .stats {

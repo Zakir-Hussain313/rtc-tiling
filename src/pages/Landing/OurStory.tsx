@@ -1,5 +1,5 @@
 import Image from "next/image";
-import "../../styles/OurStory.css";
+import "../../styles/Landing/OurStory.css";
 import AboutImage from '../../assets/images/noroot -copy.png'
 import Mainbutton from "@/Components/Mainbutton";
 
@@ -48,9 +48,9 @@ export default function OurStory() {
                         <Mainbutton
                             data="About Us"
                             href="/about"
-                            fontSize="clamp(20px, 2.5vw, 30px)"
-                            padding="5px 5px 5px 20px"
-                            arrowSize="clamp(38px, 4vw, 50px)"
+                            fontSize="clamp(25px, 2.5vw, 25px)"
+                            padding="clamp(7px, 0.4vw, 7px) clamp(7px, 0.4vw, 5px) clamp(7px, 0.4vw, 7px) clamp(22px, 2vw, 30px)"
+                            arrowSize="clamp(38px, 4vw, 55px)"
                         />
                     </div>
                 </div>

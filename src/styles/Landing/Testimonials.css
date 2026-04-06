@@ -1,5 +1,4 @@
 .testimonials-section {
-  padding: 0 16px;
   font-family: 'Jost', sans-serif;
 }
 
@@ -7,7 +6,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding: 48px 54px;
+  padding: 48px 70px;
   align-items: flex-start;
   text-align: left;
 }
@@ -30,6 +29,7 @@
 .marquee-outer {
   width: 100%;
   overflow: hidden;
+  margin-top: 50px;
   margin-bottom: 50px;
 }
 
@@ -171,7 +171,7 @@
 
 @media (max-width: 540px) {
   .title-container {
-    padding: 28px 20px;
+    padding: 28px 24px;
   }
 
   .title-container h1 {

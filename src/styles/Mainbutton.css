@@ -9,7 +9,7 @@
   background-color: var(--btn-bg, #5b4630);
   color: var(--btn-color, #fff);
   font-size: var(--btn-font-size, inherit);
-  border: var(--btn-border, none); /* <-- new line */
+  border: var(--btn-border, none);
 }
 
 .main-button .arrow {
@@ -38,4 +38,5 @@
 .arrow-inner img {
   display: block;
   height: auto;
+  width: var(--btn-arrow-image-size, 20px);
 }

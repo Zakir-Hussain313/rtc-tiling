@@ -1,4 +1,4 @@
-import "../../styles/Hero.css";
+import "../../styles/Landing/Hero.css";
 import Image from "next/image";
 import heroBackground from "../../assets/images/Hero-background.webp";
 import google from "../../assets/images/Google.webp";

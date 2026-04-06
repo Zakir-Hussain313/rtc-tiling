@@ -1,4 +1,4 @@
-import "../../styles/featured.css"
+import "../../styles/Landing/featured.css"
 import image1 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
 import image2 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
 import image3 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
