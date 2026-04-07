@@ -1,0 +1,51 @@
+.projectsListing-main-section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.projectsListing-main-section hr {
+    color: #555;
+}
+
+.projects-div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 28px 0;
+    border-radius: 50px;
+}
+
+
+.projects-div h1 {
+    font-size: 40px;
+    font-family: Playfair Display, Playfair Display-400;
+    font-weight: 400;
+    max-width: 20%;
+    text-align: left;
+}
+
+.project-image {
+    position: relative;
+    width: 320px;
+    height: 200px;
+}
+
+.project-date {
+    font-size: 25px;
+    font-family: Jost, Jost-400;
+    font-weight: 400;
+    color: #555;
+}
+
+.project-arrow {
+    color: white;
+    border-radius: 50px;
+    background: #C4A473;
+    padding: 14px;
+}
+
+.projects-div:hover {
+    background: rgb(32, 32, 32);
+    color: white;
+}
