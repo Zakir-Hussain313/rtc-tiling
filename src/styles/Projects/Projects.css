@@ -1,0 +1,21 @@
+.projects-main-section {
+    padding: 140px 70px 4px 70px;
+}
+
+@media (max-width: 1024px) {
+    .projects-main-section {
+        padding: 120px 40px 40px 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .projects-main-section {
+        padding: 100px 24px 40px 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .projects-main-section {
+        padding: 90px 16px 32px 16px;
+    }
+}

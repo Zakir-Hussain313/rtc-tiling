@@ -14,13 +14,13 @@ export default function OurStory() {
                         <Link
                             href={'/'}
                         >
-                            Home
+                            Home 
                         </Link>
-                        <span>/</span>
+                        <span> / </span>
                         <Link
                             href={'/about'}
                         >
-                            About Us
+                             About Us
                         </Link>
                     </div>
                     <h1>PRECISION IN EVERY PROJECT</h1>

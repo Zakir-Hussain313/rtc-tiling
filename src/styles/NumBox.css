@@ -9,9 +9,11 @@ span {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 120px;
+    gap: 100px;
     flex-wrap: wrap;
-    padding: 48px 3px;
+    padding: 68px 3px;
+    max-width: 1300px;
+    margin: 0 auto;
 }
 
 .stats {
@@ -29,11 +31,11 @@ span {
 }
 
 .stats-up h1 {
-    font-size: 85px;
+    font-size: 75px;
 }
 
 .stats-up span {
-    font-size: 85px;
+    font-size: 80px;
     color: #c4a473;
 }
 

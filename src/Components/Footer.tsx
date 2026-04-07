@@ -74,17 +74,15 @@ const Footer = () => {
 
         <div className='bottomBar'>
           <p className='copyright'>rtctiling © 2026 All Rights Reserved.</p>
-          <div className='credit'>
+          <Link href={"https://pixelmanic.dev/"} className='credit'>
             <span className='creditText'>Design &amp; Development</span>
-            <Link href={"https://pixelmanic.dev/"}>
               <Image
                 src={pm}
                 alt="Pm"
                 width={44}
                 height={44}
               />
-            </Link>
-          </div>
+          </Link>
         </div>
       </div>
     </footer>
