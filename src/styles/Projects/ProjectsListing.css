@@ -47,5 +47,9 @@
 
 .projects-div:hover {
     background: rgb(32, 32, 32);
+}
+
+.projects-div:hover h1,
+.projects-div:hover p {
     color: white;
 }
