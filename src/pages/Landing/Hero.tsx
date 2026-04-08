@@ -5,6 +5,7 @@ import google from "../../assets/images/Google.webp";
 import facebook from "../../assets/images/Facebook.webp";
 import trustpilot from "../../assets/images/trustpilot.webp";
 import star from "../../assets/icons/star.svg";
+import Link from "next/link";
 
 
 function Hero() {
@@ -25,9 +26,9 @@ function Hero() {
             Your Surfaces
           </h1>
 
-          <a href="tel:0468 264 894" className="hero-button">
+          <Link href="tel:0468 264 894" className="hero-button">
             Call now: 0415 456 215
-          </a>
+          </Link>
 
           <div className="hero-ratings">
             <div className="hero-left">
