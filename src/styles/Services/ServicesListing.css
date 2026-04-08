@@ -1,14 +1,14 @@
-.projectsListing-main-section {
+.ServicesListing-main-section {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-.projectsListing-main-section hr {
+.ServicesListing-main-section hr {
     color: #555;
 }
 
-.projects-div {
+.services-div {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -17,7 +17,7 @@
     transition: background 0.35s ease;
 }
 
-.projects-div h1 {
+.services-div h1 {
     font-size: 40px;
     font-family: Playfair Display, Playfair Display-400;
     font-weight: 400;
@@ -27,22 +27,23 @@
     text-transform: uppercase;
 }
 
-.project-image {
+.services-image {
     position: relative;
     width: 320px;
     height: 200px;
     flex-shrink: 0;
 }
 
-.project-date {
-    font-size: 25px;
+.services-description {
+    font-size: 15px;
+    max-width: 29%;
     font-family: Jost, Jost-400;
     font-weight: 400;
     color: #555;
     transition: color 0.35s ease;
 }
 
-.project-arrow {
+.services-arrow {
     color: white;
     border-radius: 50px;
     background: #C4A473;
@@ -50,41 +51,41 @@
     flex-shrink: 0;
 }
 
-.projects-div:hover {
+.services-div:hover {
     background: rgb(32, 32, 32);
 }
 
-.projects-div:hover h1,
-.projects-div:hover p {
+.services-div:hover h1,
+.services-div:hover p {
     color: white;
 }
 
 /* ── Tablet (≤1024px) ── */
 @media (max-width: 1024px) {
-    .projects-div {
+    .services-div {
         padding: 24px 16px;
         gap: 16px;
         border-radius: 40px;
     }
 
-    .projects-div h1 {
+    .services-div h1 {
         font-size: 30px;
         max-width: 25%;
     }
 
-    .project-image {
+    .services-image {
         width: 240px;
         height: 160px;
     }
 
-    .project-date {
+    .services-description {
         font-size: 20px;
     }
 }
 
 /* ── Large mobile (≤768px) ── */
 @media (max-width: 768px) {
-    .projects-div {
+    .services-div {
         flex-direction: column;
         align-items: flex-start;
         padding: 20px 16px;
@@ -92,46 +93,45 @@
         border-radius: 30px;
     }
 
-    .projects-div h1 {
+    .services-div h1 {
         font-size: 26px;
         max-width: 100%;
     }
 
-    .project-image {
+    .services-image {
         width: 100%;
         height: 220px;
     }
 
-    .project-date {
+    .services-description {
         font-size: 17px;
     }
 
-    .project-arrow {
+    .services-arrow {
         align-self: flex-end;
     }
 }
 
-/* ── Small mobile (≤480px) ── */
 @media (max-width: 480px) {
-    .projects-div {
+    .services-div {
         padding: 16px 12px;
         gap: 12px;
         border-radius: 24px;
     }
 
-    .projects-div h1 {
+    .services-div h1 {
         font-size: 22px;
     }
 
-    .project-image {
+    .services-image {
         height: 180px;
     }
 
-    .project-date {
+    .services-description {
         font-size: 15px;
     }
 
-    .project-arrow {
+    .services-arrow {
         padding: 10px;
     }
 }

@@ -7,6 +7,7 @@ import image2 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
 import image3 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
 import image4 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
 import image5 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
+import Link from 'next/link';
 
 const projects = [
     { image: image1, title: 'POOL TILED', day: '04', month: '03', year: '2025' },
@@ -22,7 +23,7 @@ export default function ProjectsListing() {
             <section className="projectsListing-main-section">
                 {projects.map((project, index) => (
                     <div key={index}>
-                        <div className='projects-div'>
+                        <Link href={''} className='projects-div'>
                             <div className="project-image">
                                 <Image
                                     src={project.image}
@@ -42,7 +43,7 @@ export default function ProjectsListing() {
                                 className=''
                             />
                         </div>
-                    </div>
+                    </Link>
                     <hr />
                     </div>
                 ))}
