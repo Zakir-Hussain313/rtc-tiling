@@ -1,0 +1,132 @@
+.heroTextCard {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+}
+
+.heroTextCardHeader {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.heroTextCardIcon {
+    width: 42px;
+    height: 42px;
+    background: var(--brand-pale);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.heroTextCardIcon svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--brand);
+}
+
+.heroTextCardTitle {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.heroTextCardSub {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+}
+
+/* ── Fields ───────────────────────────────────────── */
+
+.heroFieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.heroFieldGroup:last-child {
+    margin-bottom: 0;
+}
+
+.heroFieldLabel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+}
+
+.heroCharCount {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--text-muted);
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.heroFieldInput {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    background: var(--white);
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+}
+
+.heroFieldInput:focus {
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(91, 70, 48, 0.08);
+}
+
+.heroFieldInput::placeholder {
+    color: var(--text-muted);
+}
+
+.heroFieldTextarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    background: var(--white);
+    resize: vertical;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+    line-height: 1.6;
+    min-height: 90px;
+}
+
+.heroFieldTextarea:focus {
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(91, 70, 48, 0.08);
+}
+
+.heroFieldTextarea::placeholder {
+    color: var(--text-muted);
+}
+
+/* ── Responsive ───────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .heroTextCard {
+        padding: 18px;
+    }
+}

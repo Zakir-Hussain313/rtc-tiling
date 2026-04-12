@@ -1,0 +1,163 @@
+.heroEditorBody {
+    flex: 1;
+    padding: 32px 36px;
+}
+
+/* ── Page header ──────────────────────────────────── */
+
+.heroEditorHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 32px;
+    animation: fadeUp 0.4s ease both;
+}
+
+.heroEditorEyebrow {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin-bottom: 6px;
+    font-family: var(--font-body);
+}
+
+.heroEditorHeading {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+
+.heroEditorSub {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+}
+
+.heroEditorHeaderActions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.heroEditorBtnGhost {
+    padding: 10px 20px;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    white-space: nowrap;
+}
+
+.heroEditorBtnGhost:hover {
+    background: var(--brand-pale);
+    border-color: var(--brand-muted);
+    color: var(--brand);
+}
+
+.heroEditorBtnPrimary {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 20px;
+    background: var(--brand);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: background 0.15s;
+    white-space: nowrap;
+}
+
+.heroEditorBtnPrimary:hover {
+    background: var(--brand-light);
+}
+
+.heroEditorBtnPrimary svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* ── Two column grid ──────────────────────────────── */
+
+.heroEditorGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    animation: fadeUp 0.4s 0.1s ease both;
+}
+
+.heroEditorLeft,
+.heroEditorRight {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ── Responsive ───────────────────────────────────── */
+
+@media (max-width: 1024px) {
+    .heroEditorBody {
+        padding: 24px 24px;
+    }
+
+    .heroEditorHeading {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .heroEditorBody {
+        padding: 20px 16px;
+    }
+
+    .heroEditorHeader {
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .heroEditorHeaderActions {
+        width: 100%;
+    }
+
+    .heroEditorBtnGhost,
+    .heroEditorBtnPrimary {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .heroEditorGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .heroEditorHeading {
+        font-size: 22px;
+    }
+}
+
+/* ── Animation ────────────────────────────────────── */
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

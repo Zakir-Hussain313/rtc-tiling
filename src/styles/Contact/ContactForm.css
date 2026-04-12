@@ -1,6 +1,5 @@
 .contact-form-main {
     padding: 80px 0px;
-    max-width: 1300px;
     margin: 0 auto;
     box-sizing: border-box;
 }
@@ -137,10 +136,9 @@
     color: #c4a473;
 }
 
-/* ── Tablet (≤1024px) ── */
 @media (max-width: 1024px) {
     .contact-form-main {
-        padding: 64px 40px;
+        padding: 64px 0px;
     }
 
     .contact-form-wrapper {
@@ -148,10 +146,9 @@
     }
 }
 
-/* ── Large mobile (≤768px) ── */
 @media (max-width: 768px) {
     .contact-form-main {
-        padding: 48px 24px;
+        padding: 48px 0px;
     }
 
     .contact-form-wrapper {
@@ -165,7 +162,6 @@
     }
 }
 
-/* ── Small mobile (≤480px) ── */
 @media (max-width: 480px) {
     .contact-form-main {
         padding: 36px 16px;
@@ -186,11 +182,11 @@
     }
 
     .contact-info-block h3 {
-        font-size: 16px;
+        font-size: 20px;
     }
 
     .contact-info-block p,
     .contact-info-link {
-        font-size: 14px;
+        font-size: 17px;
     }
 }

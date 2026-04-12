@@ -3,7 +3,7 @@ import '../../styles/Contact/PageIntro.css'
 
 export default function ContactPageIntro(){
     return(
-        <main>
+        <main className="pageIntro-main-section">
             <section className="pageIntro-first-section">
                 <div className="first-section-child-1">
                     <div className="bread-crumb">

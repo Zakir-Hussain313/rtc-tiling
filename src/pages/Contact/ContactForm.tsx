@@ -40,8 +40,8 @@ export default function ContactForm() {
                         <Mainbutton
                             data="Submit"
                             href=""
-                            fontSize="clamp(16px, 1.5vw, 20px)"
-                            padding="clamp(5px, 0.4vw, 7px) clamp(5px, 0.4vw, 7px) clamp(5px, 0.4vw, 7px) clamp(18px, 1.5vw, 24px)"
+                            fontSize="clamp(20px, 1.5vw, 25px)"
+                            padding="clamp(5px, 0.5vw, 7px) clamp(5px, 0.4vw, 7px) clamp(5px, 0.4vw, 7px) clamp(18px, 1.5vw, 24px)"
                             arrowSize="clamp(36px, 3.5vw, 48px)"
                         />
                     </div>

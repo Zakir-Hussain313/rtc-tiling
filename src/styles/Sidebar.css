@@ -1,0 +1,215 @@
+
+.sidebarBackdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sidebarBackdrop.open {
+    opacity: 1;
+}
+
+.sidebar {
+    width: 248px;
+    background: var(--brand-dark);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 100;
+    transition: transform 0.3s ease;
+}
+
+.sidebarLogo {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sidebarLogoMark {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logoIcon {
+    width: 36px;
+    height: 36px;
+    background: var(--brand);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.logoIcon svg {
+    width: 18px;
+    height: 18px;
+    fill: white;
+}
+
+.logoText {
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.01em;
+}
+
+.logoSub {
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.45);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 2px;
+    font-family: var(--font-body);
+}
+
+.sidebarCloseBtn {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: rgba(255, 255, 255, 0.6);
+    flex-shrink: 0;
+}
+
+.sidebarCloseBtn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.sidebarCloseBtn:hover {
+    color: white;
+}
+
+.sidebarNav {
+    flex: 1;
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow-y: auto;
+}
+
+.navSectionLabel {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.28);
+    padding: 12px 8px 6px;
+    font-family: var(--font-body);
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: var(--radius-sm);
+    color: rgba(255, 255, 255, 0.60);
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+    cursor: pointer;
+    font-family: var(--font-body);
+}
+
+.navItem:hover {
+    background: rgba(255, 255, 255, 0.07);
+    color: rgba(255, 255, 255, 0.88);
+}
+
+.navItem.active {
+    background: var(--brand);
+    color: white;
+    font-weight: 500;
+}
+
+.navItem svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    opacity: 0.8;
+}
+
+.navItem.active svg {
+    opacity: 1;
+}
+
+.sidebarFooter {
+    padding: 16px 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.logoutBtn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 9px 10px;
+    border-radius: var(--radius-sm);
+    color: rgba(255, 255, 255, 0.60);
+    font-size: 14px;
+    font-weight: 400;
+    font-family: var(--font-body);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    text-align: left;
+}
+
+.logoutBtn:hover {
+    background: rgba(255, 255, 255, 0.07);
+    color: rgba(255, 255, 255, 0.88);
+}
+
+.logoutBtn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    opacity: 0.8;
+}
+
+.logoutBtn:hover svg {
+    opacity: 1;
+}
+
+
+@media (max-width: 1024px) {
+    .sidebarBackdrop {
+        display: block;
+        pointer-events: none;
+    }
+
+    .sidebarBackdrop.open {
+        pointer-events: all;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .sidebarCloseBtn {
+        display: flex;
+    }
+}
