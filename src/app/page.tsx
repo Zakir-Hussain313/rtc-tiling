@@ -1,4 +1,4 @@
-import Home from "../pages/Landing/Home";
+import Home from "../ui/Landing/Home";
 
 export default function Page() {
   return (

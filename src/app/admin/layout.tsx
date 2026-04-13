@@ -9,20 +9,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     return (
         <div className="adminShell">
-            <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+            <Sidebar
+                isOpen={sidebarOpen}
+                onOpen={() => setSidebarOpen(true)}
+                onClose={() => setSidebarOpen(false)}
+            />
             <div className="adminMain">
-                <div
-                    className="adminMainInner"
-                    data-sidebar-toggle="true"
-                    onClick={(e) => {
-                        const target = e.target as HTMLElement;
-                        if (target.closest('.hamburgerBtn')) {
-                            setSidebarOpen(true);
-                        }
-                    }}
-                >
-                    {children}
-                </div>
+                {children}
             </div>
         </div>
     );

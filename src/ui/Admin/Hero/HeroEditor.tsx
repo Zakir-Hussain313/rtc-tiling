@@ -9,7 +9,6 @@ export default function HeroEditor() {
     return (
         <>
             <main className="heroEditorBody">
-
                 <div className="heroEditorHeader">
                     <div>
                         <div className="heroEditorEyebrow">Editing</div>

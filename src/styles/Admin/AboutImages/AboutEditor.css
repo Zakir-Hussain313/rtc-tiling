@@ -1,0 +1,319 @@
+.aboutEditorBody {
+    flex: 1;
+    padding: 32px 36px;
+}
+
+/* ── Header ───────────────────────────────────────── */
+
+.aboutEditorHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 32px;
+    animation: fadeUp 0.4s ease both;
+}
+
+.aboutEditorEyebrow {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin-bottom: 6px;
+    font-family: var(--font-body);
+}
+
+.aboutEditorHeading {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+
+.aboutEditorSub {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+}
+
+.aboutEditorBtnPrimary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--brand);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: background 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.aboutEditorBtnPrimary:hover {
+    background: var(--brand-light);
+}
+
+.aboutEditorBtnPrimary.saved {
+    background: var(--success);
+}
+
+.aboutEditorBtnPrimary svg {
+    width: 15px;
+    height: 15px;
+}
+
+/* ── Grid ─────────────────────────────────────────── */
+
+.aboutEditorGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    animation: fadeUp 0.4s 0.08s ease both;
+}
+
+/* ── Image slot card ──────────────────────────────── */
+
+.aboutImageSlot {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.aboutImageSlotHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.aboutImageSlotIcon {
+    width: 38px;
+    height: 38px;
+    background: var(--brand-pale);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.aboutImageSlotIcon svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--brand);
+}
+
+.aboutImageSlotLabel {
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.aboutImageSlotHint {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+}
+
+/* ── Dropzone ─────────────────────────────────────── */
+
+.aboutDropzone {
+    border: 2px dashed var(--border-strong);
+    border-radius: var(--radius-md);
+    background: var(--off-white);
+    cursor: pointer;
+    min-height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.aboutDropzone:hover {
+    border-color: var(--brand);
+    background: var(--brand-pale);
+}
+
+.aboutDropzone.dragging {
+    border-color: var(--brand);
+    background: var(--brand-pale);
+}
+
+.aboutDropzone.hasImage {
+    border-style: solid;
+    border-color: var(--border);
+    min-height: 200px;
+}
+
+.aboutDropzoneInner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 32px 20px;
+    text-align: center;
+}
+
+.aboutDropzoneIcon {
+    width: 48px;
+    height: 48px;
+    background: var(--brand-muted);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2px;
+}
+
+.aboutDropzoneIcon svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--brand);
+}
+
+.aboutDropzoneLabel {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+}
+
+.aboutDropzoneLabel span {
+    color: var(--brand);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.aboutDropzoneSub {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+}
+
+/* ── Preview ──────────────────────────────────────── */
+
+.aboutPreviewImg {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.aboutPreviewOverlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(61, 46, 30, 0.55);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    font-family: var(--font-body);
+}
+
+.aboutPreviewOverlay svg {
+    width: 20px;
+    height: 20px;
+    stroke: white;
+}
+
+.aboutDropzone:hover .aboutPreviewOverlay {
+    opacity: 1;
+}
+
+/* ── File name ────────────────────────────────────── */
+
+.aboutFileName {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    background: var(--brand-pale);
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    word-break: break-all;
+}
+
+.aboutFileName svg {
+    width: 13px;
+    height: 13px;
+    stroke: var(--brand);
+    flex-shrink: 0;
+}
+
+/* ── Animation ────────────────────────────────────── */
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ───────────────────────────────────── */
+
+@media (max-width: 1024px) {
+    .aboutEditorBody {
+        padding: 24px;
+    }
+    .aboutEditorHeader {
+        margin-top: 48px;
+    }
+}
+
+@media (max-width: 768px) {
+    .aboutEditorBody {
+        padding: 20px 16px;
+    }
+
+    .aboutEditorHeader {
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .aboutEditorBtnPrimary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .aboutEditorHeading {
+        font-size: 22px;
+    }
+
+    .aboutEditorGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .aboutDropzone {
+        min-height: 160px;
+    }
+
+    .aboutDropzone.hasImage {
+        min-height: 170px;
+    }
+
+    .aboutPreviewImg {
+        height: 170px;
+    }
+}

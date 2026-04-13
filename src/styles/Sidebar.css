@@ -1,4 +1,3 @@
-
 .sidebarBackdrop {
     display: none;
     position: fixed;
@@ -26,6 +25,38 @@
     z-index: 100;
     transition: transform 0.3s ease;
 }
+
+/* ── Floating hamburger ───────────────────────────── */
+
+.sidebarHamburger {
+    display: none;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 98;
+    width: 42px;
+    height: 42px;
+    background: var(--brand-dark);
+    border: none;
+    border-radius: var(--radius-sm);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    transition: background 0.15s;
+}
+
+.sidebarHamburger:hover {
+    background: var(--brand);
+}
+
+.sidebarHamburger svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* ── Logo ─────────────────────────────────────────── */
 
 .sidebarLogo {
     padding: 24px 20px 20px;
@@ -95,6 +126,8 @@
     color: white;
 }
 
+/* ── Nav ──────────────────────────────────────────── */
+
 .sidebarNav {
     flex: 1;
     padding: 16px 12px;
@@ -151,6 +184,8 @@
     opacity: 1;
 }
 
+/* ── Footer ───────────────────────────────────────── */
+
 .sidebarFooter {
     padding: 16px 12px;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -190,8 +225,13 @@
     opacity: 1;
 }
 
+/* ── Responsive ───────────────────────────────────── */
 
 @media (max-width: 1024px) {
+    .sidebarHamburger {
+        display: flex;
+    }
+
     .sidebarBackdrop {
         display: block;
         pointer-events: none;

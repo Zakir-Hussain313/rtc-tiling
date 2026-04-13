@@ -1,4 +1,4 @@
-import AboutComponent from "@/pages/About/About";
+import AboutComponent from "@/ui/About/About";
 
 export default function About(){
     return(

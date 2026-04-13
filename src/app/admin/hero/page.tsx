@@ -1,4 +1,4 @@
-import HeroEditor from "@/pages/Admin/Hero/HeroEditor";
+import HeroEditor from "@/ui/Admin/Hero/HeroEditor";
 
 
 export default function HeroPage() {

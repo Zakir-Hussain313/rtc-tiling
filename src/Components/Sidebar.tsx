@@ -47,7 +47,7 @@ const navItems = [
         ),
     },
     {
-        href: '/admin/about',
+        href: '/admin/about-images',
         label: 'About Page Images',
         icon: (
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -62,9 +62,10 @@ const navItems = [
 interface SidebarProps {
     isOpen: boolean;
     onClose: () => void;
+    onOpen: () => void;
 }
 
-export default function Sidebar({ isOpen, onClose }: SidebarProps) {
+export default function Sidebar({ isOpen, onClose, onOpen }: SidebarProps) {
     const pathname = usePathname();
     const router = useRouter();
 
@@ -78,13 +79,21 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
     return (
         <>
-            {/* Backdrop */}
+            <button
+                className="sidebarHamburger"
+                onClick={onOpen}
+                aria-label="Open menu"
+            >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <line x1="3" y1="12" x2="21" y2="12" />
+                    <line x1="3" y1="18" x2="21" y2="18" />
+                </svg>
+            </button>
             <div
                 className={`sidebarBackdrop ${isOpen ? 'open' : ''}`}
                 onClick={onClose}
             />
-
-            {/* Sidebar */}
             <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
                 <div className="sidebarLogo">
                     <div className="sidebarLogoMark">
@@ -98,7 +107,6 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                             <div className="logoSub">Content Manager</div>
                         </div>
                     </div>
-                    {/* Close button - only visible on mobile */}
                     <button className="sidebarCloseBtn" onClick={onClose}>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <line x1="18" y1="6" x2="6" y2="18" />

@@ -56,11 +56,6 @@ export default function HeroButtonFields() {
                     </div>
                 </div>
             </div>
-
-            <div className="heroBtnPreview">
-                <span className="heroBtnPreviewLabel">Preview</span>
-                <button className="heroBtnPreviewBtn">{btnText || 'Button'}</button>
-            </div>
         </div>
     );
 }
