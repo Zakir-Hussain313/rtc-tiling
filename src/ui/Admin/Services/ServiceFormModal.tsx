@@ -6,11 +6,12 @@ import '@/styles/Admin/Services/ServiceFormModal.css';
 
 interface ServiceFormModalProps {
     service: Service | null;
-    onSave: (data: Omit<Service, 'id'>) => void;
+    onSave: (data: Omit<Service, '_id' | 'slug'>) => void;
     onClose: () => void;
+    saving: boolean;
 }
 
-export default function ServiceFormModal({ service, onSave, onClose }: ServiceFormModalProps) {
+export default function ServiceFormModal({ service, onSave, onClose, saving }: ServiceFormModalProps) {
     const [title, setTitle] = useState(service?.title ?? '');
     const [description, setDescription] = useState(service?.description ?? '');
     const [image, setImage] = useState<string | null>(service?.image ?? null);
@@ -34,7 +35,7 @@ export default function ServiceFormModal({ service, onSave, onClose }: ServiceFo
     }
 
     function handleSubmit() {
-        if (!title.trim()) return;
+        if (!title.trim() || saving) return;
         onSave({ title, description, image });
     }
 
@@ -55,8 +56,6 @@ export default function ServiceFormModal({ service, onSave, onClose }: ServiceFo
                 </div>
 
                 <div className="svcModalBody">
-
-                    {/* Image upload */}
                     <div className="svcModalField">
                         <label className="svcModalLabel">Service Image</label>
                         <div
@@ -92,7 +91,6 @@ export default function ServiceFormModal({ service, onSave, onClose }: ServiceFo
                         {imageName && <p className="svcModalImageName">{imageName}</p>}
                     </div>
 
-                    {/* Title */}
                     <div className="svcModalField">
                         <label className="svcModalLabel" htmlFor="svc-title">Title</label>
                         <input
@@ -114,7 +112,6 @@ export default function ServiceFormModal({ service, onSave, onClose }: ServiceFo
                         )}
                     </div>
 
-                    {/* Description */}
                     <div className="svcModalField">
                         <label className="svcModalLabel" htmlFor="svc-desc">Description</label>
                         <textarea
@@ -126,16 +123,14 @@ export default function ServiceFormModal({ service, onSave, onClose }: ServiceFo
                             rows={4}
                         />
                     </div>
-
                 </div>
 
                 <div className="svcModalFooter">
-                    <button className="svcModalBtnGhost" onClick={onClose}>Cancel</button>
-                    <button className="svcModalBtnPrimary" onClick={handleSubmit}>
-                        {service ? 'Save Changes' : 'Add Service'}
+                    <button className="svcModalBtnGhost" onClick={onClose} disabled={saving}>Cancel</button>
+                    <button className="svcModalBtnPrimary" onClick={handleSubmit} disabled={saving}>
+                        {saving ? 'Saving...' : service ? 'Save Changes' : 'Add Service'}
                     </button>
                 </div>
-
             </div>
         </div>
     );

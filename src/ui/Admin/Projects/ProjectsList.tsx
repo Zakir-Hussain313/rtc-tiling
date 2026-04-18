@@ -6,7 +6,7 @@ import '@/styles/Admin/Projects/PorjectsListing.css';
 interface ProjectsListProps {
     projects: Project[];
     onEdit: (project: Project) => void;
-    onDelete: (id: number) => void;
+    onDelete: (id: string) => void; // 👈 string _id now
 }
 
 export default function ProjectsList({ projects, onEdit, onDelete }: ProjectsListProps) {
@@ -36,9 +36,8 @@ export default function ProjectsList({ projects, onEdit, onDelete }: ProjectsLis
             </div>
             <div className="projectsListBody">
                 {projects.map((project) => (
-                    <div key={project.id} className="projectsListRow">
+                    <div key={project._id} className="projectsListRow">
 
-                        {/* Image */}
                         <div className="projectsListImg">
                             {project.image ? (
                                 <img src={project.image} alt={project.title} />
@@ -53,25 +52,21 @@ export default function ProjectsList({ projects, onEdit, onDelete }: ProjectsLis
                             )}
                         </div>
 
-                        {/* Title + description */}
                         <div className="projectsListInfo">
                             <span className="projectsListTitle">{project.title}</span>
                             <span className="projectsListDesc">{project.description}</span>
                         </div>
 
-                        {/* Date */}
                         <div className="projectsListDate">
                             {project.day} / {project.month} / {project.year}
                         </div>
 
-                        {/* Auto-generated link */}
                         <div className="projectsListLink">
                             <span className="projectsListLinkBadge">
                                 {generateSlug(project.title)}
                             </span>
                         </div>
 
-                        {/* Actions */}
                         <div className="projectsListActions">
                             <button
                                 className="projectsActionBtn edit"
@@ -86,7 +81,7 @@ export default function ProjectsList({ projects, onEdit, onDelete }: ProjectsLis
                             </button>
                             <button
                                 className="projectsActionBtn delete"
-                                onClick={() => onDelete(project.id)}
+                                onClick={() => onDelete(project._id)}
                                 title="Delete"
                             >
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -98,7 +93,6 @@ export default function ProjectsList({ projects, onEdit, onDelete }: ProjectsLis
                                 <span>Delete</span>
                             </button>
                         </div>
-
                     </div>
                 ))}
             </div>

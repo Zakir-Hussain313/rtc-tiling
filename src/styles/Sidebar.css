@@ -73,14 +73,12 @@
 }
 
 .logoIcon {
-    width: 36px;
-    height: 36px;
-    background: var(--brand);
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 50px;
+    height: 50px;
     flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .logoIcon svg {
@@ -90,11 +88,10 @@
 }
 
 .logoText {
-    font-family: var(--font-heading);
     font-size: 17px;
     font-weight: 700;
     color: white;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.07em;
 }
 
 .logoSub {

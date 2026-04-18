@@ -1,12 +1,20 @@
 'use client';
 
-import { useState } from 'react';
 import '@/styles/Admin/Hero/HeroTextFields.css';
 
-export default function HeroTextFields() {
-    const [headline, setHeadline] = useState('We Build Spaces That Inspire');
-    const [subheading, setSubheading] = useState('Award-winning architecture and interior design studio based in the heart of the city.');
+interface HeroTextFieldsProps {
+    headline: string;
+    subheading: string;
+    onHeadlineChange: (val: string) => void;
+    onSubheadingChange: (val: string) => void;
+}
 
+export default function HeroTextFields({
+    headline,
+    subheading,
+    onHeadlineChange,
+    onSubheadingChange,
+}: HeroTextFieldsProps) {
     return (
         <div className="heroTextCard">
             <div className="heroTextCardHeader">
@@ -33,7 +41,7 @@ export default function HeroTextFields() {
                     className="heroFieldInput"
                     value={headline}
                     maxLength={80}
-                    onChange={(e) => setHeadline(e.target.value)}
+                    onChange={(e) => onHeadlineChange(e.target.value)}
                     placeholder="Enter hero headline..."
                 />
             </div>
@@ -49,7 +57,7 @@ export default function HeroTextFields() {
                     value={subheading}
                     maxLength={180}
                     rows={3}
-                    onChange={(e) => setSubheading(e.target.value)}
+                    onChange={(e) => onSubheadingChange(e.target.value)}
                     placeholder="Enter hero subheading..."
                 />
             </div>

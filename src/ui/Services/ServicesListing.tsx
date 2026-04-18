@@ -1,35 +1,47 @@
-
 import Image from 'next/image'
 import '../../styles/Services/ServicesListing.css'
-import arrow from "../../assets/icons/Arrow.svg";
-import image1 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
-import image2 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
-import image3 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
-import image4 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
-import image5 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
-import Link from 'next/link';
+import arrow from "../../assets/icons/Arrow.svg"
+import fallbackImage from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
+import Link from 'next/link'
+import { connectDB } from 'lib/mongodb'
+import Service from 'models/Service'
 
-const services = [
-    { image: image1, title: 'WALL TILING', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy.' },
-    { image: image2, title: 'SCREEDING', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy.' },
-    { image: image3, title: 'SKIRTING', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy.' },
-    { image: image4, title: 'WATERPROOF', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy.' },
-    { image: image5, title: 'FLOOR TILING', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy.' },
-]
+type ServiceDoc = {
+    _id: string
+    title: string
+    description: string
+    image: string
+    slug: string
+}
 
-export default function ServicesListing() {
+async function getServices(): Promise<ServiceDoc[]> {
+    try {
+        await connectDB()
+        const services = await Service.find().sort({ order: 1, createdAt: -1 }).lean()
+        return services as unknown as ServiceDoc[]
+    } catch (err) {
+        console.error('[ServicesListing] Failed to fetch services', err)
+        return []
+    }
+}
+
+export default async function ServicesListing() {
+    const services = await getServices()
+
     return (
         <main>
             <section className="ServicesListing-main-section">
-                {services.map((service, index) => (
-                    <div key={index}>
-                        <Link href={''} className='services-div'>
+                {services.map((service , index) => (
+                    <div key={service._id}>
+                        <Link href={service.slug} className='services-div'>
                             <div className="services-image">
                                 <Image
-                                    src={service.image}
+                                    src={service.image || fallbackImage}
                                     alt={service.title}
                                     fill
                                     className='img rounded-[40px] object-cover'
+                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                    priority={index === 0} 
                                 />
                             </div>
                             <h1>{service.title}</h1>
@@ -40,13 +52,18 @@ export default function ServicesListing() {
                                     alt='arrow'
                                     width={27}
                                     height={27}
-                                    className=''
                                 />
                             </div>
                         </Link>
                         <hr />
                     </div>
                 ))}
+
+                {services.length === 0 && (
+                    <p style={{ padding: '2rem', opacity: 0.5 }}>
+                        No services available yet.
+                    </p>
+                )}
             </section>
         </main>
     )

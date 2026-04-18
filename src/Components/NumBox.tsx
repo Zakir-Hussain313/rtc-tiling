@@ -8,40 +8,71 @@ interface Stat {
   label: string;
 }
 
-const statsData: Stat[] = [
-  { value: 99, symbol: "+", label: "Projects Completed" },
-  { value: 10, symbol: "+", label: "Team Members" },
-  { value: 92, symbol: "%", label: "Client Retention" },
-  { value: 80, symbol: "+", label: "Successful Launches" },
-];
-
 function NumBox() {
-  const [counts, setCounts] = useState(statsData.map(() => 0));
+  const [statsData, setStatsData] = useState<Stat[]>([]);
+  const [counts, setCounts] = useState<number[]>([]);
   const [animated, setAnimated] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const statsRef = useRef<HTMLDivElement | null>(null);
 
+  // ✅ FETCH FROM API
   useEffect(() => {
+    async function fetchStats() {
+      try {
+        const res = await fetch('/api/stats');
+        const data = await res.json();
+
+        if (res.ok && data.data?.stats) {
+          const formatted = data.data.stats.map((s: any) => ({
+            value: Number(s.value),
+            symbol: s.suffix,
+            label: s.label,
+          }));
+
+          setStatsData(formatted);
+          setCounts(formatted.map(() => 0));
+        }
+      } catch (err) {
+        console.error('Failed to load stats:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchStats();
+  }, []);
+
+  // ✅ ANIMATION
+  useEffect(() => {
+    if (!statsData.length) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !animated) {
           setAnimated(true);
+
           statsData.forEach((stat, index) => {
             let start = 0;
             const duration = 2000;
             const increment = stat.value / (duration / 30);
+
             const interval = setInterval(() => {
               start += increment;
+
               if (start >= stat.value) {
                 start = stat.value;
                 clearInterval(interval);
               }
+
               setCounts((prev) => {
-                const newCounts = [...prev];
-                newCounts[index] = Math.floor(start);
-                return newCounts;
+                const updated = [...prev];
+                updated[index] = Math.floor(start);
+                return updated;
               });
             }, 30);
           });
+
           observer.disconnect();
         }
       },
@@ -53,7 +84,9 @@ function NumBox() {
     }
 
     return () => observer.disconnect();
-  }, [animated]);
+  }, [statsData, animated]);
+
+  if (loading) return null;
 
   return (
     <main className="stats-container" ref={statsRef}>

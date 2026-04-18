@@ -1,52 +1,73 @@
-
 import Image from 'next/image'
 import '../../styles/Projects/ProjectsListing.css'
-import arrow from "../../assets/icons/Arrow.svg";
-import image1 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
-import image2 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
-import image3 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
-import image4 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
-import image5 from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
-import Link from 'next/link';
+import arrow from "../../assets/icons/Arrow.svg"
+import fallbackImage from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
+import Link from 'next/link'
+import { connectDB } from 'lib/mongodb'
+import Project from 'models/Project'
 
-const projects = [
-    { image: image1, title: 'POOL TILED', day: '04', month: '03', year: '2025' },
-    { image: image2, title: 'KITCHEN DONE', day: '04', month: '03', year: '2025' },
-    { image: image3, title: 'SKIRTING FINISHED', day: '04', month: '03', year: '2025' },
-    { image: image4, title: 'FLOORING AT AIRPORT', day: '04', month: '03', year: '2025' },
-    { image: image5, title: 'PROJECT AT WESTPOINT', day: '04', month: '03', year: '2025' },
-]
+type ProjectDoc = {
+    _id: string
+    title: string
+    day: string
+    month: string
+    year: string
+    image: string
+    slug: string
+}
 
-export default function ProjectsListing() {
+async function getProjects(): Promise<ProjectDoc[]> {
+    try {
+        await connectDB()
+        const projects = await Project.find().sort({ order: 1, createdAt: -1 }).lean()
+        return projects as unknown as ProjectDoc[]
+    } catch (err) {
+        console.error('[ProjectsListing] Failed to fetch projects', err)
+        return []
+    }
+}
+
+export default async function ProjectsListing() {
+    const projects = await getProjects()
+
     return (
         <main>
             <section className="projectsListing-main-section">
                 {projects.map((project, index) => (
-                    <div key={index}>
-                        <Link href={''} className='projects-div'>
+                    <div key={project._id}>
+                        <Link href={project.slug} className='projects-div'>
                             <div className="project-image">
                                 <Image
-                                    src={project.image}
+                                    src={project.image || fallbackImage}
                                     alt={project.title}
                                     fill
                                     className='img rounded-[40px] object-cover'
+                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                    priority={index === 0}
                                 />
                             </div>
                             <h1>{project.title}</h1>
-                        <p className='project-date'>{project.day} / {project.month} / {project.year}</p>
-                        <div className='project-arrow'>
-                            <Image
-                                src={arrow}
-                                alt='arrow'
-                                width={27}
-                                height={27}
-                                className=''
-                            />
-                        </div>
-                    </Link>
-                    <hr />
+                            <p className='project-date'>
+                                {project.day} / {project.month} / {project.year}
+                            </p>
+                            <div className='project-arrow'>
+                                <Image
+                                    src={arrow}
+                                    alt='arrow'
+                                    width={27}
+                                    height={27}
+                                />
+                            </div>
+                        </Link>
+                        <hr />
                     </div>
                 ))}
+
+                {projects.length === 0 && (
+                    <p style={{ padding: '2rem', opacity: 0.5 }}>
+                        No projects available yet.
+                    </p>
+                )}
             </section>
         </main>
     )

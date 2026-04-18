@@ -11,12 +11,13 @@ export default function LayoutWrapper({
 }) {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith('/admin');
+  const isLogin = pathname?.startsWith('/login');
 
   return (
     <>
-      {!isAdmin && <Navbar />}
+      {!isAdmin && !isLogin && <Navbar />}
       {children}
-      {!isAdmin && <Footer />}
+      {!isAdmin && !isLogin && <Footer />}
     </>
   );
 }

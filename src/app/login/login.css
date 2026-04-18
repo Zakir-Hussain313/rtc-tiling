@@ -1,0 +1,239 @@
+.loginPage {
+    min-height: 100vh;
+    background: var(--off-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+}
+
+.loginCard {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 40px 36px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 4px 24px rgba(91, 70, 48, 0.08);
+}
+
+/* ── Logo ─────────────────────────────────────────── */
+
+.loginLogo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 36px;
+}
+
+.loginLogoIcon {
+    width: 52px;
+    height: 52px;
+    background: var(--brand-dark);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+}
+
+.loginLogoIcon svg {
+    width: 26px;
+    height: 26px;
+    fill: white;
+}
+
+.loginLogoText {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.loginLogoSub {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+}
+
+/* ── Form ─────────────────────────────────────────── */
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.loginField {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.loginLabel {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+}
+
+/* ── Input ────────────────────────────────────────── */
+
+.loginInputWrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.loginInputIcon {
+    position: absolute;
+    left: 13px;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+}
+
+.loginInputIcon svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--text-muted);
+}
+
+.loginInput {
+    width: 100%;
+    padding: 11px 14px 11px 40px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    background: var(--white);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.loginInput:focus {
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(91, 70, 48, 0.08);
+}
+
+.loginInput::placeholder {
+    color: var(--text-muted);
+}
+
+.loginInput:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.loginInputPassword {
+    padding-right: 42px;
+}
+
+/* ── Eye toggle ───────────────────────────────────── */
+
+.loginEyeBtn {
+    position: absolute;
+    right: 12px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: var(--text-muted);
+    padding: 4px;
+    transition: color 0.15s;
+}
+
+.loginEyeBtn:hover {
+    color: var(--brand);
+}
+
+.loginEyeBtn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* ── Error ────────────────────────────────────────── */
+
+.loginError {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--danger);
+    background: var(--danger-bg);
+    border: 1px solid #f0c4c4;
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-family: var(--font-body);
+}
+
+.loginError svg {
+    width: 15px;
+    height: 15px;
+    stroke: var(--danger);
+    flex-shrink: 0;
+}
+
+/* ── Submit ───────────────────────────────────────── */
+
+.loginSubmitBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px;
+    background: var(--brand);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: background 0.15s;
+    margin-top: 4px;
+}
+
+.loginSubmitBtn:hover:not(:disabled) {
+    background: var(--brand-light);
+}
+
+.loginSubmitBtn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.loginSubmitBtn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* ── Spinner ──────────────────────────────────────── */
+
+.loginSpinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ── Responsive ───────────────────────────────────── */
+
+@media (max-width: 480px) {
+    .loginCard {
+        padding: 28px 20px;
+    }
+}

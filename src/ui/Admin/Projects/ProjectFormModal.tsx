@@ -6,11 +6,12 @@ import '@/styles/Admin/Projects/ProjectFormModal.css';
 
 interface ProjectFormModalProps {
     project: Project | null;
-    onSave: (data: Omit<Project, 'id'>) => void;
+    onSave: (data: Omit<Project, '_id' | 'slug'>) => void;
     onClose: () => void;
+    saving: boolean;
 }
 
-export default function ProjectFormModal({ project, onSave, onClose }: ProjectFormModalProps) {
+export default function ProjectFormModal({ project, onSave, onClose, saving }: ProjectFormModalProps) {
     const [title, setTitle] = useState(project?.title ?? '');
     const [description, setDescription] = useState(project?.description ?? '');
     const [day, setDay] = useState(project?.day ?? '');
@@ -37,7 +38,54 @@ export default function ProjectFormModal({ project, onSave, onClose }: ProjectFo
     }
 
     function handleSubmit() {
-        if (!title.trim()) return;
+        if (!title.trim() || saving) return;
+
+        const d = Number(day);
+        const m = Number(month);
+        const y = Number(year);
+
+        // basic numeric validation
+        if (!d || !m || !y) {
+            alert("Please enter a valid date");
+            return;
+        }
+
+        if (d < 1 || d > 31) {
+            alert("Day must be between 1 and 31");
+            return;
+        }
+
+        if (m < 1 || m > 12) {
+            alert("Month must be between 1 and 12");
+            return;
+        }
+
+        const currentYear = new Date().getFullYear();
+        if (y < 1900 || y > currentYear) {
+            alert("Enter a valid year");
+            return;
+        }
+
+        // real date validation (handles Feb, leap years, etc.)
+        const date = new Date(y, m - 1, d);
+        if (
+            date.getFullYear() !== y ||
+            date.getMonth() !== m - 1 ||
+            date.getDate() !== d
+        ) {
+            alert("Invalid date");
+            return;
+        }
+
+        // ❗ NEW: prevent future dates
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        if (date > today) {
+            alert("Date cannot be in the future");
+            return;
+        }
+
         onSave({ title, description, day, month, year, image });
     }
 
@@ -59,7 +107,6 @@ export default function ProjectFormModal({ project, onSave, onClose }: ProjectFo
 
                 <div className="modalBody">
 
-                    {/* Image upload */}
                     <div className="modalField">
                         <label className="modalLabel">Project Image</label>
                         <div
@@ -95,7 +142,6 @@ export default function ProjectFormModal({ project, onSave, onClose }: ProjectFo
                         {imageName && <p className="modalImageName">{imageName}</p>}
                     </div>
 
-                    {/* Title */}
                     <div className="modalField">
                         <label className="modalLabel" htmlFor="proj-title">Title</label>
                         <input
@@ -106,7 +152,6 @@ export default function ProjectFormModal({ project, onSave, onClose }: ProjectFo
                             onChange={(e) => setTitle(e.target.value)}
                             placeholder="e.g. POOL TILED"
                         />
-                        {/* Live slug preview */}
                         {title.trim() && (
                             <div className="modalSlugPreview">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -118,7 +163,6 @@ export default function ProjectFormModal({ project, onSave, onClose }: ProjectFo
                         )}
                     </div>
 
-                    {/* Description */}
                     <div className="modalField">
                         <label className="modalLabel" htmlFor="proj-desc">Description</label>
                         <textarea
@@ -131,7 +175,6 @@ export default function ProjectFormModal({ project, onSave, onClose }: ProjectFo
                         />
                     </div>
 
-                    {/* Date */}
                     <div className="modalField">
                         <label className="modalLabel">Date</label>
                         <div className="modalDateRow">
@@ -167,9 +210,9 @@ export default function ProjectFormModal({ project, onSave, onClose }: ProjectFo
                 </div>
 
                 <div className="modalFooter">
-                    <button className="modalBtnGhost" onClick={onClose}>Cancel</button>
-                    <button className="modalBtnPrimary" onClick={handleSubmit}>
-                        {project ? 'Save Changes' : 'Add Project'}
+                    <button className="modalBtnGhost" onClick={onClose} disabled={saving}>Cancel</button>
+                    <button className="modalBtnPrimary" onClick={handleSubmit} disabled={saving}>
+                        {saving ? 'Saving...' : project ? 'Save Changes' : 'Add Project'}
                     </button>
                 </div>
 

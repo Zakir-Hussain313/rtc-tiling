@@ -1,10 +1,11 @@
 import Image from "next/image"
 import "../../styles/About/OurCraft.css"
-import image from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
+import fallbackImage from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
 import Mainbutton from "@/Components/Mainbutton"
 import { GiTrowel } from "react-icons/gi"
 import { MdDiamond } from "react-icons/md"
 import { BsHouseFill } from "react-icons/bs"
+import { getAboutImages } from 'lib/getAboutImages';
 
 const features = [
     {
@@ -24,7 +25,10 @@ const features = [
     },
 ]
 
-export default function OurCraft() {
+export default async function OurCraft() {
+    const images = await getAboutImages();
+    const craftImageUrl = images.find((img) => img.id === 3)?.url ?? null;
+
     return (
         <main className="our-craft-main-section">
             <section className="our-craft-heading">
@@ -39,10 +43,11 @@ export default function OurCraft() {
             <section className="our-craft-section">
                 <div className="our-craft-left">
                     <Image
-                        src={image}
-                        alt="RTC Tiling team"
+                        src={craftImageUrl ?? fallbackImage}
+                        alt="RTC Tiling craftsmanship"
                         fill
                         className="object-cover rounded-3xl"
+                        sizes="(max-width: 768px) 100vw, 50vw"
                     />
                 </div>
 

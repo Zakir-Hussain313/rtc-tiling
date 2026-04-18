@@ -1,31 +1,45 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ServicesList from './ServicesList';
 import ServiceFormModal from './ServiceFormModal';
 import '@/styles/Admin/Services/ServicesEditor.css';
 
 export type Service = {
-    id: number;
+    _id: string;
     title: string;
     description: string;
     image: string | null;
+    slug: string;
 };
 
 export function generateServiceSlug(title: string): string {
     return '/services/' + title.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 }
 
-const initialServices: Service[] = [
-    { id: 1, title: 'Floor Tiling', description: 'Premium floor tiling using high-quality porcelain and ceramic tiles for residential and commercial spaces.', image: null },
-    { id: 2, title: 'Wall Cladding', description: 'Expert wall cladding installation to enhance the aesthetic and durability of your interior and exterior walls.', image: null },
-    { id: 3, title: 'Pool Tiling', description: 'Specialist pool tiling services using waterproof, slip-resistant tiles built to last.', image: null },
-];
-
 export default function ServicesEditor() {
-    const [services, setServices] = useState<Service[]>(initialServices);
+    const [services, setServices] = useState<Service[]>([]);
+    const [loading, setLoading] = useState(true);
     const [modalOpen, setModalOpen] = useState(false);
     const [editingService, setEditingService] = useState<Service | null>(null);
+    const [saving, setSaving] = useState(false);
+
+    // ── Load services from DB on mount
+    useEffect(() => {
+        async function load() {
+            try {
+                const res = await fetch('/api/services');
+                if (!res.ok) throw new Error('Failed to fetch');
+                const json = await res.json();
+                setServices(json.data ?? []);
+            } catch (err) {
+                console.error('[ServicesEditor] Failed to load services', err);
+            } finally {
+                setLoading(false);
+            }
+        }
+        load();
+    }, []);
 
     function handleAdd() {
         setEditingService(null);
@@ -37,31 +51,68 @@ export default function ServicesEditor() {
         setModalOpen(true);
     }
 
-    function handleDelete(id: number) {
-        setServices((prev) => prev.filter((s) => s.id !== id));
+    async function handleDelete(id: string) {
+        if (!confirm('Delete this service?')) return;
+        try {
+            const res = await fetch(`/api/services/${id}`, { method: 'DELETE' });
+            if (!res.ok) throw new Error('Failed to delete');
+            setServices((prev) => prev.filter((s) => s._id !== id));
+        } catch (err) {
+            console.error('[ServicesEditor] Delete failed', err);
+            alert('Failed to delete service.');
+        }
     }
 
-    function handleSave(data: Omit<Service, 'id'>) {
-        if (editingService) {
-            setServices((prev) =>
-                prev.map((s) => (s.id === editingService.id ? { ...data, id: editingService.id } : s))
-            );
-        } else {
-            setServices((prev) => [...prev, { ...data, id: Date.now() }]);
+    async function handleSave(data: Omit<Service, '_id' | 'slug'>) {
+        setSaving(true);
+        try {
+            if (editingService) {
+                // ── EDIT: PUT /api/services/[id]
+                const res = await fetch(`/api/services/${editingService._id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                });
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.error ?? 'Failed to update');
+                }
+                const json = await res.json();
+                setServices((prev) =>
+                    prev.map((s) => (s._id === editingService._id ? json.data : s))
+                );
+            } else {
+                // ── ADD: POST /api/services
+                const res = await fetch('/api/services', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                });
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.error ?? 'Failed to create');
+                }
+                const json = await res.json();
+                setServices((prev) => [...prev, json.data]);
+            }
+            setModalOpen(false);
+        } catch (err: any) {
+            console.error('[ServicesEditor] Save failed', err);
+            alert(err.message ?? 'Failed to save service.');
+        } finally {
+            setSaving(false);
         }
-        setModalOpen(false);
     }
 
     return (
         <main className="servicesEditorBody">
-
             <div className="servicesEditorHeader">
                 <div>
                     <div className="servicesEditorEyebrow">Editing</div>
                     <h1 className="servicesEditorHeading">Services</h1>
                     <p className="servicesEditorSub">Add, edit or remove services shown on your website.</p>
                 </div>
-                <button className="servicesEditorBtnPrimary" onClick={handleAdd}>
+                <button className="servicesEditorBtnPrimary" onClick={handleAdd} disabled={saving}>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                         <line x1="12" y1="5" x2="12" y2="19" />
                         <line x1="5" y1="12" x2="19" y2="12" />
@@ -70,20 +121,24 @@ export default function ServicesEditor() {
                 </button>
             </div>
 
-            <ServicesList
-                services={services}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-            />
+            {loading ? (
+                <p style={{ padding: '2rem', opacity: 0.5 }}>Loading services…</p>
+            ) : (
+                <ServicesList
+                    services={services}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
+                />
+            )}
 
             {modalOpen && (
                 <ServiceFormModal
                     service={editingService}
                     onSave={handleSave}
                     onClose={() => setModalOpen(false)}
+                    saving={saving}
                 />
             )}
-
         </main>
     );
 }

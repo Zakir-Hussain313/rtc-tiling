@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import '@/styles/Sidebar.css';
+import Image from 'next/image';
+import logo from '../assets/images/Rtc.png'
 
 const navItems = [
     {
@@ -69,8 +71,18 @@ export default function Sidebar({ isOpen, onClose, onOpen }: SidebarProps) {
     const pathname = usePathname();
     const router = useRouter();
 
-    function handleLogout() {
-        router.push('/');
+    async function handleLogout() {
+        try {
+            await fetch('/api/auth/logout', {
+                method: 'POST',
+                credentials: 'include',
+            });
+
+            router.push('/');
+
+        } catch (err) {
+            console.error('Logout failed:', err);
+        }
     }
 
     function handleNavClick() {
@@ -98,12 +110,16 @@ export default function Sidebar({ isOpen, onClose, onOpen }: SidebarProps) {
                 <div className="sidebarLogo">
                     <div className="sidebarLogoMark">
                         <div className="logoIcon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.25C16.5 22.15 20 17.25 20 12V6l-8-4z" />
-                            </svg>
+                            <Image
+                                src={logo}
+                                alt='Logo'
+                                width={50}
+                                height={50}
+                                className='object-cover'
+                            />
                         </div>
                         <div>
-                            <div className="logoText">Studio Admin</div>
+                            <div className="logoText">RTC-Tiling</div>
                             <div className="logoSub">Content Manager</div>
                         </div>
                     </div>

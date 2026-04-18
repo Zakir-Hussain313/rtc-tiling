@@ -6,7 +6,7 @@ import "@/styles/Admin/Services/ServicesList.css";
 interface ServicesListProps {
     services: Service[];
     onEdit: (service: Service) => void;
-    onDelete: (id: number) => void;
+    onDelete: (id: string) => void; // string _id now
 }
 
 export default function ServicesList({ services, onEdit, onDelete }: ServicesListProps) {
@@ -37,9 +37,8 @@ export default function ServicesList({ services, onEdit, onDelete }: ServicesLis
             </div>
             <div className="servicesListBody">
                 {services.map((service) => (
-                    <div key={service.id} className="servicesListRow">
+                    <div key={service._id} className="servicesListRow">
 
-                        {/* Image */}
                         <div className="servicesListImg">
                             {service.image ? (
                                 <img src={service.image} alt={service.title} />
@@ -54,37 +53,24 @@ export default function ServicesList({ services, onEdit, onDelete }: ServicesLis
                             )}
                         </div>
 
-                        {/* Title only */}
                         <div className="servicesListTitle">{service.title}</div>
-
-                        {/* Description in its own column */}
                         <div className="servicesListDesc">{service.description}</div>
 
-                        {/* Auto-generated link */}
                         <div className="servicesListLink">
                             <span className="servicesListLinkBadge">
                                 {generateServiceSlug(service.title)}
                             </span>
                         </div>
 
-                        {/* Actions */}
                         <div className="servicesListActions">
-                            <button
-                                className="servicesActionBtn edit"
-                                onClick={() => onEdit(service)}
-                                title="Edit"
-                            >
+                            <button className="servicesActionBtn edit" onClick={() => onEdit(service)} title="Edit">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M12 20h9" />
                                     <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" />
                                 </svg>
                                 <span>Edit</span>
                             </button>
-                            <button
-                                className="servicesActionBtn delete"
-                                onClick={() => onDelete(service.id)}
-                                title="Delete"
-                            >
+                            <button className="servicesActionBtn delete" onClick={() => onDelete(service._id)} title="Delete">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                                     <polyline points="3 6 5 6 21 6" />
                                     <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" />
@@ -94,10 +80,10 @@ export default function ServicesList({ services, onEdit, onDelete }: ServicesLis
                                 <span>Delete</span>
                             </button>
                         </div>
-
                     </div>
                 ))}
             </div>
         </div>
     );
 }
+

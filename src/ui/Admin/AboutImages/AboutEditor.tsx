@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import '@/styles/Admin/AboutImages/AboutEditor.css';
 
 type ImageSlot = {
@@ -8,91 +8,172 @@ type ImageSlot = {
     label: string;
     preview: string | null;
     fileName: string | null;
+    existingUrl: string | null; // from DB
 };
 
 const initialSlots: ImageSlot[] = [
-    { id: 1, label: 'Image 1', preview: null, fileName: null },
-    { id: 2, label: 'Image 2', preview: null, fileName: null },
-    { id: 3, label: 'Image 3', preview: null, fileName: null },
-    { id: 4, label: 'Image 4', preview: null, fileName: null },
+    { id: 1, label: 'Image 1', preview: null, fileName: null, existingUrl: null },
+    { id: 2, label: 'Image 2', preview: null, fileName: null, existingUrl: null },
+    { id: 3, label: 'Image 3', preview: null, fileName: null, existingUrl: null },
 ];
 
 export default function AboutEditor() {
     const [slots, setSlots] = useState<ImageSlot[]>(initialSlots);
     const [saved, setSaved] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [fetching, setFetching] = useState(true);
+
+    // Load existing images from DB on mount
+    useEffect(() => {
+        async function loadImages() {
+            try {
+                const res = await fetch('/api/about');
+                if (!res.ok) throw new Error('Failed to load');
+                const json = await res.json();
+                const dbImages: { id: number; url: string }[] = json.data?.images ?? [];
+
+                setSlots((prev) =>
+                    prev.map((slot) => {
+                        const match = dbImages.find((img) => img.id === slot.id);
+                        return match
+                            ? { ...slot, existingUrl: match.url }
+                            : slot;
+                    })
+                );
+            } catch (err) {
+                console.error('Failed to load about images', err);
+            } finally {
+                setFetching(false);
+            }
+        }
+
+        loadImages();
+    }, []);
 
     function handleFile(id: number, file: File) {
         if (!file.type.startsWith('image/')) return;
+
         const reader = new FileReader();
         reader.onload = (e) => {
             setSlots((prev) =>
                 prev.map((s) =>
                     s.id === id
-                        ? { ...s, preview: e.target?.result as string, fileName: file.name }
+                        ? {
+                              ...s,
+                              preview: e.target?.result as string,
+                              fileName: file.name,
+                          }
                         : s
                 )
             );
         };
+
         reader.readAsDataURL(file);
         setSaved(false);
     }
 
-    function handleSave() {
-        // connect to your API here
-        setSaved(true);
-        setTimeout(() => setSaved(false), 2500);
+    async function handleSave() {
+        // Only send slots that have a NEW preview (base64) — skip unchanged ones
+        const changedSlots = slots.filter((s) => s.preview !== null);
+
+        if (changedSlots.length === 0) {
+            alert('No new images selected to save.');
+            return;
+        }
+
+        try {
+            setLoading(true);
+
+            const payload = {
+                images: changedSlots.map((s) => ({
+                    id: s.id,
+                    image: s.preview,
+                })),
+            };
+
+            const res = await fetch('/api/about', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+
+            if (!res.ok) throw new Error('Failed to save images');
+
+            const json = await res.json();
+            const dbImages: { id: number; url: string }[] = json.data?.images ?? [];
+
+            // After save: clear previews, update existingUrl from DB response
+            setSlots((prev) =>
+                prev.map((slot) => {
+                    const match = dbImages.find((img) => img.id === slot.id);
+                    return {
+                        ...slot,
+                        preview: null,
+                        fileName: null,
+                        existingUrl: match?.url ?? slot.existingUrl,
+                    };
+                })
+            );
+
+            setSaved(true);
+            setTimeout(() => setSaved(false), 2500);
+        } catch (err) {
+            console.error(err);
+            alert('Failed to save images');
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
         <main className="aboutEditorBody">
-
             <div className="aboutEditorHeader">
                 <div>
                     <div className="aboutEditorEyebrow">Editing</div>
                     <h1 className="aboutEditorHeading">About Page Images</h1>
-                    <p className="aboutEditorSub">Upload or replace the four images displayed on your About page.</p>
+                    <p className="aboutEditorSub">
+                        Upload or replace the three images displayed on your About page.
+                    </p>
                 </div>
+
                 <button
                     className={`aboutEditorBtnPrimary ${saved ? 'saved' : ''}`}
                     onClick={handleSave}
+                    disabled={loading || fetching}
                 >
-                    {saved ? (
-                        <>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                <polyline points="20 6 9 17 4 12" />
-                            </svg>
-                            Saved!
-                        </>
-                    ) : (
-                        <>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
-                                <polyline points="17 21 17 13 7 13 7 21" />
-                                <polyline points="7 3 7 8 15 8" />
-                            </svg>
-                            Save Changes
-                        </>
-                    )}
+                    {fetching ? 'Loading...' : loading ? 'Saving...' : saved ? 'Saved!' : 'Save Changes'}
                 </button>
             </div>
 
-            <div className="aboutEditorGrid">
-                {slots.map((slot) => (
-                    <AboutImageSlot
-                        key={slot.id}
-                        slot={slot}
-                        onFile={(file) => handleFile(slot.id, file)}
-                    />
-                ))}
-            </div>
-
+            {fetching ? (
+                <p style={{ padding: '2rem', opacity: 0.5 }}>Loading current images…</p>
+            ) : (
+                <div className="aboutEditorGrid">
+                    {slots.map((slot) => (
+                        <AboutImageSlot
+                            key={slot.id}
+                            slot={slot}
+                            onFile={(file) => handleFile(slot.id, file)}
+                        />
+                    ))}
+                </div>
+            )}
         </main>
     );
 }
 
-function AboutImageSlot({ slot, onFile }: { slot: ImageSlot; onFile: (file: File) => void }) {
+function AboutImageSlot({
+    slot,
+    onFile,
+}: {
+    slot: ImageSlot;
+    onFile: (file: File) => void;
+}) {
     const inputRef = useRef<HTMLInputElement>(null);
     const [dragging, setDragging] = useState(false);
+
+    // Show new upload preview first, then fall back to DB image
+    const displaySrc = slot.preview ?? slot.existingUrl;
 
     function handleDrop(e: React.DragEvent) {
         e.preventDefault();
@@ -103,56 +184,30 @@ function AboutImageSlot({ slot, onFile }: { slot: ImageSlot; onFile: (file: File
 
     return (
         <div className="aboutImageSlot">
-            <div className="aboutImageSlotHeader">
-                <div className="aboutImageSlotIcon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <rect x="3" y="3" width="18" height="18" rx="2" />
-                        <circle cx="8.5" cy="8.5" r="1.5" />
-                        <polyline points="21 15 16 10 5 21" />
-                    </svg>
-                </div>
-                <div>
-                    <div className="aboutImageSlotLabel">{slot.label}</div>
-                    <div className="aboutImageSlotHint">Recommended: 800 × 600px</div>
-                </div>
-            </div>
-
             <div
-                className={`aboutDropzone ${dragging ? 'dragging' : ''} ${slot.preview ? 'hasImage' : ''}`}
+                className={`aboutDropzone ${dragging ? 'dragging' : ''} ${
+                    displaySrc ? 'hasImage' : ''
+                }`}
                 onClick={() => inputRef.current?.click()}
                 onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
                 onDragLeave={() => setDragging(false)}
                 onDrop={handleDrop}
             >
-                {slot.preview ? (
-                    <>
-                        <img src={slot.preview} alt={slot.label} className="aboutPreviewImg" />
-                        <div className="aboutPreviewOverlay">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M12 20h9" />
-                                <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" />
-                            </svg>
-                            Click to replace
-                        </div>
-                    </>
+                {displaySrc ? (
+                    <img
+                        src={displaySrc}
+                        alt={slot.label}
+                        className="aboutPreviewImg"
+                    />
                 ) : (
-                    <div className="aboutDropzoneInner">
-                        <div className="aboutDropzoneIcon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                <polyline points="16 16 12 12 8 16" />
-                                <line x1="12" y1="12" x2="12" y2="21" />
-                                <path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3" />
-                            </svg>
-                        </div>
-                        <p className="aboutDropzoneLabel">Drag & drop or <span>browse</span></p>
-                        <p className="aboutDropzoneSub">PNG, JPG, WEBP — max 10MB</p>
-                    </div>
+                    <p>Drag & drop or click to upload</p>
                 )}
+
                 <input
                     ref={inputRef}
                     type="file"
                     accept="image/*"
-                    style={{ display: 'none' }}
+                    hidden
                     onChange={(e) => {
                         const file = e.target.files?.[0];
                         if (file) onFile(file);
@@ -161,12 +216,13 @@ function AboutImageSlot({ slot, onFile }: { slot: ImageSlot; onFile: (file: File
             </div>
 
             {slot.fileName && (
-                <div className="aboutFileName">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z" />
-                        <polyline points="13 2 13 9 20 9" />
-                    </svg>
-                    {slot.fileName}
+                <div className="aboutFileName">{slot.fileName}</div>
+            )}
+
+            {/* Show a badge if this slot already has a saved image */}
+            {!slot.preview && slot.existingUrl && (
+                <div className="aboutFileName" style={{ opacity: 0.5 }}>
+                    Saved image loaded
                 </div>
             )}
         </div>

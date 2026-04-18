@@ -1,10 +1,18 @@
 'use client';
 
-import { useState } from 'react';
 import '@/styles/Admin/Hero/HeroOverlay.css';
 
-export default function HeroOverlay() {
-    const [opacity, setOpacity] = useState(40);
+interface HeroOverlayProps {
+    opacity: number;
+    onChange: (val: number) => void;
+    backgroundImage: string | null;
+}
+
+export default function HeroOverlay({ opacity, onChange, backgroundImage }: HeroOverlayProps) {
+    // Use the actual uploaded/saved image in the preview, fall back to placeholder
+    const previewBg = backgroundImage
+        ? backgroundImage
+        : 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=60';
 
     return (
         <div className="heroOverlayCard">
@@ -31,7 +39,7 @@ export default function HeroOverlay() {
                     step={1}
                     value={opacity}
                     className="heroOverlaySlider"
-                    onChange={(e) => setOpacity(Number(e.target.value))}
+                    onChange={(e) => onChange(Number(e.target.value))}
                 />
                 <span className="heroOverlaySliderEndLabel">100%</span>
             </div>
@@ -39,7 +47,7 @@ export default function HeroOverlay() {
             <div className="heroOverlayPreview">
                 <div
                     className="heroOverlayPreviewBg"
-                    style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=60)' }}
+                    style={{ backgroundImage: `url(${previewBg})` }}
                 >
                     <div
                         className="heroOverlayPreviewLayer"

@@ -6,51 +6,79 @@ import facebook from "../../assets/images/Facebook.webp";
 import trustpilot from "../../assets/images/trustpilot.webp";
 import star from "../../assets/icons/star.svg";
 import Link from "next/link";
+import { connectDB } from "lib/mongodb";
+import Hero from "models/Hero";
 
+type HeroDoc = {
+    backgroundImage: string | null;
+    headline: string | null;
+    subheading: string | null;
+    overlayOpacity: number | null;
+};
 
-function Hero() {
-  return (
-    <section className="hero">
-      <div className="hero-grid">
-
-        {/* Background Image */}
-        <div
-          className="hero-bg"
-          style={{ backgroundImage: `url(${heroBackground.src})` }}
-        />
-        <div className="hero-overlay" />
-
-        <div className="hero-content">
-          <h1 className="hero-text">
-            Redefining <br />
-            Your Surfaces
-          </h1>
-
-          <Link href="tel:0468 264 894" className="hero-button">
-            Call now: 0415 456 215
-          </Link>
-
-          <div className="hero-ratings">
-            <div className="hero-left">
-              <Image className="hero-icons" src={google} alt="Google icon" />
-              <Image className="hero-icons" src={facebook} alt="Facebook icon" />
-              <Image className="hero-icons" src={trustpilot} alt="Trustpilot icon" />
-            </div>
-            <div className="hero-right">
-              <div className="stars">
-                {[...Array(5)].map((_, i) => (
-                  <Image key={i} src={star} alt="star" className="star" />
-                ))}
-              </div>
-              <div className="rating-text">
-                <span>3K+ User Reviews</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+async function getHeroData(): Promise<HeroDoc> {
+    try {
+        await connectDB();
+        const hero = await Hero.findOne().lean();
+        return (hero as unknown as HeroDoc) ?? {};
+    } catch (err) {
+        console.error('[Hero] Failed to fetch hero data', err);
+        return { backgroundImage: null, headline: null, subheading: null, overlayOpacity: null };
+    }
 }
 
-export default Hero;
+async function HeroSection() {
+    const hero = await getHeroData();
+
+    const bgImage = hero.backgroundImage ?? heroBackground.src;
+    const headline = hero.headline?.trim() || 'Redefining Your Surfaces';
+    const overlayOpacity = (hero.overlayOpacity ?? 40) / 100;
+
+    return (
+        <section className="hero">
+            <div className="hero-grid">
+
+                {/* Background Image */}
+                <div
+                    className="hero-bg"
+                    style={{ backgroundImage: `url(${bgImage})` }}
+                />
+                <div
+                    className="hero-overlay"
+                    style={{ opacity: overlayOpacity }}
+                />
+
+                <div className="hero-content">
+                    <h1 className="hero-text">
+                        {headline}
+                    </h1>
+
+                    <Link href="tel:0468264894" className="hero-button">
+                        Call now: 0415 456 215
+                    </Link>
+
+                    <div className="hero-ratings">
+                        <div className="hero-left">
+                            <Image className="hero-icons" src={google} alt="Google icon" />
+                            <Image className="hero-icons" src={facebook} alt="Facebook icon" />
+                            <Image className="hero-icons" src={trustpilot} alt="Trustpilot icon" />
+                        </div>
+                        <div className="hero-right">
+                            <div className="stars">
+                                {[...Array(5)].map((_, i) => (
+                                    <Image key={i} src={star} alt="star" className="star" />
+                                ))}
+                            </div>
+                            <div className="rating-text">
+                                <span>3K+ User Reviews</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    );
+}
+
+export default HeroSection;

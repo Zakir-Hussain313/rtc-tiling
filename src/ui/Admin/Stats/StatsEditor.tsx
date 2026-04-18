@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import StatCard from './StatCard';
 import '@/styles/Admin/Stats/StatsEditor.css';
 
@@ -13,7 +13,7 @@ export type StatItem = {
     label: string;
 };
 
-const initialStats: StatItem[] = [
+const defaultStats: StatItem[] = [
     { id: 1, value: '99',  suffix: '+', label: 'Projects Completed'  },
     { id: 2, value: '10',  suffix: '+', label: 'Team Members'        },
     { id: 3, value: '92',  suffix: '%', label: 'Client Retention'    },
@@ -21,18 +21,78 @@ const initialStats: StatItem[] = [
 ];
 
 export default function StatsEditor() {
-    const [stats, setStats] = useState<StatItem[]>(initialStats);
+    const [stats, setStats] = useState<StatItem[]>(defaultStats);
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
     const [saved, setSaved] = useState(false);
+    const [error, setError] = useState('');
+
+    // Load stats from API on mount
+    useEffect(() => {
+        async function fetchStats() {
+            try {
+                const res = await fetch('/api/stats');
+                const data = await res.json();
+
+                if (res.ok && data.data?.stats?.length === 4) {
+                    setStats(data.data.stats);
+                }
+            } catch (err) {
+                console.error('Failed to fetch stats:', err);
+                setError('Failed to load stats. Using defaults.');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchStats();
+    }, []);
 
     function handleChange(id: number, field: keyof StatItem, value: string) {
-        setStats((prev) => prev.map((s) => (s.id === id ? { ...s, [field]: value } : s)));
+        setStats((prev) =>
+            prev.map((s) => (s.id === id ? { ...s, [field]: value } : s))
+        );
         setSaved(false);
+        setError('');
     }
 
-    function handleSave() {
-        // connect to your API here
-        setSaved(true);
-        setTimeout(() => setSaved(false), 2500);
+    async function handleSave() {
+        setSaving(true);
+        setError('');
+
+        try {
+            const res = await fetch('/api/stats', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ stats }),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                setError(data.error || 'Failed to save stats');
+                return;
+            }
+
+            setSaved(true);
+            setTimeout(() => setSaved(false), 2500);
+        } catch (err) {
+            console.error('Failed to save stats:', err);
+            setError('Something went wrong. Please try again.');
+        } finally {
+            setSaving(false);
+        }
+    }
+
+    if (loading) {
+        return (
+            <main className="statsEditorBody">
+                <div className="statsEditorLoading">
+                    <span className="statsEditorSpinner" />
+                    Loading stats...
+                </div>
+            </main>
+        );
     }
 
     return (
@@ -47,8 +107,14 @@ export default function StatsEditor() {
                 <button
                     className={`statsEditorBtnPrimary ${saved ? 'saved' : ''}`}
                     onClick={handleSave}
+                    disabled={saving}
                 >
-                    {saved ? (
+                    {saving ? (
+                        <>
+                            <span className="statsEditorSpinner" />
+                            Saving...
+                        </>
+                    ) : saved ? (
                         <>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                 <polyline points="20 6 9 17 4 12" />
@@ -67,6 +133,17 @@ export default function StatsEditor() {
                     )}
                 </button>
             </div>
+
+            {error && (
+                <div className="statsEditorError">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="12" />
+                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                    {error}
+                </div>
+            )}
 
             <div className="statsEditorGrid">
                 {stats.map((stat) => (

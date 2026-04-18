@@ -1,10 +1,14 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useRef, useState } from 'react';
 import '@/styles/Admin/Hero/HeroImageUpload.css';
 
-export default function HeroImageUpload() {
-    const [preview, setPreview] = useState<string | null>(null);
+interface HeroImageUploadProps {
+    value: string | null;
+    onChange: (base64: string) => void;
+}
+
+export default function HeroImageUpload({ value, onChange }: HeroImageUploadProps) {
     const [isDragging, setIsDragging] = useState(false);
     const [fileName, setFileName] = useState<string | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -13,7 +17,7 @@ export default function HeroImageUpload() {
         if (!file.type.startsWith('image/')) return;
         setFileName(file.name);
         const reader = new FileReader();
-        reader.onload = (e) => setPreview(e.target?.result as string);
+        reader.onload = (e) => onChange(e.target?.result as string);
         reader.readAsDataURL(file);
     }
 
@@ -21,11 +25,6 @@ export default function HeroImageUpload() {
         e.preventDefault();
         setIsDragging(false);
         const file = e.dataTransfer.files[0];
-        if (file) handleFile(file);
-    }
-
-    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        const file = e.target.files?.[0];
         if (file) handleFile(file);
     }
 
@@ -46,15 +45,15 @@ export default function HeroImageUpload() {
             </div>
 
             <div
-                className={`heroDropzone ${isDragging ? 'dragging' : ''} ${preview ? 'hasPreview' : ''}`}
+                className={`heroDropzone ${isDragging ? 'dragging' : ''} ${value ? 'hasPreview' : ''}`}
                 onClick={() => inputRef.current?.click()}
                 onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
                 onDragLeave={() => setIsDragging(false)}
                 onDrop={handleDrop}
             >
-                {preview ? (
+                {value ? (
                     <>
-                        <img src={preview} alt="Hero preview" className="heroPreviewImg" />
+                        <img src={value} alt="Hero preview" className="heroPreviewImg" />
                         <div className="heroPreviewOverlay">
                             <span className="heroPreviewOverlayText">Click to replace</span>
                         </div>
@@ -77,7 +76,10 @@ export default function HeroImageUpload() {
                     type="file"
                     accept="image/*"
                     className="heroFileInput"
-                    onChange={handleChange}
+                    onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) handleFile(file);
+                    }}
                 />
             </div>
 
@@ -88,6 +90,13 @@ export default function HeroImageUpload() {
                         <polyline points="13 2 13 9 20 9" />
                     </svg>
                     {fileName}
+                </div>
+            )}
+
+            {/* Show saved image badge if it's a Cloudinary URL not a new upload */}
+            {value && !value.startsWith('data:') && !fileName && (
+                <div className="heroFileName" style={{ opacity: 0.5 }}>
+                    Saved image loaded
                 </div>
             )}
         </div>

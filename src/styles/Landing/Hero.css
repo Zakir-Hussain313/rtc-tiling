@@ -45,6 +45,7 @@
     font-size: 90px;
     font-family: playfair;
     font-weight: 100;
+    max-width: 50%;
 }
 
 .hero-button {
@@ -172,6 +173,7 @@
     .hero-text {
         font-size: 80px;
         margin-top: 150px;
+        max-width: 80%;
     }
 
     .hero-button {
@@ -229,6 +231,7 @@
     .hero-text {
         font-size: 52px;
         margin-top: 200px;
+        max-width: 80%;
     }
 
     .hero-button {
@@ -289,6 +292,7 @@
     .hero-text {
         font-size: 42px;
         margin-top: 180px;
+        max-width: 80%;
     }
 
     .hero-button {

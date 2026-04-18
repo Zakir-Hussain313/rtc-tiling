@@ -25,6 +25,8 @@
     text-align: left;
     transition: color 0.35s ease;
     text-transform: uppercase;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 .services-image {
@@ -41,6 +43,10 @@
     font-weight: 400;
     color: #555;
     transition: color 0.35s ease;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .services-arrow {
@@ -105,6 +111,7 @@
 
     .services-description {
         font-size: 17px;
+        max-width: 90%;
     }
 
     .services-arrow {
