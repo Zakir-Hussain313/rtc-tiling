@@ -1,13 +1,18 @@
 .featured-main-section {
-    padding: 0 16px;
+    padding: 80px 50px;
     font-family: 'Jost', sans-serif;
+}
+
+.featured-second-main-section {
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .title-section {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    padding: 48px 54px;
+    margin-bottom: 40px;
 }
 
 .title-section h1 {
@@ -26,7 +31,6 @@
 
 .image-section {
     display: grid;
-    padding: 20px 0;
     grid-template-columns: repeat(9, 1fr);
     grid-auto-rows: 260px;
     gap: 20px;
@@ -41,7 +45,7 @@
 .button-section {
     display: flex;
     justify-content: center;
-    padding: 32px 0 48px 0;
+    margin-top: 40px;
 }
 
 .image1 { grid-column: span 4; }
@@ -51,9 +55,10 @@
 .image5 { grid-column: span 3; }
 .image6 { grid-column: span 4; }
 
+/* ── Tablet ───────────────────────────────────────── */
 @media (max-width: 1024px) {
-    .title-section {
-        padding: 36px 40px;
+    .featured-main-section {
+        padding: 64px 24px;
     }
 
     .title-section h1 {
@@ -77,9 +82,14 @@
     .image6 { grid-column: span 6; }
 }
 
+/* ── Mobile ───────────────────────────────────────── */
 @media (max-width: 768px) {
+    .featured-main-section {
+        padding: 48px 16px;
+    }
+
     .title-section {
-        padding: 32px 28px;
+        margin-bottom: 32px;
     }
 
     .title-section h1 {
@@ -106,11 +116,20 @@
     .image-div {
         border-radius: 24px;
     }
+
+    .button-section {
+        margin-top: 32px;
+    }
 }
 
+/* ── Small mobile ─────────────────────────────────── */
 @media (max-width: 540px) {
+    .featured-main-section {
+        padding: 40px 12px;
+    }
+
     .title-section {
-        padding: 28px 20px;
+        margin-bottom: 28px;
     }
 
     .title-section h1 {
@@ -141,13 +160,18 @@
     }
 
     .button-section {
-        padding: 24px 0 36px 0;
+        margin-top: 28px;
     }
 }
 
+/* ── XS ───────────────────────────────────────────── */
 @media (max-width: 380px) {
+    .featured-main-section {
+        padding: 32px 12px;
+    }
+
     .title-section {
-        padding: 22px 16px;
+        margin-bottom: 24px;
     }
 
     .title-section h1 {
@@ -165,5 +189,9 @@
 
     .image-div {
         border-radius: 16px;
+    }
+
+    .button-section {
+        margin-top: 24px;
     }
 }

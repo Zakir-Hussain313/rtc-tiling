@@ -1,13 +1,19 @@
 .expertise-main-section {
     font-family: 'Jost', sans-serif;
+    padding: 80px 0;
+}
+
+.expertise-main-section > section {
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .title-container {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    padding: 48px 70px;
     text-align: left;
+    padding-left: 50px;
 }
 
 .title-container h1 {
@@ -28,10 +34,10 @@
 }
 
 .marquee-outer {
-    width: 100%;
+    width: 100vw;
+    position: relative;
     overflow: hidden;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
 }
 
 .marquee-track {
@@ -42,16 +48,12 @@
 }
 
 .marquee-track:hover {
-    animation-play-state: paused;
+    animation-play-state: running !important;
 }
 
 @keyframes marquee {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-33.333%);
-    }
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-33.333%); }
 }
 
 .service-card {
@@ -60,7 +62,6 @@
     text-align: center;
     font-family: "Jost", sans-serif;
     color: #000;
-    transition: transform 0.3s;
     white-space: nowrap;
     flex-shrink: 0;
     width: 300px;
@@ -71,6 +72,7 @@
     position: relative;
     width: 280px;
     height: 400px;
+    overflow: hidden;
 }
 
 .card-image {
@@ -87,13 +89,14 @@
     color: #626262;
 }
 
-.service-card:hover {
-    transform: translateY(-5px);
+.expertise-button-section {
+    margin-top: 40px;
 }
 
+/* ── Tablet ───────────────────────────────────────── */
 @media (max-width: 1024px) {
-    .title-container {
-        padding: 36px 40px;
+    .expertise-main-section {
+        padding: 64px 24px;
     }
 
     .title-container h1 {
@@ -106,9 +109,14 @@
     }
 }
 
+/* ── Mobile ───────────────────────────────────────── */
 @media (max-width: 768px) {
+    .expertise-main-section {
+        padding: 48px 16px;
+    }
+
     .title-container {
-        padding: 32px 28px;
+        margin-bottom: 32px;
     }
 
     .title-container h1 {
@@ -132,11 +140,16 @@
     .card-label {
         font-size: 14px;
     }
+
+    .expertise-button-section {
+        margin-top: 32px;
+    }
 }
 
+/* ── Small mobile ─────────────────────────────────── */
 @media (max-width: 540px) {
-    .title-container {
-        padding: 28px 24px;
+    .expertise-main-section {
+        padding: 40px 12px;
     }
 
     .title-container h1 {
@@ -163,9 +176,14 @@
     }
 }
 
+/* ── XS ───────────────────────────────────────────── */
 @media (max-width: 380px) {
+    .expertise-main-section {
+        padding: 32px 12px;
+    }
+
     .title-container {
-        padding: 22px 16px;
+        margin-bottom: 24px;
     }
 
     .title-container h1 {

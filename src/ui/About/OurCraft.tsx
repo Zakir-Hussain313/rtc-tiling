@@ -46,7 +46,7 @@ export default async function OurCraft() {
                         src={craftImageUrl ?? fallbackImage}
                         alt="RTC Tiling craftsmanship"
                         fill
-                        className="object-cover rounded-3xl"
+                        className="object-cover"
                         sizes="(max-width: 768px) 100vw, 50vw"
                     />
                 </div>

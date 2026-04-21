@@ -20,14 +20,13 @@ export default async function OurStory() {
                         <span> / </span>
                         <Link href={'/about'}>About Us</Link>
                     </div>
-                    <h1>PRECISION IN EVERY PROJECT</h1>
+                    <h1>PRECISION IN EVERY <br />PROJECT</h1>
                 </div>
                 <div className="first-section-child-2">
                     <h1>100<span>%</span></h1>
                     <p>Customer Satisfaction</p>
                 </div>
             </section>
-
             <section className="about-second-section">
                 <div className="second-section-child-1">
                     <div className="second-section-image-box">
@@ -40,7 +39,7 @@ export default async function OurStory() {
                             priority
                         />
                     </div>
-                    <div className="second-section-image-box">
+                    <div className="second-section-image-box second-image-box">
                         <Image
                             src={image2Url ?? fallbackImage}
                             alt="RTC Tiling — our story image 2"
