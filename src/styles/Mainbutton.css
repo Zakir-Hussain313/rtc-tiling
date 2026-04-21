@@ -10,17 +10,46 @@
   color: var(--btn-color, #fff);
   font-size: var(--btn-font-size, inherit);
   border: var(--btn-border, none);
+  position: relative;
+  overflow: hidden;
+  transition: color 0.25s ease;
 }
+
+/* ── Bubble ───────────────────────────────────────── */
+
+.btn-bubble {
+  position: absolute;
+  border-radius: 50%;
+  /* 👇 separate from arrow color — a darker warm tone */
+  background-color: var(--btn-bubble-color, #c4a473);
+  pointer-events: none;
+  transform: scale(0);
+  /* 👇 always bold, no opacity */
+  opacity: 1;
+  z-index: 0;
+}
+
+/* ── Label sits above bubble ──────────────────────── */
+
+.btn-label {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Arrow ────────────────────────────────────────── */
 
 .main-button .arrow {
   width: var(--btn-arrow-size, 44px);
   height: var(--btn-arrow-size, 44px);
+  /* 👇 arrow bg stays its own color, independent of bubble */
   background-color: var(--btn-arrow-bg, #e3c28d);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .arrow-inner {

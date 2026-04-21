@@ -9,9 +9,12 @@ export type Project = {
     _id: string;
     title: string;
     description: string;
-    day: string;
-    month: string;
-    year: string;
+    type: string;
+    location: string;
+    completionYear: string;
+    size: string;
+    designStyle: string;
+    client: string;
     image: string | null;
     slug: string;
 };
@@ -27,7 +30,6 @@ export default function ProjectsEditor() {
     const [editingProject, setEditingProject] = useState<Project | null>(null);
     const [saving, setSaving] = useState(false);
 
-    // ── Load projects from DB on mount
     useEffect(() => {
         async function load() {
             try {
@@ -70,7 +72,6 @@ export default function ProjectsEditor() {
         setSaving(true);
         try {
             if (editingProject) {
-                // ── EDIT: PUT /api/projects/[id]
                 const res = await fetch(`/api/projects/${editingProject._id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
@@ -85,7 +86,6 @@ export default function ProjectsEditor() {
                     prev.map((p) => (p._id === editingProject._id ? json.data : p))
                 );
             } else {
-                // ── ADD: POST /api/projects
                 const res = await fetch('/api/projects', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },

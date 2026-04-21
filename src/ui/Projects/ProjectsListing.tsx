@@ -35,7 +35,7 @@ export default async function ProjectsListing() {
             <section className="projectsListing-main-section">
                 {projects.map((project, index) => (
                     <div key={project._id}>
-                        <Link href={project.slug} className='projects-div'>
+                        <Link href={`/projects/${project.slug}`} className='projects-div'>
                             <div className="project-image">
                                 <Image
                                     src={project.image || fallbackImage}

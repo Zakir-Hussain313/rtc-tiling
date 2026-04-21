@@ -5,9 +5,12 @@ export interface IProject extends Document {
     description: string;
     image: string;
     imagePublicId: string;
-    day: string;
-    month: string;
-    year: string;
+    type: string;
+    location: string;
+    completionYear: string;
+    size: string;
+    designStyle: string;
+    client: string;
     slug: string;
     order: number;
     createdAt: Date;
@@ -20,16 +23,18 @@ const ProjectSchema = new Schema<IProject>(
         description:    { type: String, default: '', trim: true },
         image:          { type: String, default: '' },
         imagePublicId:  { type: String, default: '' },
-        day:            { type: String, default: '' },
-        month:          { type: String, default: '' },
-        year:           { type: String, default: '' },
+        type:           { type: String, default: '', trim: true },
+        location:       { type: String, default: '', trim: true },
+        completionYear: { type: String, default: '', trim: true },
+        size:           { type: String, default: '', trim: true },
+        designStyle:    { type: String, default: '', trim: true },
+        client:         { type: String, default: '', trim: true },
         slug:           { type: String, required: true, unique: true, trim: true },
         order:          { type: Number, default: 0 },
     },
     { timestamps: true }
 );
 
-// Index slug for fast lookups on the public frontend
 ProjectSchema.index({ slug: 1 });
 
 const Project: Model<IProject> =

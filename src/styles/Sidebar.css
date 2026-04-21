@@ -52,8 +52,8 @@
 }
 
 .sidebarHamburger svg {
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
 }
 
 /* ── Logo ─────────────────────────────────────────── */
@@ -69,7 +69,7 @@
 .sidebarLogoMark {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 25px;
 }
 
 .logoIcon {
@@ -85,10 +85,10 @@
     width: 18px;
     height: 18px;
     fill: white;
-}
+} 
 
 .logoText {
-    font-size: 17px;
+    font-size: 20px;
     font-weight: 700;
     color: white;
     letter-spacing: 0.07em;
@@ -115,8 +115,8 @@
 }
 
 .sidebarCloseBtn svg {
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
 }
 
 .sidebarCloseBtn:hover {
@@ -186,6 +186,7 @@
 .sidebarFooter {
     padding: 16px 12px;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: 20px;
 }
 
 .logoutBtn {
@@ -239,6 +240,7 @@
     }
 
     .sidebar {
+        width: 350px;
         transform: translateX(-100%);
     }
 
@@ -248,5 +250,62 @@
 
     .sidebarCloseBtn {
         display: flex;
+    }
+
+    .navItem {
+        font-size: 16px;
+        padding: 12px 14px;
+        gap: 14px;
+    }
+
+    .navItem svg {
+        width: 25px;
+        height: 25px;
+    }
+
+    .navSectionLabel {
+        font-size: 11px;
+        padding: 14px 8px 8px;
+    }
+
+    .logoutBtn {
+        font-size: 16px;
+        padding: 12px 14px;
+        gap: 14px;
+    }
+
+    .logoutBtn svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .sidebarFooter {
+        padding: 16px 12px calc(env(safe-area-inset-bottom) + 32px);
+    }
+}
+
+@media (max-width: 768px) {
+    .navItem {
+        font-size: 20px;
+        padding: 14px 16px;
+    }
+
+    .navItem svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .logoutBtn {
+        font-size: 17px;
+        padding: 14px 16px;
+    }
+
+    .logoutBtn svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .sidebarFooter {
+        padding: 16px 12px calc(env(safe-area-inset-bottom) + 48px);
     }
 }

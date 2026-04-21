@@ -6,7 +6,7 @@ import '@/styles/Admin/Projects/PorjectsListing.css';
 interface ProjectsListProps {
     projects: Project[];
     onEdit: (project: Project) => void;
-    onDelete: (id: string) => void; // 👈 string _id now
+    onDelete: (id: string) => void;
 }
 
 export default function ProjectsList({ projects, onEdit, onDelete }: ProjectsListProps) {
@@ -20,7 +20,7 @@ export default function ProjectsList({ projects, onEdit, onDelete }: ProjectsLis
                     </svg>
                 </div>
                 <p className="projectsEmptyText">No projects yet</p>
-                <p className="projectsEmptySub">Click &quot;Add Project&quot; to get started</p>
+                <p className="projectsEmptySub">Click "Add Project" to get started</p>
             </div>
         );
     }
@@ -30,7 +30,7 @@ export default function ProjectsList({ projects, onEdit, onDelete }: ProjectsLis
             <div className="projectsListHeader">
                 <span>Image</span>
                 <span>Title</span>
-                <span>Date</span>
+                <span>Details</span>
                 <span>Auto Link</span>
                 <span>Actions</span>
             </div>
@@ -57,8 +57,13 @@ export default function ProjectsList({ projects, onEdit, onDelete }: ProjectsLis
                             <span className="projectsListDesc">{project.description}</span>
                         </div>
 
-                        <div className="projectsListDate">
-                            {project.day} / {project.month} / {project.year}
+                        <div className="projectsListMeta">
+                            {project.type        && <span>{project.type}</span>}
+                            {project.location    && <span>{project.location}</span>}
+                            {project.client      && <span>{project.client}</span>}
+                            {project.designStyle && <span>{project.designStyle}</span>}
+                            {project.completionYear && <span>{project.completionYear}</span>}
+                            {project.size        && <span>{project.size}</span>}
                         </div>
 
                         <div className="projectsListLink">

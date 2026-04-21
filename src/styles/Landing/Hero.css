@@ -3,13 +3,13 @@
     display: flex;
     justify-content: center;
     margin-top: 110px;
-    padding: 0 16px;
+    padding: 0 24px;
     box-sizing: border-box;
 }
 
 .hero-grid {
     position: relative;
-    max-width: 1500px;
+    max-width: 1400px;
     width: 100%;
     min-height: calc(100dvh - 120px);
     overflow: hidden;
@@ -94,13 +94,8 @@
 }
 
 @keyframes gradientMove {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    100% {
-        background-position: 100% 50%;
-    }
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
 }
 
 .hero-ratings {
@@ -136,13 +131,8 @@
     z-index: 3;
 }
 
-.hero-left .hero-icons:nth-child(2) {
-    z-index: 2;
-}
-
-.hero-left .hero-icons:nth-child(3) {
-    z-index: 1;
-}
+.hero-left .hero-icons:nth-child(2) { z-index: 2; }
+.hero-left .hero-icons:nth-child(3) { z-index: 1; }
 
 .hero-right {
     display: flex;
@@ -150,9 +140,7 @@
     gap: 5px;
 }
 
-.stars {
-    display: flex;
-}
+.stars { display: flex; }
 
 .star {
     width: 25px;
@@ -164,6 +152,7 @@
     font-size: 20px;
 }
 
+/* ── Tablet ───────────────────────────────────────── */
 @media (min-width: 769px) and (max-width: 1024px) {
     .hero-content {
         justify-content: flex-end;
@@ -186,18 +175,14 @@
         margin-top: 20px;
     }
 
-    .stars {
-        gap: 5px;
-    }
+    .stars { gap: 5px; }
 
     .star {
         width: 35px;
         margin: 10px 5px 0 0;
     }
 
-    .rating-text span {
-        font-size: 25px;
-    }
+    .rating-text span { font-size: 25px; }
 
     .hero-ratings {
         flex-direction: column;
@@ -207,9 +192,11 @@
     }
 }
 
+/* ── Mobile ───────────────────────────────────────── */
 @media (max-width: 768px) {
     .hero {
         margin-top: 95px;
+        padding: 0 16px;
     }
 
     .hero-grid {
@@ -219,9 +206,7 @@
         border-radius: 32px;
     }
 
-    .hero-overlay {
-        border-radius: 32px;
-    }
+    .hero-overlay { border-radius: 32px; }
 
     .hero-content {
         justify-content: flex-end;
@@ -246,19 +231,14 @@
         margin-top: 20px;
     }
 
-    .stars {
-        display: flex;
-        gap: 4px;
-    }
+    .stars { gap: 4px; }
 
     .star {
         width: 22px;
         margin: 8px 4px 0 0;
     }
 
-    .rating-text span {
-        font-size: 16px;
-    }
+    .rating-text span { font-size: 16px; }
 
     .hero-ratings {
         flex-direction: column;
@@ -268,6 +248,7 @@
     }
 }
 
+/* ── Small mobile ─────────────────────────────────── */
 @media (max-width: 540px) {
     .hero {
         margin-top: 90px;
@@ -281,13 +262,9 @@
         max-height: calc(100dvh - 95px);
     }
 
-    .hero-overlay {
-        border-radius: 24px;
-    }
+    .hero-overlay { border-radius: 24px; }
 
-    .hero-content {
-        margin: 16px;
-    }
+    .hero-content { margin: 16px; }
 
     .hero-text {
         font-size: 42px;
@@ -301,18 +278,14 @@
         margin-top: 22px;
     }
 
-    .hero-left .hero-icons {
-        width: 42px;
-    }
+    .hero-left .hero-icons { width: 42px; }
 
     .star {
         width: 18px;
         margin: 6px 3px 0 0;
     }
 
-    .rating-text span {
-        font-size: 14px;
-    }
+    .rating-text span { font-size: 14px; }
 
     .hero-ratings {
         gap: 12px;
@@ -320,22 +293,14 @@
     }
 }
 
+/* ── XS ───────────────────────────────────────────── */
 @media (max-width: 380px) {
-    .hero-grid {
-        border-radius: 18px;
-    }
+    .hero-grid { border-radius: 18px; }
+    .hero-overlay { border-radius: 18px; }
 
-    .hero-overlay {
-        border-radius: 18px;
-    }
+    .hero-content { margin: 14px; }
 
-    .hero-content {
-        margin: 14px;
-    }
-
-    .hero-text {
-        font-size: 36px;
-    }
+    .hero-text { font-size: 36px; }
 
     .hero-button {
         font-size: 13px;
@@ -343,15 +308,9 @@
         margin-top: 18px;
     }
 
-    .hero-left .hero-icons {
-        width: 36px;
-    }
+    .hero-left .hero-icons { width: 36px; }
 
-    .star {
-        width: 15px;
-    }
+    .star { width: 15px; }
 
-    .rating-text span {
-        font-size: 13px;
-    }
+    .rating-text span { font-size: 13px; }
 }

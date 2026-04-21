@@ -12,14 +12,31 @@ interface ProjectFormModalProps {
 }
 
 export default function ProjectFormModal({ project, onSave, onClose, saving }: ProjectFormModalProps) {
-    const [title, setTitle] = useState(project?.title ?? '');
-    const [description, setDescription] = useState(project?.description ?? '');
-    const [day, setDay] = useState(project?.day ?? '');
-    const [month, setMonth] = useState(project?.month ?? '');
-    const [year, setYear] = useState(project?.year ?? '');
-    const [image, setImage] = useState<string | null>(project?.image ?? null);
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [type, setType] = useState('');
+    const [location, setLocation] = useState('');
+    const [completionYear, setCompletionYear] = useState('');
+    const [size, setSize] = useState('');
+    const [designStyle, setDesignStyle] = useState('');
+    const [client, setClient] = useState('');
+    const [image, setImage] = useState<string | null>(null);
     const [imageName, setImageName] = useState<string | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
+
+    // ── Sync all fields when the project prop changes (e.g. switching between edits)
+    useEffect(() => {
+        setTitle(project?.title ?? '');
+        setDescription(project?.description ?? '');
+        setType(project?.type ?? '');
+        setLocation(project?.location ?? '');
+        setCompletionYear(project?.completionYear ?? '');
+        setSize(project?.size ?? '');
+        setDesignStyle(project?.designStyle ?? '');
+        setClient(project?.client ?? '');
+        setImage(project?.image ?? null);
+        setImageName(project?.image ? 'Current image' : null);
+    }, [project]);
 
     useEffect(() => {
         function onKey(e: KeyboardEvent) {
@@ -40,53 +57,14 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
     function handleSubmit() {
         if (!title.trim() || saving) return;
 
-        const d = Number(day);
-        const m = Number(month);
-        const y = Number(year);
-
-        // basic numeric validation
-        if (!d || !m || !y) {
-            alert("Please enter a valid date");
-            return;
-        }
-
-        if (d < 1 || d > 31) {
-            alert("Day must be between 1 and 31");
-            return;
-        }
-
-        if (m < 1 || m > 12) {
-            alert("Month must be between 1 and 12");
-            return;
-        }
-
+        const y = Number(completionYear);
         const currentYear = new Date().getFullYear();
-        if (y < 1900 || y > currentYear) {
-            alert("Enter a valid year");
+        if (completionYear && (y < 1900 || y > currentYear + 5)) {
+            alert('Enter a valid completion year');
             return;
         }
 
-        // real date validation (handles Feb, leap years, etc.)
-        const date = new Date(y, m - 1, d);
-        if (
-            date.getFullYear() !== y ||
-            date.getMonth() !== m - 1 ||
-            date.getDate() !== d
-        ) {
-            alert("Invalid date");
-            return;
-        }
-
-        // ❗ NEW: prevent future dates
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        if (date > today) {
-            alert("Date cannot be in the future");
-            return;
-        }
-
-        onSave({ title, description, day, month, year, image });
+        onSave({ title, description, type, location, completionYear, size, designStyle, client, image });
     }
 
     return (
@@ -107,6 +85,7 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
 
                 <div className="modalBody">
 
+                    {/* Image */}
                     <div className="modalField">
                         <label className="modalLabel">Project Image</label>
                         <div
@@ -142,6 +121,7 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
                         {imageName && <p className="modalImageName">{imageName}</p>}
                     </div>
 
+                    {/* Title */}
                     <div className="modalField">
                         <label className="modalLabel" htmlFor="proj-title">Title</label>
                         <input
@@ -150,7 +130,7 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
                             className="modalInput"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
-                            placeholder="e.g. POOL TILED"
+                            placeholder="e.g. Pool Tiled"
                         />
                         {title.trim() && (
                             <div className="modalSlugPreview">
@@ -163,6 +143,7 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
                         )}
                     </div>
 
+                    {/* Description */}
                     <div className="modalField">
                         <label className="modalLabel" htmlFor="proj-desc">Description</label>
                         <textarea
@@ -175,38 +156,83 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
                         />
                     </div>
 
-                    <div className="modalField">
-                        <label className="modalLabel">Date</label>
-                        <div className="modalDateRow">
+                    {/* Two-column grid */}
+                    <div className="modalGrid">
+
+                        <div className="modalField">
+                            <label className="modalLabel" htmlFor="proj-type">Type</label>
                             <input
+                                id="proj-type"
                                 type="text"
-                                className="modalInput modalDateInput"
-                                value={day}
-                                onChange={(e) => setDay(e.target.value)}
-                                placeholder="DD"
-                                maxLength={2}
+                                className="modalInput"
+                                value={type}
+                                onChange={(e) => setType(e.target.value)}
+                                placeholder="e.g. Residential"
                             />
-                            <span className="modalDateSep">/</span>
+                        </div>
+
+                        <div className="modalField">
+                            <label className="modalLabel" htmlFor="proj-location">Location</label>
                             <input
+                                id="proj-location"
                                 type="text"
-                                className="modalInput modalDateInput"
-                                value={month}
-                                onChange={(e) => setMonth(e.target.value)}
-                                placeholder="MM"
-                                maxLength={2}
+                                className="modalInput"
+                                value={location}
+                                onChange={(e) => setLocation(e.target.value)}
+                                placeholder="e.g. Dubai, UAE"
                             />
-                            <span className="modalDateSep">/</span>
+                        </div>
+
+                        <div className="modalField">
+                            <label className="modalLabel" htmlFor="proj-year">Completion Year</label>
                             <input
+                                id="proj-year"
                                 type="text"
-                                className="modalInput modalDateInput modalDateInputYear"
-                                value={year}
-                                onChange={(e) => setYear(e.target.value)}
-                                placeholder="YYYY"
+                                className="modalInput"
+                                value={completionYear}
+                                onChange={(e) => setCompletionYear(e.target.value)}
+                                placeholder="e.g. 2024"
                                 maxLength={4}
                             />
                         </div>
-                    </div>
 
+                        <div className="modalField">
+                            <label className="modalLabel" htmlFor="proj-size">Size</label>
+                            <input
+                                id="proj-size"
+                                type="text"
+                                className="modalInput"
+                                value={size}
+                                onChange={(e) => setSize(e.target.value)}
+                                placeholder="e.g. 450 sqm"
+                            />
+                        </div>
+
+                        <div className="modalField">
+                            <label className="modalLabel" htmlFor="proj-style">Design Style</label>
+                            <input
+                                id="proj-style"
+                                type="text"
+                                className="modalInput"
+                                value={designStyle}
+                                onChange={(e) => setDesignStyle(e.target.value)}
+                                placeholder="e.g. Modern Minimalist"
+                            />
+                        </div>
+
+                        <div className="modalField">
+                            <label className="modalLabel" htmlFor="proj-client">Client</label>
+                            <input
+                                id="proj-client"
+                                type="text"
+                                className="modalInput"
+                                value={client}
+                                onChange={(e) => setClient(e.target.value)}
+                                placeholder="e.g. Private Client"
+                            />
+                        </div>
+
+                    </div>
                 </div>
 
                 <div className="modalFooter">

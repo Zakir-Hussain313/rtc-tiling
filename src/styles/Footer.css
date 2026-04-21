@@ -8,6 +8,8 @@
   border: 1.5px solid #d9d9d9;
   border-radius: 32px;
   padding: 40px 74px 24px 74px;
+  max-width: 1400px;
+  margin: 0 auto;
   box-sizing: border-box;
 }
 

@@ -144,9 +144,7 @@ export default function Sidebar({ isOpen, onClose, onOpen }: SidebarProps) {
                             {item.label}
                         </Link>
                     ))}
-                </nav>
-
-                <div className="sidebarFooter">
+                    <div className="sidebarFooter my-12">
                     <button className="logoutBtn" onClick={handleLogout}>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
@@ -156,6 +154,7 @@ export default function Sidebar({ isOpen, onClose, onOpen }: SidebarProps) {
                         Logout
                     </button>
                 </div>
+                </nav>
             </aside>
         </>
     );
