@@ -38,7 +38,7 @@ export async function PUT(
         const {
             title, description, image,
             type, location, completionYear,
-            size, designStyle, client,
+            size, designStyle, client, date,
         } = body as Record<string, unknown>;
 
         const updates: Record<string, unknown> = {};
@@ -46,7 +46,6 @@ export async function PUT(
         if (typeof title === 'string' && title.trim()) {
             const trimmedTitle = title.trim();
             const newSlug = generateSlug(trimmedTitle);
-
             const conflict = await Project.findOne({ slug: newSlug, _id: { $ne: id } });
             if (conflict) {
                 return NextResponse.json(
@@ -54,7 +53,6 @@ export async function PUT(
                     { status: 409 }
                 );
             }
-
             updates.title = trimmedTitle;
             updates.slug  = newSlug;
         }
@@ -66,12 +64,13 @@ export async function PUT(
         if (typeof size           === 'string') updates.size           = size.trim();
         if (typeof designStyle    === 'string') updates.designStyle    = designStyle.trim();
         if (typeof client         === 'string') updates.client         = client.trim();
+        if (typeof date           === 'string') updates.date           = date.trim();
 
         if (typeof image === 'string' && image.startsWith('data:image/')) {
             if (project.imagePublicId) await deleteImage(project.imagePublicId);
             const result = await uploadImage(image, 'rtc/projects');
-            updates.image          = result.url;
-            updates.imagePublicId  = result.publicId;
+            updates.image         = result.url;
+            updates.imagePublicId = result.publicId;
         }
 
         const updated = await Project.findByIdAndUpdate(

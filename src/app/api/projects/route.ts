@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
         const {
             title, description, image,
             type, location, completionYear,
-            size, designStyle, client,
+            size, designStyle, client, date,
         } = body as Record<string, unknown>;
 
         if (typeof title !== 'string' || !title.trim()) {
@@ -80,6 +80,7 @@ export async function POST(req: NextRequest) {
             size:           typeof size           === 'string' ? size.trim()           : '',
             designStyle:    typeof designStyle    === 'string' ? designStyle.trim()    : '',
             client:         typeof client         === 'string' ? client.trim()         : '',
+            date:           typeof date           === 'string' ? date.trim()           : '',
             slug,
             order: count,
         });
