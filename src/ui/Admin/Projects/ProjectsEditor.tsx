@@ -15,6 +15,7 @@ export type Project = {
     size: string;
     designStyle: string;
     client: string;
+    date: string;
     image: string | null;
     slug: string;
 };

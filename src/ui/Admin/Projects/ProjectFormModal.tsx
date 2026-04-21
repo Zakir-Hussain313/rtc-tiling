@@ -11,31 +11,36 @@ interface ProjectFormModalProps {
     saving: boolean;
 }
 
+const TODAY = new Date().toISOString().split('T')[0]; // YYYY-MM-DD, used as max date
+
 export default function ProjectFormModal({ project, onSave, onClose, saving }: ProjectFormModalProps) {
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [type, setType] = useState('');
-    const [location, setLocation] = useState('');
+    const [title,          setTitle]          = useState('');
+    const [description,    setDescription]    = useState('');
+    const [type,           setType]           = useState('');
+    const [location,       setLocation]       = useState('');
     const [completionYear, setCompletionYear] = useState('');
-    const [size, setSize] = useState('');
-    const [designStyle, setDesignStyle] = useState('');
-    const [client, setClient] = useState('');
-    const [image, setImage] = useState<string | null>(null);
-    const [imageName, setImageName] = useState<string | null>(null);
+    const [size,           setSize]           = useState('');
+    const [designStyle,    setDesignStyle]    = useState('');
+    const [client,         setClient]         = useState('');
+    const [date,           setDate]           = useState('');
+    const [dateError,      setDateError]      = useState('');
+    const [image,          setImage]          = useState<string | null>(null);
+    const [imageName,      setImageName]      = useState<string | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
-    // ── Sync all fields when the project prop changes (e.g. switching between edits)
     useEffect(() => {
-        setTitle(project?.title ?? '');
-        setDescription(project?.description ?? '');
-        setType(project?.type ?? '');
-        setLocation(project?.location ?? '');
+        setTitle         (project?.title          ?? '');
+        setDescription   (project?.description    ?? '');
+        setType          (project?.type           ?? '');
+        setLocation      (project?.location       ?? '');
         setCompletionYear(project?.completionYear ?? '');
-        setSize(project?.size ?? '');
-        setDesignStyle(project?.designStyle ?? '');
-        setClient(project?.client ?? '');
-        setImage(project?.image ?? null);
-        setImageName(project?.image ? 'Current image' : null);
+        setSize          (project?.size           ?? '');
+        setDesignStyle   (project?.designStyle    ?? '');
+        setClient        (project?.client         ?? '');
+        setDate          (project?.date           ?? '');
+        setDateError     ('');
+        setImage         (project?.image          ?? null);
+        setImageName     (project?.image ? 'Current image' : null);
     }, [project]);
 
     useEffect(() => {
@@ -54,17 +59,47 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
         reader.readAsDataURL(file);
     }
 
+    function validateDate(value: string): string {
+        if (!value) return ''; // date is optional
+
+        // Must match YYYY-MM-DD
+        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+        if (!dateRegex.test(value)) return 'Invalid date format.';
+
+        const parsed = new Date(value);
+        if (isNaN(parsed.getTime())) return 'Invalid date.';
+
+        const year = parsed.getFullYear();
+        if (year < 1900) return 'Date must be after 1900.';
+
+        const today = new Date(TODAY);
+        if (parsed > today) return 'Date cannot be in the future.';
+
+        return '';
+    }
+
+    function handleDateChange(value: string) {
+        setDate(value);
+        setDateError(validateDate(value));
+    }
+
     function handleSubmit() {
         if (!title.trim() || saving) return;
 
         const y = Number(completionYear);
         const currentYear = new Date().getFullYear();
         if (completionYear && (y < 1900 || y > currentYear + 5)) {
-            alert('Enter a valid completion year');
+            alert('Enter a valid completion year (between 1900 and ' + (currentYear + 5) + ')');
             return;
         }
 
-        onSave({ title, description, type, location, completionYear, size, designStyle, client, image });
+        const dateValidationError = validateDate(date);
+        if (dateValidationError) {
+            setDateError(dateValidationError);
+            return;
+        }
+
+        onSave({ title, description, type, location, completionYear, size, designStyle, client, date, image });
     }
 
     return (
@@ -232,12 +267,33 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
                             />
                         </div>
 
+                        {/* Date */}
+                        <div className="modalField">
+                            <label className="modalLabel" htmlFor="proj-date">Project Date</label>
+                            <input
+                                id="proj-date"
+                                type="date"
+                                className={`modalInput ${dateError ? 'inputError' : ''}`}
+                                value={date}
+                                max={TODAY}
+                                min="1900-01-01"
+                                onChange={(e) => handleDateChange(e.target.value)}
+                            />
+                            {dateError && (
+                                <p className="modalInputError">{dateError}</p>
+                            )}
+                        </div>
+
                     </div>
                 </div>
 
                 <div className="modalFooter">
                     <button className="modalBtnGhost" onClick={onClose} disabled={saving}>Cancel</button>
-                    <button className="modalBtnPrimary" onClick={handleSubmit} disabled={saving}>
+                    <button
+                        className="modalBtnPrimary"
+                        onClick={handleSubmit}
+                        disabled={saving || !!dateError}
+                    >
                         {saving ? 'Saving...' : project ? 'Save Changes' : 'Add Project'}
                     </button>
                 </div>

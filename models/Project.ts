@@ -11,6 +11,7 @@ export interface IProject extends Document {
     size: string;
     designStyle: string;
     client: string;
+    date: string;
     slug: string;
     order: number;
     createdAt: Date;
@@ -29,6 +30,7 @@ const ProjectSchema = new Schema<IProject>(
         size:           { type: String, default: '', trim: true },
         designStyle:    { type: String, default: '', trim: true },
         client:         { type: String, default: '', trim: true },
+        date:           { type: String, default: '', trim: true },
         slug:           { type: String, required: true, unique: true, trim: true },
         order:          { type: Number, default: 0 },
     },

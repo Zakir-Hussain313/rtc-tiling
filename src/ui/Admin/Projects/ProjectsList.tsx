@@ -9,6 +9,13 @@ interface ProjectsListProps {
     onDelete: (id: string) => void;
 }
 
+function formatDate(dateStr: string): string {
+    if (!dateStr) return '—';
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return '—';
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
 export default function ProjectsList({ projects, onEdit, onDelete }: ProjectsListProps) {
     if (projects.length === 0) {
         return (
@@ -30,7 +37,7 @@ export default function ProjectsList({ projects, onEdit, onDelete }: ProjectsLis
             <div className="projectsListHeader">
                 <span>Image</span>
                 <span>Title</span>
-                <span>Details</span>
+                <span>Date</span>
                 <span>Auto Link</span>
                 <span>Actions</span>
             </div>
@@ -57,13 +64,9 @@ export default function ProjectsList({ projects, onEdit, onDelete }: ProjectsLis
                             <span className="projectsListDesc">{project.description}</span>
                         </div>
 
-                        <div className="projectsListMeta">
-                            {project.type        && <span>{project.type}</span>}
-                            {project.location    && <span>{project.location}</span>}
-                            {project.client      && <span>{project.client}</span>}
-                            {project.designStyle && <span>{project.designStyle}</span>}
-                            {project.completionYear && <span>{project.completionYear}</span>}
-                            {project.size        && <span>{project.size}</span>}
+                        {/* Date replaces Details */}
+                        <div className="projectsListDate">
+                            <span>{formatDate(project.date)}</span>
                         </div>
 
                         <div className="projectsListLink">
