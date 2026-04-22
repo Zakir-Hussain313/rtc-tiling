@@ -9,11 +9,19 @@ import Project from 'models/Project'
 type ProjectDoc = {
     _id: string
     title: string
-    day: string
-    month: string
-    year: string
+    date: string
     image: string
     slug: string
+}
+
+function formatDate(dateStr: string): string {
+    if (!dateStr) return '';
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return '';
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = String(d.getFullYear());
+    return `${day} / ${month} / ${year}`;
 }
 
 async function getProjects(): Promise<ProjectDoc[]> {
@@ -48,7 +56,7 @@ export default async function ProjectsListing() {
                             </div>
                             <h1>{project.title}</h1>
                             <p className='project-date'>
-                                {project.day} / {project.month} / {project.year}
+                                {formatDate(project.date)}
                             </p>
                             <div className='project-arrow'>
                                 <Image

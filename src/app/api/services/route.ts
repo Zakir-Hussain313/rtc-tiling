@@ -14,22 +14,16 @@ function generateSlug(title: string): string {
     );
 }
 
-// ── GET /api/services ──────────────────────────────
-
 export async function GET() {
     try {
         await connectDB();
-
         const services = await Service.find().sort({ order: 1, createdAt: -1 });
-
         return NextResponse.json({ success: true, data: services }, { status: 200 });
     } catch (error) {
         console.error('[GET /api/services]', error);
         return NextResponse.json({ error: 'Failed to fetch services' }, { status: 500 });
     }
 }
-
-// ── POST /api/services ─────────────────────────────
 
 export async function POST(req: NextRequest) {
     try {
@@ -46,7 +40,11 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
         }
 
-        const { title, description, image } = body as Record<string, unknown>;
+        const {
+            title, description, image,
+            serviceType, location, estimatedDuration,
+            maximumArea, finishStyle, suitableFor,
+        } = body as Record<string, unknown>;
 
         if (typeof title !== 'string' || !title.trim()) {
             return NextResponse.json({ error: 'Title is required' }, { status: 400 });
@@ -75,10 +73,16 @@ export async function POST(req: NextRequest) {
         const count = await Service.countDocuments();
 
         const service = await Service.create({
-            title: trimmedTitle,
-            description: typeof description === 'string' ? description.trim() : '',
-            image: imageUrl,
+            title:             trimmedTitle,
+            description:       typeof description       === 'string' ? description.trim()       : '',
+            image:             imageUrl,
             imagePublicId,
+            serviceType:       typeof serviceType       === 'string' ? serviceType.trim()       : '',
+            location:          typeof location          === 'string' ? location.trim()          : '',
+            estimatedDuration: typeof estimatedDuration === 'string' ? estimatedDuration.trim() : '',
+            maximumArea:       typeof maximumArea       === 'string' ? maximumArea.trim()       : '',
+            finishStyle:       typeof finishStyle       === 'string' ? finishStyle.trim()       : '',
+            suitableFor:       typeof suitableFor       === 'string' ? suitableFor.trim()       : '',
             slug,
             order: count,
         });

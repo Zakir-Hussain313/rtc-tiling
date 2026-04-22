@@ -1,0 +1,335 @@
+/* ═══════════════════════════════════════════════════════════
+   DetailPages.css  —  shared by ServiceDetailPage & ProjectDetailPage
+   ═══════════════════════════════════════════════════════════ */
+
+.detail-main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 150px 60px 100px;
+    font-family: 'Jost', sans-serif;
+}
+
+/* ── Breadcrumb ───────────────────────────────────── */
+.detail-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 40px;
+    font-size: 15px;
+    font-weight: 400;
+    color: #888;
+    flex-wrap: wrap;
+}
+
+.detail-breadcrumb a {
+    color: #888;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.detail-breadcrumb a:hover {
+    color: #111;
+}
+
+.detail-breadcrumb-sep {
+    color: #bbb;
+    font-size: 13px;
+}
+
+.detail-breadcrumb-current {
+    color: #111;
+    font-weight: 500;
+}
+
+/* ── Hero ─────────────────────────────────────────── */
+.detail-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 72px;
+    align-items: flex-start;
+}
+
+/* ── Image ────────────────────────────────────────── */
+.detail-img-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 4.5;
+    border-radius: 28px;
+    overflow: hidden;
+    background: #f0f0f0;
+}
+
+.detail-img {
+    object-fit: cover;
+}
+
+.detail-img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+}
+
+.detail-img-placeholder svg {
+    width: 60px;
+    height: 60px;
+    color: #ccc;
+}
+
+/* ── Info panel ───────────────────────────────────── */
+.detail-info {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-top: 8px;
+}
+
+.detail-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 3.5vw, 48px);
+    font-weight: 400;
+    color: #111;
+    line-height: 1.15;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+}
+
+.detail-desc {
+    font-size: clamp(14px, 1.5vw, 17px);
+    font-weight: 400;
+    color: #222;
+    line-height: 1.75;
+    max-width: 520px;
+}
+
+.detail-meta {
+    font-size: 14px;
+    font-weight: 400;
+    color: #888;
+    letter-spacing: 0.04em;
+}
+
+/* ── Details table ────────────────────────────────── */
+.detail-table {
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #555;
+}
+
+.detail-row {
+    display: grid;
+    grid-template-columns: 200px 24px 1fr;
+    align-items: center;
+    padding: 10px 0 10px 28px;
+}
+
+.detail-row-label {
+    font-size: clamp(13px, 1.4vw, 20px);
+    font-weight: 400;
+    color: #666;
+    letter-spacing: 0.01em;
+}
+
+.detail-row-dash {
+    font-size: clamp(13px, 1.4vw, 20px);
+    color: #bbb;
+}
+
+.detail-row-value {
+    font-size: clamp(14px, 1.6vw, 22px);
+    font-weight: 500;
+    padding-left: 15px;
+    color: #111;
+    text-transform: uppercase;
+    font-family: 'Playfair Display', serif;
+}
+
+/* ── Gallery section ──────────────────────────────── */
+.project-gallery-in-detail-page {
+    padding: 80px 0 0 0;
+}
+
+.project-gallery-in-detail-page h1 {
+    font-size: clamp(20px, 2.5vw, 30px);
+    margin-bottom: 20px;
+    font-family: 'Playfair Display', serif;
+    text-transform: uppercase;
+}
+
+/* ── Large desktop (1200–1400px) ──────────────────── */
+@media (max-width: 1400px) {
+    .detail-main {
+        padding: 140px 48px 90px;
+    }
+}
+
+/* ── Tablet landscape (1024–1200px) ───────────────── */
+@media (max-width: 1200px) {
+    .detail-main {
+        padding: 130px 40px 80px;
+    }
+
+    .detail-hero {
+        gap: 48px;
+    }
+
+    .detail-row {
+        grid-template-columns: 160px 20px 1fr;
+        padding-left: 22px;
+    }
+}
+
+/* ── Tablet portrait (768–1024px) ─────────────────── */
+@media (max-width: 1024px) {
+    .detail-main {
+        padding: 120px 32px 72px;
+    }
+
+    .detail-hero {
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+    }
+
+    .detail-img-wrap {
+        aspect-ratio: 4 / 5;
+        border-radius: 22px;
+    }
+
+    .detail-row {
+        grid-template-columns: 140px 18px 1fr;
+        padding-left: 18px;
+    }
+}
+
+@media (max-width: 768px) {
+    .detail-main {
+        padding: 100px 24px 60px;
+    }
+
+    .detail-breadcrumb {
+        margin-bottom: 24px;
+        font-size: 13px;
+        gap: 6px;
+    }
+
+    .detail-hero {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .detail-img-wrap {
+        aspect-ratio: 16 / 10;
+        border-radius: 20px;
+    }
+
+    .detail-info {
+        gap: 18px;
+        padding-top: 0;
+    }
+
+    .detail-row {
+        grid-template-columns: 180px 32px 1fr;
+        padding: 10px 0 10px 32px;
+    }
+
+    .detail-row-label {
+        font-size: 18px;
+    }
+
+    .detail-row-dash {
+        font-size: 20px;
+    }
+
+    .detail-row-value {
+        font-size: 16px;
+        padding-left: 10px;
+    }
+
+    .project-gallery-in-detail-page {
+        padding-top: 56px;
+    }
+}
+
+@media (max-width: 600px) {
+    .detail-main {
+        padding: 92px 20px 52px;
+    }
+
+    .detail-img-wrap {
+        aspect-ratio: 4 / 3;
+        border-radius: 18px;
+    }
+
+    .detail-title {
+        font-size: clamp(22px, 6vw, 30px);
+    }
+
+    .detail-desc {
+        font-size: 14px;
+        max-width: 100%;
+    }
+
+    .detail-row {
+        grid-template-columns: 105px 14px 1fr;
+        padding: 9px 0 9px 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .detail-main {
+        padding: 85px 16px 48px;
+    }
+
+    .detail-breadcrumb {
+        font-size: 12px;
+        gap: 5px;
+        margin-bottom: 20px;
+    }
+
+    .detail-img-wrap {
+        border-radius: 14px;
+        aspect-ratio: 1 / 1;
+    }
+
+    .detail-info {
+        gap: 14px;
+    }
+
+    .detail-title {
+        font-size: clamp(20px, 7vw, 28px);
+    }
+
+    .detail-row {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        gap: 2px;
+        padding: 12px 0 12px 14px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .detail-row-dash {
+        display: none;
+    }
+
+    .detail-row-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #aaa;
+    }
+
+    .detail-row-value {
+        font-size: 15px;
+        padding-left: 0;
+    }
+
+    .project-gallery-in-detail-page {
+        padding-top: 44px;
+    }
+
+    .project-gallery-in-detail-page h1 {
+        font-size: 18px;
+    }
+}

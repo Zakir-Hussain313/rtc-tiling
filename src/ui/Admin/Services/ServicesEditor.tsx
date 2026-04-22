@@ -9,6 +9,12 @@ export type Service = {
     _id: string;
     title: string;
     description: string;
+    serviceType: string;
+    location: string;
+    estimatedDuration: string;
+    maximumArea: string;
+    finishStyle: string;
+    suitableFor: string;
     image: string | null;
     slug: string;
 };
@@ -24,7 +30,6 @@ export default function ServicesEditor() {
     const [editingService, setEditingService] = useState<Service | null>(null);
     const [saving, setSaving] = useState(false);
 
-    // ── Load services from DB on mount
     useEffect(() => {
         async function load() {
             try {
@@ -67,7 +72,6 @@ export default function ServicesEditor() {
         setSaving(true);
         try {
             if (editingService) {
-                // ── EDIT: PUT /api/services/[id]
                 const res = await fetch(`/api/services/${editingService._id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
@@ -82,7 +86,6 @@ export default function ServicesEditor() {
                     prev.map((s) => (s._id === editingService._id ? json.data : s))
                 );
             } else {
-                // ── ADD: POST /api/services
                 const res = await fetch('/api/services', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },

@@ -17,6 +17,12 @@ const links = [
   { href: "/contact", label: "Contact" },
 ];
 
+// "/" must be exact match, everything else uses startsWith
+function isActiveLink(href: string, pathname: string): boolean {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(href + "/");
+}
+
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
@@ -35,7 +41,9 @@ function Navbar() {
   };
 
   useEffect(() => {
-    const activeIndex = links.findIndex((l) => l.href === pathname);
+    // Find the active link index using the smart matcher
+    const activeIndex = links.findIndex((l) => isActiveLink(l.href, pathname));
+    // Fall back to Home (index 0) if nothing matches
     const index = activeIndex !== -1 ? activeIndex : 0;
     moveIndicatorTo(linkRefs.current[index]);
   }, [pathname]);
@@ -58,7 +66,7 @@ function Navbar() {
           className="nav-pill"
           ref={navPillRef}
           onMouseLeave={() => {
-            const activeIndex = links.findIndex((l) => l.href === pathname);
+            const activeIndex = links.findIndex((l) => isActiveLink(l.href, pathname));
             const index = activeIndex !== -1 ? activeIndex : 0;
             moveIndicatorTo(linkRefs.current[index]);
           }}
@@ -75,7 +83,7 @@ function Navbar() {
               key={link.href}
               href={link.href}
               ref={(el) => { linkRefs.current[i] = el; }}
-              className={pathname === link.href ? "active" : ""}
+              className={isActiveLink(link.href, pathname) ? "active" : ""}
               onMouseEnter={() => moveIndicatorTo(linkRefs.current[i])}
             >
               {link.label}
@@ -99,7 +107,12 @@ function Navbar() {
       <div className={`menu ${isOpen ? "" : "closed"}`}>
         <div className="menu-links">
           {links.map((link) => (
-            <Link key={link.href} className="m-links" href={link.href} onClick={closeMenu}>
+            <Link
+              key={link.href}
+              className={`m-links${isActiveLink(link.href, pathname) ? " active" : ""}`}
+              href={link.href}
+              onClick={closeMenu}
+            >
               {link.label}
             </Link>
           ))}

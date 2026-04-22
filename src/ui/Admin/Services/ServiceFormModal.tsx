@@ -12,11 +12,30 @@ interface ServiceFormModalProps {
 }
 
 export default function ServiceFormModal({ service, onSave, onClose, saving }: ServiceFormModalProps) {
-    const [title, setTitle] = useState(service?.title ?? '');
-    const [description, setDescription] = useState(service?.description ?? '');
-    const [image, setImage] = useState<string | null>(service?.image ?? null);
-    const [imageName, setImageName] = useState<string | null>(null);
+    const [title,             setTitle]             = useState('');
+    const [description,       setDescription]       = useState('');
+    const [serviceType,       setServiceType]       = useState('');
+    const [location,          setLocation]          = useState('');
+    const [estimatedDuration, setEstimatedDuration] = useState('');
+    const [maximumArea,       setMaximumArea]       = useState('');
+    const [finishStyle,       setFinishStyle]       = useState('');
+    const [suitableFor,       setSuitableFor]       = useState('');
+    const [image,             setImage]             = useState<string | null>(null);
+    const [imageName,         setImageName]         = useState<string | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        setTitle            (service?.title             ?? '');
+        setDescription      (service?.description       ?? '');
+        setServiceType      (service?.serviceType       ?? '');
+        setLocation         (service?.location          ?? '');
+        setEstimatedDuration(service?.estimatedDuration ?? '');
+        setMaximumArea      (service?.maximumArea       ?? '');
+        setFinishStyle      (service?.finishStyle       ?? '');
+        setSuitableFor      (service?.suitableFor       ?? '');
+        setImage            (service?.image             ?? null);
+        setImageName        (service?.image ? 'Current image' : null);
+    }, [service]);
 
     useEffect(() => {
         function onKey(e: KeyboardEvent) {
@@ -36,7 +55,11 @@ export default function ServiceFormModal({ service, onSave, onClose, saving }: S
 
     function handleSubmit() {
         if (!title.trim() || saving) return;
-        onSave({ title, description, image });
+        onSave({
+            title, description, serviceType, location,
+            estimatedDuration, maximumArea, finishStyle,
+            suitableFor, image,
+        });
     }
 
     return (
@@ -56,6 +79,8 @@ export default function ServiceFormModal({ service, onSave, onClose, saving }: S
                 </div>
 
                 <div className="svcModalBody">
+
+                    {/* Image */}
                     <div className="svcModalField">
                         <label className="svcModalLabel">Service Image</label>
                         <div
@@ -91,6 +116,7 @@ export default function ServiceFormModal({ service, onSave, onClose, saving }: S
                         {imageName && <p className="svcModalImageName">{imageName}</p>}
                     </div>
 
+                    {/* Title */}
                     <div className="svcModalField">
                         <label className="svcModalLabel" htmlFor="svc-title">Title</label>
                         <input
@@ -112,6 +138,7 @@ export default function ServiceFormModal({ service, onSave, onClose, saving }: S
                         )}
                     </div>
 
+                    {/* Description */}
                     <div className="svcModalField">
                         <label className="svcModalLabel" htmlFor="svc-desc">Description</label>
                         <textarea
@@ -123,6 +150,83 @@ export default function ServiceFormModal({ service, onSave, onClose, saving }: S
                             rows={4}
                         />
                     </div>
+
+                    {/* Two-column grid */}
+                    <div className="svcModalGrid">
+
+                        <div className="svcModalField">
+                            <label className="svcModalLabel" htmlFor="svc-type">Service Type</label>
+                            <input
+                                id="svc-type"
+                                type="text"
+                                className="svcModalInput"
+                                value={serviceType}
+                                onChange={(e) => setServiceType(e.target.value)}
+                                placeholder="e.g. Residential"
+                            />
+                        </div>
+
+                        <div className="svcModalField">
+                            <label className="svcModalLabel" htmlFor="svc-location">Location</label>
+                            <input
+                                id="svc-location"
+                                type="text"
+                                className="svcModalInput"
+                                value={location}
+                                onChange={(e) => setLocation(e.target.value)}
+                                placeholder="e.g. Dubai, UAE"
+                            />
+                        </div>
+
+                        <div className="svcModalField">
+                            <label className="svcModalLabel" htmlFor="svc-duration">Estimated Duration</label>
+                            <input
+                                id="svc-duration"
+                                type="text"
+                                className="svcModalInput"
+                                value={estimatedDuration}
+                                onChange={(e) => setEstimatedDuration(e.target.value)}
+                                placeholder="e.g. 3–5 days"
+                            />
+                        </div>
+
+                        <div className="svcModalField">
+                            <label className="svcModalLabel" htmlFor="svc-area">Maximum Area</label>
+                            <input
+                                id="svc-area"
+                                type="text"
+                                className="svcModalInput"
+                                value={maximumArea}
+                                onChange={(e) => setMaximumArea(e.target.value)}
+                                placeholder="e.g. 500 sqm"
+                            />
+                        </div>
+
+                        <div className="svcModalField">
+                            <label className="svcModalLabel" htmlFor="svc-finish">Finish & Style</label>
+                            <input
+                                id="svc-finish"
+                                type="text"
+                                className="svcModalInput"
+                                value={finishStyle}
+                                onChange={(e) => setFinishStyle(e.target.value)}
+                                placeholder="e.g. Matte, Polished"
+                            />
+                        </div>
+
+                        <div className="svcModalField">
+                            <label className="svcModalLabel" htmlFor="svc-suitable">Suitable For</label>
+                            <input
+                                id="svc-suitable"
+                                type="text"
+                                className="svcModalInput"
+                                value={suitableFor}
+                                onChange={(e) => setSuitableFor(e.target.value)}
+                                placeholder="e.g. Villas, Apartments"
+                            />
+                        </div>
+
+                    </div>
                 </div>
 
                 <div className="svcModalFooter">
@@ -131,6 +235,7 @@ export default function ServiceFormModal({ service, onSave, onClose, saving }: S
                         {saving ? 'Saving...' : service ? 'Save Changes' : 'Add Service'}
                     </button>
                 </div>
+
             </div>
         </div>
     );
