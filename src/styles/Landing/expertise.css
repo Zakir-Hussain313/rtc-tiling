@@ -93,7 +93,17 @@
     margin-top: 40px;
 }
 
-/* ── Tablet ───────────────────────────────────────── */
+a.service-card {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    display: block;
+}
+
+a.service-card .image-slider-container {
+    transition: transform 0.3s ease;
+}
+
 @media (max-width: 1024px) {
     .expertise-main-section {
         padding: 64px 24px;

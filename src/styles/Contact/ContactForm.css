@@ -51,7 +51,7 @@
     border-radius: 10px;
     padding: 12px 16px;
     outline: none;
-    transition: border-color 0.25s ease;
+    transition: border-color 0.25s ease, background 0.25s ease, opacity 0.25s ease;
     resize: none;
     width: 100%;
     box-sizing: border-box;
@@ -67,10 +67,113 @@
     border-color: #c4a473;
 }
 
+.contact-form-group input:disabled,
+.contact-form-group textarea:disabled {
+    background: #f7f7f7;
+    color: #999;
+    border-color: #e8e8e8;
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+/* ── Submit area ──────────────────────────────────── */
 .contact-form-submit {
     margin-top: 8px;
     display: flex;
     justify-content: center;
+}
+
+.contact-submit-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+}
+
+/* native button styled to match the site's design language */
+.cf-submit-btn {
+    font-family: Jost, sans-serif;
+    font-size: clamp(16px, 1.5vw, 20px);
+    font-weight: 500;
+    color: #fff;
+    background-color: #5b4630;
+    border: none;
+    border-radius: 999px;
+    padding: 14px 36px;
+    cursor: pointer;
+    transition: background 0.25s ease, opacity 0.25s ease, transform 0.15s ease;
+    letter-spacing: 0.02em;
+}
+
+.cf-submit-btn:hover:not(:disabled) {
+    background-color: #3e2e1e;
+    transform: translateY(-1px);
+}
+
+.cf-submit-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* subtle pulse while sending */
+.cf-submit-btn.sending {
+    animation: cf-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes cf-pulse {
+    0%, 100% { opacity: 0.55; }
+    50%       { opacity: 1;   }
+}
+
+/* ── Reassurance text ─────────────────────────────── */
+.cf-reassurance {
+    font-family: Jost, sans-serif;
+    font-size: 13px;
+    color: #3a9e5f;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    margin: 0;
+    text-align: center;
+}
+
+/* ── Status banners ───────────────────────────────── */
+.cf-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-family: Jost, sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    width: 100%;
+    box-sizing: border-box;
+    animation: cf-fade-in 0.35s ease;
+}
+
+@keyframes cf-fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0);   }
+}
+
+.cf-status svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.cf-status--success {
+    background: #edfbf3;
+    color: #1f7a45;
+    border: 1.5px solid #a8e6c1;
+}
+
+.cf-status--error {
+    background: #fff4f4;
+    color: #b91c1c;
+    border: 1.5px solid #fca5a5;
 }
 
 /* ── Right: Info ── */
@@ -136,57 +239,41 @@
     color: #c4a473;
 }
 
+/* ── Tablet ───────────────────────────────────────── */
 @media (max-width: 1024px) {
-    .contact-form-main {
-        padding: 64px 0px;
-    }
-
-    .contact-form-wrapper {
-        gap: 48px;
-    }
+    .contact-form-main { padding: 64px 0px; }
+    .contact-form-wrapper { gap: 48px; }
 }
 
+/* ── Mobile ───────────────────────────────────────── */
 @media (max-width: 768px) {
-    .contact-form-main {
-        padding: 48px 0px;
-    }
-
-    .contact-form-wrapper {
-        grid-template-columns: 1fr;
-        gap: 48px;
-    }
-
-    .contact-form-right {
-        padding-top: 0;
-        gap: 32px;
-    }
+    .contact-form-main { padding: 48px 0px; }
+    .contact-form-wrapper { grid-template-columns: 1fr; gap: 48px; }
+    .contact-form-right { padding-top: 0; gap: 32px; }
 }
 
+/* ── Small mobile ─────────────────────────────────── */
 @media (max-width: 480px) {
-    .contact-form-main {
-        padding: 36px 16px;
-    }
-
-    .contact-form-row {
-        grid-template-columns: 1fr;
-    }
-
-    .contact-form-left {
-        gap: 18px;
-    }
-
+    .contact-form-main { padding: 36px 16px; }
+    .contact-form-row { grid-template-columns: 1fr; }
+    .contact-form-left { gap: 18px; }
+    .contact-form-group label { font-size: 16px; }
     .contact-form-group input,
-    .contact-form-group textarea {
-        font-size: 14px;
-        padding: 10px 14px;
-    }
-
-    .contact-info-block h3 {
-        font-size: 20px;
-    }
-
+    .contact-form-group textarea { font-size: 14px; padding: 10px 14px; }
+    .contact-info-block h3 { font-size: 20px; }
     .contact-info-block p,
-    .contact-info-link {
-        font-size: 17px;
-    }
+    .contact-info-link { font-size: 17px; }
+    .cf-status { font-size: 14px; padding: 12px 16px; }
+    .cf-submit-btn { width: 100%; text-align: center; }
+}
+
+/* ── Mainbutton wrapper ────────────────────────────── */
+.cf-mainbutton-wrap {
+    cursor: pointer;
+    display: inline-flex;
+}
+
+.cf-mainbutton-wrap--disabled {
+    opacity: 0.55;
+    pointer-events: none;
 }

@@ -1,6 +1,7 @@
 // src/ui/Landing/Expertise.tsx
 
 import Image from "next/image";
+import Link from "next/link";
 import "../../styles/Landing/expertise.css";
 import fallbackImage from '../../assets/images/Airport-crossville-copy.jpg.jpeg';
 import Mainbutton from "@/Components/Mainbutton";
@@ -51,21 +52,32 @@ export default async function Expertise() {
                 {items.length > 0 ? (
                     <section className="marquee-outer">
                         <div className="marquee-track">
-                            {items.map((service, index) => (
-                                <div className="service-card" key={`${service._id}-${index}`}>
-                                    <div className="image-slider-container">
-                                        <Image
-                                            src={typeof service.image === "string" && service.image !== "" ? service.image : fallbackImage}
-                                            alt={service.title}
-                                            fill
-                                            className="card-image object-cover"
-                                            style={{ borderRadius: "30px" }}
-                                            sizes="(max-width: 768px) 50vw, 300px"
-                                        />
-                                    </div>
-                                    <h3 className="card-label">{service.title}</h3>
-                                </div>
-                            ))}
+                            {items.map((service, index) => {
+                                // strip any /services/ prefix so we always get a clean slug
+                                const slug = service.slug.startsWith('/services/')
+                                    ? service.slug.replace('/services/', '')
+                                    : service.slug;
+
+                                return (
+                                    <Link
+                                        key={`${service._id}-${index}`}
+                                        href={`/services/${slug}`}
+                                        className="service-card"
+                                    >
+                                        <div className="image-slider-container">
+                                            <Image
+                                                src={typeof service.image === "string" && service.image !== "" ? service.image : fallbackImage}
+                                                alt={service.title}
+                                                fill
+                                                className="card-image object-cover"
+                                                style={{ borderRadius: "30px" }}
+                                                sizes="(max-width: 768px) 50vw, 300px"
+                                            />
+                                        </div>
+                                        <h3 className="card-label">{service.title}</h3>
+                                    </Link>
+                                );
+                            })}
                         </div>
                     </section>
                 ) : (
