@@ -37,8 +37,6 @@ const ProjectSchema = new Schema<IProject>(
     { timestamps: true }
 );
 
-ProjectSchema.index({ slug: 1 });
-
 const Project: Model<IProject> =
     mongoose.models.Project || mongoose.model<IProject>('Project', ProjectSchema);
 

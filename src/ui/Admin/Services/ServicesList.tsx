@@ -6,7 +6,7 @@ import "@/styles/Admin/Services/ServicesList.css";
 interface ServicesListProps {
     services: Service[];
     onEdit: (service: Service) => void;
-    onDelete: (id: string) => void; // string _id now
+    onDelete: (id: string) => void;
 }
 
 export default function ServicesList({ services, onEdit, onDelete }: ServicesListProps) {
@@ -21,7 +21,7 @@ export default function ServicesList({ services, onEdit, onDelete }: ServicesLis
                     </svg>
                 </div>
                 <p className="servicesEmptyText">No services yet</p>
-                <p className="servicesEmptySub">Click &quot;Add Service&quot; to get started</p>
+                <p className="servicesEmptySub">Click &qout;Add Service&qout; to get started</p>
             </div>
         );
     }
@@ -31,7 +31,7 @@ export default function ServicesList({ services, onEdit, onDelete }: ServicesLis
             <div className="servicesListHeader">
                 <span>Image</span>
                 <span>Title</span>
-                <span>Description</span>
+                <span>Details</span>
                 <span>Auto Link</span>
                 <span>Actions</span>
             </div>
@@ -53,8 +53,19 @@ export default function ServicesList({ services, onEdit, onDelete }: ServicesLis
                             )}
                         </div>
 
-                        <div className="servicesListTitle">{service.title}</div>
-                        <div className="servicesListDesc">{service.description}</div>
+                        <div className="servicesListInfo">
+                            <span className="servicesListTitle">{service.title}</span>
+                            <span className="servicesListDesc">{service.description}</span>
+                        </div>
+
+                        <div className="servicesListMeta">
+                            {service.serviceType       && <span> {service.serviceType}</span>}, 
+                            {service.location          && <span> {service.location}</span>}, 
+                            {service.estimatedDuration && <span> {service.estimatedDuration}</span>}, 
+                            {service.maximumArea       && <span> {service.maximumArea}</span>}, 
+                            {service.finishStyle       && <span> {service.finishStyle}</span>}, 
+                            {service.suitableFor       && <span> {service.suitableFor}</span>}
+                        </div>
 
                         <div className="servicesListLink">
                             <span className="servicesListLinkBadge">
@@ -80,10 +91,10 @@ export default function ServicesList({ services, onEdit, onDelete }: ServicesLis
                                 <span>Delete</span>
                             </button>
                         </div>
+
                     </div>
                 ))}
             </div>
         </div>
     );
 }
-

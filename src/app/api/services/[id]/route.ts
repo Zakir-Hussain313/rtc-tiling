@@ -14,16 +14,13 @@ function generateSlug(title: string): string {
     );
 }
 
-// ── PUT /api/services/[id] ─────────────────────────
-
 export async function PUT(
     req: NextRequest,
-    { params }: { params: Promise<{ id: string }> }  // 👈 Promise now
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         await connectDB();
-
-        const { id } = await params;  // 👈 await it
+        const { id } = await params;
 
         let body: unknown;
         try {
@@ -41,38 +38,40 @@ export async function PUT(
             return NextResponse.json({ error: 'Service not found' }, { status: 404 });
         }
 
-        const { title, description, image } = body as Record<string, unknown>;
+        const {
+            title, description, image,
+            serviceType, location, estimatedDuration,
+            maximumArea, finishStyle, suitableFor,
+        } = body as Record<string, unknown>;
 
         const updates: Record<string, unknown> = {};
 
         if (typeof title === 'string' && title.trim()) {
             const trimmedTitle = title.trim();
             const newSlug = generateSlug(trimmedTitle);
-
-            const conflict = await Service.findOne({
-                slug: newSlug,
-                _id: { $ne: id },
-            });
-
+            const conflict = await Service.findOne({ slug: newSlug, _id: { $ne: id } });
             if (conflict) {
                 return NextResponse.json(
                     { error: 'A service with this title already exists' },
                     { status: 409 }
                 );
             }
-
             updates.title = trimmedTitle;
-            updates.slug = newSlug;
+            updates.slug  = newSlug;
         }
 
-        if (typeof description === 'string') updates.description = description.trim();
+        if (typeof description       === 'string') updates.description       = description.trim();
+        if (typeof serviceType       === 'string') updates.serviceType       = serviceType.trim();
+        if (typeof location          === 'string') updates.location          = location.trim();
+        if (typeof estimatedDuration === 'string') updates.estimatedDuration = estimatedDuration.trim();
+        if (typeof maximumArea       === 'string') updates.maximumArea       = maximumArea.trim();
+        if (typeof finishStyle       === 'string') updates.finishStyle       = finishStyle.trim();
+        if (typeof suitableFor       === 'string') updates.suitableFor       = suitableFor.trim();
 
         if (typeof image === 'string' && image.startsWith('data:image/')) {
-            if (service.imagePublicId) {
-                await deleteImage(service.imagePublicId);
-            }
+            if (service.imagePublicId) await deleteImage(service.imagePublicId);
             const result = await uploadImage(image, 'rtc/services');
-            updates.image = result.url;
+            updates.image         = result.url;
             updates.imagePublicId = result.publicId;
         }
 
@@ -89,26 +88,20 @@ export async function PUT(
     }
 }
 
-// ── DELETE /api/services/[id] ──────────────────────
-
 export async function DELETE(
     _req: NextRequest,
-    { params }: { params: Promise<{ id: string }> }  // 👈 Promise now
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
         await connectDB();
-
-        const { id } = await params;  // 👈 await it
+        const { id } = await params;
 
         const service = await Service.findById(id);
         if (!service) {
             return NextResponse.json({ error: 'Service not found' }, { status: 404 });
         }
 
-        if (service.imagePublicId) {
-            await deleteImage(service.imagePublicId);
-        }
-
+        if (service.imagePublicId) await deleteImage(service.imagePublicId);
         await Service.findByIdAndDelete(id);
 
         return NextResponse.json({ success: true }, { status: 200 });
