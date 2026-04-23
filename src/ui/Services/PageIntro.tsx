@@ -1,8 +1,9 @@
 import Link from "next/link";
 import '../../styles/Services/PageIntro.css'
+import CountUp from "@/Components/CountUp";
 
-export default function ServicesPageIntro(){
-    return(
+export default function ServicesPageIntro() {
+    return (
         <main>
             <section className="pageIntro-first-section">
                 <div className="first-section-child-1">
@@ -10,20 +11,19 @@ export default function ServicesPageIntro(){
                         <Link
                             href={'/'}
                         >
-                            Home 
+                            Home
                         </Link>
                         <span> / </span>
                         <Link
                             href={'/services'}
                         >
-                             Services
+                            Services
                         </Link>
                     </div>
                     <h1>Excellence in Every Detail.</h1>
                 </div>
                 <div className="first-section-child-2">
-                    <h1>92<span>%</span></h1>
-                    <p>Client Retention</p>
+                    <CountUp value={92} symbol="%" label="Client Retention" />
                 </div>
             </section>
         </main>

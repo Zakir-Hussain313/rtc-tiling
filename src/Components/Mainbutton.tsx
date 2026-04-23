@@ -84,7 +84,7 @@ function Mainbutton({
     bubble.style.left = `${x - size / 2}px`;
     bubble.style.top = `${y - size / 2}px`;
     // 👇 faster exit: 0.3s, no opacity transition
-    bubble.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    bubble.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
     bubble.style.transform = 'scale(0)';
 
     if (hoverTextColor && btn) {

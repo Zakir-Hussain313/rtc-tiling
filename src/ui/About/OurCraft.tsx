@@ -6,6 +6,7 @@ import { GiTrowel } from "react-icons/gi"
 import { MdDiamond } from "react-icons/md"
 import { BsHouseFill } from "react-icons/bs"
 import { getAboutImages } from 'lib/getAboutImages';
+import FadeIn from "@/Components/FadeIn"
 
 const features = [
     {
@@ -31,16 +32,16 @@ export default async function OurCraft() {
 
     return (
         <main className="our-craft-main-section">
-            <section className="our-craft-heading">
+            <FadeIn className="our-craft-heading">
                 <h2>OUR CRAFT</h2>
                 <h1>
                     <span>**</span>We Build With Precision —{" "}
                     <br />
                     For Homes, Businesses, and Modern Spaces<span>**</span>
                 </h1>
-            </section>
+            </FadeIn>
 
-            <section className="our-craft-section">
+            <FadeIn className="our-craft-section" delay={150}>
                 <div className="our-craft-left">
                     <Image
                         src={craftImageUrl ?? fallbackImage}
@@ -53,16 +54,16 @@ export default async function OurCraft() {
 
                 <div className="our-craft-right">
                     {features.map((f, i) => (
-                        <div className="our-craft-right-div" key={i}>
+                        <FadeIn className="our-craft-right-div" key={i} delay={200 + i * 100}>
                             <div className="our-craft-icon">{f.icon}</div>
                             <div className="our-craft-right-text">
                                 <h1>{f.title}</h1>
                                 <p>{f.desc}</p>
                             </div>
-                        </div>
+                        </FadeIn>
                     ))}
 
-                    <div className="our-craft-btn">
+                    <FadeIn className="our-craft-btn" delay={500}>
                         <Mainbutton
                             data="View Our Projects"
                             href="/projects"
@@ -70,9 +71,9 @@ export default async function OurCraft() {
                             padding="5px 5px 5px 20px"
                             arrowSize="clamp(38px, 4vw, 50px)"
                         />
-                    </div>
+                    </FadeIn>
                 </div>
-            </section>
+            </FadeIn>
         </main>
     )
 }

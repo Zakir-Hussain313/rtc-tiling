@@ -28,7 +28,6 @@
   --font-heading: 'Playfair Display', serif;
 }
 
-/* Reset margin and smoothing */
 body {
   margin: 0;
   font-family: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -38,12 +37,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Code font */
 code {
   font-family: 'Source Code Pro', Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-/* Custom fonts */
 @font-face {
   font-family: 'Jost';
   src: url(../styles/Fonts/Jost-Regular.ttf) format('truetype');
@@ -58,18 +55,15 @@ code {
   font-style: normal;
 }
 
-/* Links */
 a {
   color: black;
   text-decoration: none;
 }
 
-/* Default text */
 span, p, a {
   font-family: 'Jost', sans-serif;
 }
 
-/* Headings use Playfair */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Playfair', serif;
   margin: 0;
@@ -87,4 +81,17 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   min-height: 100vh;
   background: var(--off-white);
+}
+
+.fade-init {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+        opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fade-init.fade-in {
+    opacity: 1;
+    transform: translateY(0);
 }

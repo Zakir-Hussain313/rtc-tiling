@@ -14,6 +14,7 @@ export default function Featured() {
                 <div className="button-section">
                     <Mainbutton
                         data="View Gallery"
+                        href="/projects"
                         backgroundColor="white"
                         textColor="black"
                         border="2px solid #777"

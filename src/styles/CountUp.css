@@ -1,0 +1,69 @@
+.countup-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.countup-number-row {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.countup-number {
+    font-family: Jost, Jost-400;
+    font-weight: 400;
+    font-size: 85px;
+    color: #000;
+    line-height: 1;
+}
+
+.countup-symbol {
+    font-family: Jost, Jost-400;
+    font-weight: 400;
+    font-size: 85px;
+    color: #c4a473;
+    line-height: 1;
+}
+
+.countup-label {
+    font-family: Jost, Jost-400;
+    font-size: 18px;
+    color: #444;
+    text-align: center;
+    margin: 0;
+}
+
+@media (max-width: 1024px) {
+    .countup-number,
+    .countup-symbol {
+        font-size: 65px;
+    }
+
+    .countup-label {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .countup-number,
+    .countup-symbol {
+        font-size: 52px;
+    }
+
+    .countup-label {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .countup-number,
+    .countup-symbol {
+        font-size: 46px;
+    }
+
+    .countup-label {
+        font-size: 14px;
+    }
+}

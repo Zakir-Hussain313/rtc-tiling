@@ -89,6 +89,7 @@ export default async function Expertise() {
                 <div className="expertise-button-section flex justify-center">
                     <Mainbutton
                         data="All Services"
+                        href="/services"
                         backgroundColor="white"
                         textColor="black"
                         hoverBubbleColor="#080263"

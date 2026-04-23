@@ -39,6 +39,7 @@ export async function PUT(
             title, description, image,
             type, location, completionYear,
             size, designStyle, client, date,
+            featured,
         } = body as Record<string, unknown>;
 
         const updates: Record<string, unknown> = {};
@@ -54,22 +55,23 @@ export async function PUT(
                 );
             }
             updates.title = trimmedTitle;
-            updates.slug  = newSlug;
+            updates.slug = newSlug;
         }
 
-        if (typeof description    === 'string') updates.description    = description.trim();
-        if (typeof type           === 'string') updates.type           = type.trim();
-        if (typeof location       === 'string') updates.location       = location.trim();
+        if (typeof description === 'string') updates.description = description.trim();
+        if (typeof type === 'string') updates.type = type.trim();
+        if (typeof location === 'string') updates.location = location.trim();
         if (typeof completionYear === 'string') updates.completionYear = completionYear.trim();
-        if (typeof size           === 'string') updates.size           = size.trim();
-        if (typeof designStyle    === 'string') updates.designStyle    = designStyle.trim();
-        if (typeof client         === 'string') updates.client         = client.trim();
-        if (typeof date           === 'string') updates.date           = date.trim();
+        if (typeof size === 'string') updates.size = size.trim();
+        if (typeof designStyle === 'string') updates.designStyle = designStyle.trim();
+        if (typeof client === 'string') updates.client = client.trim();
+        if (typeof date === 'string') updates.date = date.trim();
+        if (typeof featured === 'boolean') updates.featured = featured;
 
         if (typeof image === 'string' && image.startsWith('data:image/')) {
             if (project.imagePublicId) await deleteImage(project.imagePublicId);
             const result = await uploadImage(image, 'rtc/projects');
-            updates.image         = result.url;
+            updates.image = result.url;
             updates.imagePublicId = result.publicId;
         }
 

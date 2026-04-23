@@ -1,8 +1,9 @@
 import Link from "next/link";
 import '../../styles/Contact/PageIntro.css'
+import CountUp from "@/Components/CountUp";
 
-export default function ContactPageIntro(){
-    return(
+export default function ContactPageIntro() {
+    return (
         <main className="pageIntro-main-section">
             <section className="pageIntro-first-section">
                 <div className="first-section-child-1">
@@ -10,20 +11,19 @@ export default function ContactPageIntro(){
                         <Link
                             href={'/'}
                         >
-                            Home 
+                            Home
                         </Link>
                         <span> / </span>
                         <Link
                             href={'/contact'}
                         >
-                             Contact
+                            Contact
                         </Link>
                     </div>
                     <h1>Every Tile. Perfectly Placed.</h1>
                 </div>
                 <div className="first-section-child-2">
-                    <h1>80<span>+</span></h1>
-                    <p>Successful Launches</p>
+                    <CountUp value={80} symbol="+" label="Successful Launches" />
                 </div>
             </section>
         </main>

@@ -7,6 +7,7 @@ interface ProjectsListProps {
     projects: Project[];
     onEdit: (project: Project) => void;
     onDelete: (id: string) => void;
+    onToggleFeatured: (id: string, current: boolean) => void;   // 👈 new
 }
 
 function formatDate(dateStr: string): string {
@@ -16,7 +17,7 @@ function formatDate(dateStr: string): string {
     return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
-export default function ProjectsList({ projects, onEdit, onDelete }: ProjectsListProps) {
+export default function ProjectsList({ projects, onEdit, onDelete, onToggleFeatured }: ProjectsListProps) {
     if (projects.length === 0) {
         return (
             <div className="projectsEmptyState">
@@ -38,6 +39,7 @@ export default function ProjectsList({ projects, onEdit, onDelete }: ProjectsLis
                 <span>Image</span>
                 <span>Title</span>
                 <span>Date</span>
+                <span>Featured</span>        {/* 👈 new */}
                 <span>Auto Link</span>
                 <span>Actions</span>
             </div>
@@ -64,9 +66,25 @@ export default function ProjectsList({ projects, onEdit, onDelete }: ProjectsLis
                             <span className="projectsListDesc">{project.description}</span>
                         </div>
 
-                        {/* Date replaces Details */}
                         <div className="projectsListDate">
                             <span>{formatDate(project.date)}</span>
+                        </div>
+
+                        {/* 👇 new featured toggle */}
+                        <div className="projectsListFeatured">
+                            <label className="featuredToggle" title={project.featured ? 'Remove from featured' : 'Mark as featured'}>
+                                <input
+                                    type="checkbox"
+                                    checked={project.featured ?? false}
+                                    onChange={() => onToggleFeatured(project._id, project.featured)}
+                                />
+                                <span className="featuredToggleTrack">
+                                    <span className="featuredToggleThumb" />
+                                </span>
+                                <span className="featuredToggleLabel">
+                                    {project.featured ? 'Featured' : 'Not featured'}
+                                </span>
+                            </label>
                         </div>
 
                         <div className="projectsListLink">

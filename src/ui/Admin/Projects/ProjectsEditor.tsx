@@ -18,6 +18,7 @@ export type Project = {
     date: string;
     image: string | null;
     slug: string;
+    featured: boolean;
 };
 
 export function generateSlug(title: string): string {
@@ -108,6 +109,24 @@ export default function ProjectsEditor() {
         }
     }
 
+    async function handleToggleFeatured(id: string, current: boolean) {
+        try {
+            const res = await fetch(`/api/projects/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ featured: !current }),
+            });
+            if (!res.ok) throw new Error('Failed to update');
+            const json = await res.json();
+            setProjects((prev) =>
+                prev.map((p) => (p._id === id ? json.data : p))
+            );
+        } catch (err) {
+            console.error('[ProjectsEditor] Toggle featured failed', err);
+            alert('Failed to update featured status.');
+        }
+    }
+
     return (
         <main className="projectsEditorBody">
             <div className="projectsEditorHeader">
@@ -132,6 +151,7 @@ export default function ProjectsEditor() {
                     projects={projects}
                     onEdit={handleEdit}
                     onDelete={handleDelete}
+                    onToggleFeatured={handleToggleFeatured}
                 />
             )}
 

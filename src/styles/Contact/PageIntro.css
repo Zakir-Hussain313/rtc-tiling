@@ -26,30 +26,6 @@
     font-weight: 400;
 }
 
-.first-section-child-2 {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.first-section-child-2 h1 {
-    font-size: 85px;
-    font-family: Jost, Jost-400;
-    font-weight: 400;
-}
-
-.first-section-child-2 h1 span {
-    font-size: 85px;
-    color: #c4a473;
-}
-
-.first-section-child-2 p {
-    font-size: 18px;
-    color: #444;
-}
-
-
 @media (max-width: 1024px) {
 
     .first-section-child-1 h1 {
