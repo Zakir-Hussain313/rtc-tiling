@@ -15,7 +15,7 @@ export default async function OurStory() {
 
     return (
         <main className="about-main-section">
-            <FadeIn className="about-first-section">
+            <FadeIn as="section" className="about-first-section" delay={100}>
                 <div className="first-section-child-1">
                     <div className="bread-crumb">
                         <Link href={'/'}>Home</Link>
@@ -29,7 +29,7 @@ export default async function OurStory() {
                 </div>
             </FadeIn>
 
-            <FadeIn className="about-second-section" delay={150}>
+            <FadeIn as="section" className="about-second-section" delay={150}>
                 <div className="second-section-child-1">
                     <div className="second-section-image-box">
                         <Image
@@ -64,7 +64,7 @@ export default async function OurStory() {
                 </div>
             </FadeIn>
 
-            <FadeIn className="about-third-section" delay={300}>
+            <FadeIn as="section" className="about-third-section" delay={200}>
                 <NumBox />
             </FadeIn>
         </main>

@@ -5,6 +5,7 @@ import fallbackImage from '../../assets/images/porcelain-floor-tiles-copy.jpg.jp
 import Link from 'next/link'
 import { connectDB } from 'lib/mongodb'
 import Project from 'models/Project'
+import FadeIn from '@/Components/FadeIn'
 
 type ProjectDoc = {
     _id: string
@@ -42,7 +43,7 @@ export default async function ProjectsListing() {
         <main>
             <section className="projectsListing-main-section">
                 {projects.map((project, index) => (
-                    <div key={project._id}>
+                    <FadeIn as={'div'} delay={index * 100} key={project._id}>
                         <Link href={`/projects/${project.slug}`} className='projects-div'>
                             <div className="project-image">
                                 <Image
@@ -68,7 +69,7 @@ export default async function ProjectsListing() {
                             </div>
                         </Link>
                         <hr />
-                    </div>
+                    </FadeIn>
                 ))}
 
                 {projects.length === 0 && (

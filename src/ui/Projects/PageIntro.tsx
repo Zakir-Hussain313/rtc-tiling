@@ -1,11 +1,12 @@
 import Link from "next/link";
 import '../../styles/Projects/PageIntro.css'
 import CountUp from "@/Components/CountUp";
+import FadeIn from "@/Components/FadeIn";
 
 export default function ProjectsPageIntro() {
     return (
         <main>
-            <section className="pageIntro-first-section">
+            <FadeIn as={'section'} delay={100} className="pageIntro-first-section">
                 <div className="first-section-child-1">
                     <div className="bread-crumb">
                         <Link
@@ -25,7 +26,7 @@ export default function ProjectsPageIntro() {
                 <div className="first-section-child-2">
                     <CountUp value={99} symbol="%" label="Projects Completed" />
                 </div>
-            </section>
+            </FadeIn>
         </main>
     )
 }

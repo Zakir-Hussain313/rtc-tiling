@@ -6,11 +6,12 @@ import '../../styles/Contact/ContactForm.css'
 import Mainbutton from '@/Components/Mainbutton'
 import { FaTelegramPlane, FaInstagram, FaPhone } from 'react-icons/fa'
 import Link from 'next/link'
+import FadeIn from '@/Components/FadeIn'
 
 // ── Replace these with your real EmailJS credentials ──────────────
-const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID'
+const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID'
 const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID'
-const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY'
+const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY'
 // ──────────────────────────────────────────────────────────────────
 
 type Status = 'idle' | 'sending' | 'success' | 'error'
@@ -54,7 +55,7 @@ export default function ContactForm() {
 
     return (
         <main className="contact-form-main">
-            <section className="contact-form-wrapper">
+            <FadeIn as="section" className="contact-form-wrapper" delay={100}>
 
                 {/* ── Left: Form ── */}
                 <form className="contact-form-left" ref={formRef} noValidate>
@@ -177,7 +178,7 @@ export default function ContactForm() {
                 </form>
 
                 {/* ── Right: Info ── */}
-                <div className="contact-form-right">
+                <FadeIn as="div" className="contact-form-right" delay={300}>
                     <div className="contact-info-block">
                         <h3>Chat with us.</h3>
                         <p>Speak to us via live chat.</p>
@@ -212,9 +213,8 @@ export default function ContactForm() {
                         <h3>Working hours</h3>
                         <p>Monday — Saturday: 7:00 AM — 6:00 PM</p>
                     </div>
-                </div>
-
-            </section>
+                </FadeIn>
+            </FadeIn>
         </main>
     )
 }

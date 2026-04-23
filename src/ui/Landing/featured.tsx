@@ -1,3 +1,4 @@
+import FadeIn from "@/Components/FadeIn"
 import "../../styles/Landing/featured.css"
 import FeaturedGrid from "@/Components/FeaturedGrid"
 import Mainbutton from "@/Components/Mainbutton"
@@ -6,12 +7,12 @@ export default function Featured() {
     return (
         <main className="featured-main-section">
             <section className="featured-second-main-section">
-                <section className="title-section">
+                <FadeIn as="section" className="title-section" delay={100}>
                     <h1>FEATURED</h1>
                     <p>Crafted Surfaces, Captured Moments</p>
-                </section>
+                </FadeIn>
                 <FeaturedGrid />
-                <div className="button-section">
+                <FadeIn as="div" className="button-section" delay={200}>
                     <Mainbutton
                         data="View Gallery"
                         href="/projects"
@@ -21,8 +22,8 @@ export default function Featured() {
                         fontSize="clamp(20px, 2.5vw, 25px)"
                         arrowSize="clamp(38px, 4vw, 50px)"
                     />
-                </div>
+                </FadeIn>
             </section>
-        </main>
+        </main >
     )
 }

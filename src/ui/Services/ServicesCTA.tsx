@@ -1,9 +1,10 @@
 import Mainbutton from "@/Components/Mainbutton";
+import FadeIn from "@/Components/FadeIn";
 import '../../styles/Services/ServicesCTA.css'
 
 export default function ServicesCTA() {
     return (
-        <main className="ServicesCTA-main-section">
+        <FadeIn as="main" className="ServicesCTA-main-section" delay={100}>
             <h1>let&apos;s work together to transform your space</h1>
             <p>Reach out today, and let&apos;s discuss your tiling project.</p>
             <div className="ServicesCTA-button">
@@ -15,6 +16,6 @@ export default function ServicesCTA() {
                     arrowSize="clamp(38px, 4vw, 55px)"
                 />
             </div>
-        </main>
+        </FadeIn>
     )
 }

@@ -114,9 +114,13 @@
         font-size: 28px;
     }
 
+    .socials {
+        gap: 40px;
+    }
+
     .icon {
-        width: 40px;
-        height: 40px;
+        width: 75px;
+        height: 75px;
     }
 
     .card {
@@ -155,9 +159,13 @@
         height: 360px;
     }
 
+    .socials {
+        gap: 30px;
+    }
+
     .icon {
-        width: 35px;
-        height: 35px;
+        width: 65px;
+        height: 65px;
     }
 }
 
@@ -185,12 +193,35 @@
     }
 
     .socials {
-        gap: 20px;
+        gap: 30px;
     }
 
     .icon {
-        width: 26px;
-        height: 26px;
+        width: 45px;
+        height: 45px;
+        flex-shrink: 1;
+    }
+}
+
+@media (max-width: 510px) {
+    .socials {
+        gap: 25px;
+    }
+
+    .icon {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media (max-width: 420px) {
+    .socials {
+        gap: 25px;
+    }
+
+    .icon {
+        width: 30px;
+        height: 30px;
     }
 }
 

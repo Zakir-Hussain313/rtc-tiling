@@ -1,11 +1,11 @@
-import React from 'react'
 import NumBox from '../../Components/NumBox'
+import FadeIn from '@/Components/FadeIn'
 
 function Stats() {
   return (
-    <div>
+    <FadeIn as="div" delay={100}>
         <NumBox />
-    </div>
+    </FadeIn>
   )
 }
 
