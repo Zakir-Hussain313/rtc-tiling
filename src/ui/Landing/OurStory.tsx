@@ -59,7 +59,6 @@ export default async function OurStory() {
                 <div className="card">
                     <div className="imageCol">
 
-                        {/* 👇 Client component handles cycling */}
                         <StoryImageCycler images={images} />
 
                         <div className="socials">

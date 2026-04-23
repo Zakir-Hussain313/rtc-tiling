@@ -13,7 +13,7 @@
     flex-direction: column;
     gap: 12px;
     text-align: left;
-    padding-left: 50px;
+    padding-left: 40px;
 }
 
 .title-container h1 {
@@ -106,7 +106,11 @@ a.service-card .image-slider-container {
 
 @media (max-width: 1024px) {
     .expertise-main-section {
-        padding: 64px 24px;
+        padding: 64px 0px;
+    }
+
+    .title-container {
+        padding-left: 10px;
     }
 
     .title-container h1 {
@@ -122,7 +126,7 @@ a.service-card .image-slider-container {
 /* ── Mobile ───────────────────────────────────────── */
 @media (max-width: 768px) {
     .expertise-main-section {
-        padding: 48px 16px;
+        padding: 48px 0px;
     }
 
     .title-container {
@@ -159,7 +163,7 @@ a.service-card .image-slider-container {
 /* ── Small mobile ─────────────────────────────────── */
 @media (max-width: 540px) {
     .expertise-main-section {
-        padding: 40px 12px;
+        padding: 40px 0px;
     }
 
     .title-container h1 {
@@ -189,7 +193,7 @@ a.service-card .image-slider-container {
 /* ── XS ───────────────────────────────────────────── */
 @media (max-width: 380px) {
     .expertise-main-section {
-        padding: 32px 12px;
+        padding: 32px 0px;
     }
 
     .title-container {
