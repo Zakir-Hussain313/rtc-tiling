@@ -92,7 +92,7 @@ function Navbar() {
         </nav>
 
         <div className="nav-cta">
-          <Mainbutton data={"Get a free Quote"} />
+          <Mainbutton data={"Get a free Quote"} href="/contact" />
         </div>
 
         <span className={`burger ${isOpen ? "open" : ""}`} onClick={handleClick}>

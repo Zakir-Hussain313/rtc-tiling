@@ -61,7 +61,7 @@
 }
 
 .main-button:hover .arrow-inner {
-  transform: rotate(20deg);
+  transform: rotate(40deg);
 }
 
 .arrow-inner img {

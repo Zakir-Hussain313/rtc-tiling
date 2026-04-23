@@ -14,6 +14,7 @@ export interface IProject extends Document {
     date: string;
     slug: string;
     order: number;
+    featured: boolean;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -33,6 +34,7 @@ const ProjectSchema = new Schema<IProject>(
         date:           { type: String, default: '', trim: true },
         slug:           { type: String, required: true, unique: true, trim: true },
         order:          { type: Number, default: 0 },
+        featured:       { type: Boolean, default: false },
     },
     { timestamps: true }
 );

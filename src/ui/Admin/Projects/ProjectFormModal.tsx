@@ -14,33 +14,33 @@ interface ProjectFormModalProps {
 const TODAY = new Date().toISOString().split('T')[0]; // YYYY-MM-DD, used as max date
 
 export default function ProjectFormModal({ project, onSave, onClose, saving }: ProjectFormModalProps) {
-    const [title,          setTitle]          = useState('');
-    const [description,    setDescription]    = useState('');
-    const [type,           setType]           = useState('');
-    const [location,       setLocation]       = useState('');
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [type, setType] = useState('');
+    const [location, setLocation] = useState('');
     const [completionYear, setCompletionYear] = useState('');
-    const [size,           setSize]           = useState('');
-    const [designStyle,    setDesignStyle]    = useState('');
-    const [client,         setClient]         = useState('');
-    const [date,           setDate]           = useState('');
-    const [dateError,      setDateError]      = useState('');
-    const [image,          setImage]          = useState<string | null>(null);
-    const [imageName,      setImageName]      = useState<string | null>(null);
+    const [size, setSize] = useState('');
+    const [designStyle, setDesignStyle] = useState('');
+    const [client, setClient] = useState('');
+    const [date, setDate] = useState('');
+    const [dateError, setDateError] = useState('');
+    const [image, setImage] = useState<string | null>(null);
+    const [imageName, setImageName] = useState<string | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        setTitle         (project?.title          ?? '');
-        setDescription   (project?.description    ?? '');
-        setType          (project?.type           ?? '');
-        setLocation      (project?.location       ?? '');
+        setTitle(project?.title ?? '');
+        setDescription(project?.description ?? '');
+        setType(project?.type ?? '');
+        setLocation(project?.location ?? '');
         setCompletionYear(project?.completionYear ?? '');
-        setSize          (project?.size           ?? '');
-        setDesignStyle   (project?.designStyle    ?? '');
-        setClient        (project?.client         ?? '');
-        setDate          (project?.date           ?? '');
-        setDateError     ('');
-        setImage         (project?.image          ?? null);
-        setImageName     (project?.image ? 'Current image' : null);
+        setSize(project?.size ?? '');
+        setDesignStyle(project?.designStyle ?? '');
+        setClient(project?.client ?? '');
+        setDate(project?.date ?? '');
+        setDateError('');
+        setImage(project?.image ?? null);
+        setImageName(project?.image ? 'Current image' : null);
     }, [project]);
 
     useEffect(() => {
@@ -99,7 +99,7 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
             return;
         }
 
-        onSave({ title, description, type, location, completionYear, size, designStyle, client, date, image });
+        onSave({ title, description, type, location, completionYear, size, designStyle, client, date, image, featured: false });
     }
 
     return (

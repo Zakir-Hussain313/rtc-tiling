@@ -28,7 +28,7 @@ export default function FeaturedGrid() {
     useEffect(() => {
         async function load() {
             try {
-                const res  = await fetch('/api/projects');
+                const res  = await fetch('/api/projects?featured=true');
                 const json = await res.json();
                 const all: Project[] = json.data ?? [];
                 setProjects(all.filter((p) => p.image).slice(0, 6));

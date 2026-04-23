@@ -4,6 +4,8 @@ import Image from "next/image";
 import NumBox from "@/Components/NumBox";
 import fallbackImage from '../../assets/images/Hero-background.webp'
 import { getAboutImages } from 'lib/getAboutImages';
+import CountUp from "@/Components/CountUp";
+import FadeIn from "@/Components/FadeIn";
 
 export default async function OurStory() {
     const images = await getAboutImages();
@@ -13,21 +15,21 @@ export default async function OurStory() {
 
     return (
         <main className="about-main-section">
-            <section className="about-first-section">
+            <FadeIn className="about-first-section">
                 <div className="first-section-child-1">
                     <div className="bread-crumb">
                         <Link href={'/'}>Home</Link>
                         <span> / </span>
                         <Link href={'/about'}>About Us</Link>
                     </div>
-                    <h1>PRECISION IN EVERY <br />PROJECT</h1>
+                    <h1>PRECISION IN EVERY PROJECT</h1>
                 </div>
                 <div className="first-section-child-2">
-                    <h1>100<span>%</span></h1>
-                    <p>Customer Satisfaction</p>
+                    <CountUp value={100} symbol="%" label="Customer Satisfaction" />
                 </div>
-            </section>
-            <section className="about-second-section">
+            </FadeIn>
+
+            <FadeIn className="about-second-section" delay={150}>
                 <div className="second-section-child-1">
                     <div className="second-section-image-box">
                         <Image
@@ -60,11 +62,11 @@ export default async function OurStory() {
                         we take pride in transforming your spaces with precision and care.
                     </p>
                 </div>
-            </section>
+            </FadeIn>
 
-            <section className="about-third-section">
+            <FadeIn className="about-third-section" delay={300}>
                 <NumBox />
-            </section>
+            </FadeIn>
         </main>
     );
 }

@@ -11,10 +11,16 @@ function generateSlug(title: string): string {
         .replace(/[^a-z0-9-]/g, '');
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
     try {
         await connectDB();
-        const projects = await Project.find().sort({ order: 1, createdAt: -1 });
+
+        const { searchParams } = new URL(req.url);
+        const featuredOnly = searchParams.get('featured') === 'true';
+
+        const query = featuredOnly ? { featured: true } : {};
+        const projects = await Project.find(query).sort({ order: 1, createdAt: -1 });
+
         return NextResponse.json({ success: true, data: projects }, { status: 200 });
     } catch (error) {
         console.error('[GET /api/projects]', error);
@@ -70,17 +76,17 @@ export async function POST(req: NextRequest) {
         const count = await Project.countDocuments();
 
         const project = await Project.create({
-            title:          trimmedTitle,
-            description:    typeof description    === 'string' ? description.trim()    : '',
-            image:          imageUrl,
+            title: trimmedTitle,
+            description: typeof description === 'string' ? description.trim() : '',
+            image: imageUrl,
             imagePublicId,
-            type:           typeof type           === 'string' ? type.trim()           : '',
-            location:       typeof location       === 'string' ? location.trim()       : '',
+            type: typeof type === 'string' ? type.trim() : '',
+            location: typeof location === 'string' ? location.trim() : '',
             completionYear: typeof completionYear === 'string' ? completionYear.trim() : '',
-            size:           typeof size           === 'string' ? size.trim()           : '',
-            designStyle:    typeof designStyle    === 'string' ? designStyle.trim()    : '',
-            client:         typeof client         === 'string' ? client.trim()         : '',
-            date:           typeof date           === 'string' ? date.trim()           : '',
+            size: typeof size === 'string' ? size.trim() : '',
+            designStyle: typeof designStyle === 'string' ? designStyle.trim() : '',
+            client: typeof client === 'string' ? client.trim() : '',
+            date: typeof date === 'string' ? date.trim() : '',
             slug,
             order: count,
         });
