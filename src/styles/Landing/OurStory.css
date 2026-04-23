@@ -205,23 +205,23 @@
 
 @media (max-width: 510px) {
     .socials {
-        gap: 25px;
+        gap: 15px;
     }
 
     .icon {
-        width: 35px;
-        height: 35px;
+        width: 40px;
+        height: 40px;
     }
 }
 
 @media (max-width: 420px) {
     .socials {
-        gap: 25px;
+        gap: 15px;
     }
 
     .icon {
-        width: 30px;
-        height: 30px;
+        width: 35px;
+        height: 35px;
     }
 }
 
