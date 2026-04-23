@@ -3,6 +3,7 @@ import Mainbutton from "@/Components/Mainbutton";
 import { connectDB } from "lib/mongodb";
 import Service from "models/Service";
 import StoryImageCycler from "./StoryImageCycler";
+import FadeIn from "@/Components/FadeIn";
 
 async function getServiceImages(): Promise<string[]> {
     try {
@@ -38,12 +39,12 @@ export default async function OurStory() {
                 L 0,0.92
                 Q 0,1 0.08,1
                 L 0.50,1
-                Q 0.54,1 0.550,0.965
-                L 0.55,0.88
-                C 0.55,0.83 0.550,0.80 0.60,0.80
-                L 0.60,0.80
-                L 0.92,0.80
-                Q 1,0.80 1,0.72
+                Q 0.54,1 0.550,0.94
+                L 0.55,0.80
+                C 0.55,0.80 0.550,0.70 0.60,0.70
+                L 0.60,0.70
+                L 0.92,0.70
+                Q 1,0.70 1,0.62
                 L 1,0.08
                 Q 1,0 0.92,0
                 Z
@@ -53,7 +54,7 @@ export default async function OurStory() {
             </svg>
 
             <div className="section-inner">
-                <h2 className="heading">OUR STORY</h2>
+                <FadeIn as="h2" className="heading" delay={100}>OUR STORY</FadeIn>
 
                 <div className="card">
                     <div className="imageCol">
@@ -80,7 +81,7 @@ export default async function OurStory() {
                         </div>
                     </div>
 
-                    <div className="textCol">
+                    <FadeIn as="div" className="textCol" delay={200}>
                         <p className="body">
                             SPECIALISING IN PROFESSIONAL{" "}
                             <span className="highlight">TILING SOLUTIONS</span>, WE
@@ -94,7 +95,7 @@ export default async function OurStory() {
                             padding="clamp(7px, 0.4vw, 7px) clamp(7px, 0.4vw, 5px) clamp(7px, 0.4vw, 7px) clamp(22px, 2vw, 30px)"
                             arrowSize="clamp(55px, 4vw, 55px)"
                         />
-                    </div>
+                    </FadeIn>
                 </div>
             </div>
         </section>

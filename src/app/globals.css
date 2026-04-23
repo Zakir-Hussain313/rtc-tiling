@@ -60,11 +60,18 @@ a {
   text-decoration: none;
 }
 
-span, p, a {
+span,
+p,
+a {
   font-family: 'Jost', sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Playfair', serif;
   margin: 0;
 }
@@ -81,17 +88,4 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   min-height: 100vh;
   background: var(--off-white);
-}
-
-.fade-init {
-    opacity: 0;
-    transform: translateY(24px);
-    transition:
-        opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.fade-init.fade-in {
-    opacity: 1;
-    transform: translateY(0);
 }

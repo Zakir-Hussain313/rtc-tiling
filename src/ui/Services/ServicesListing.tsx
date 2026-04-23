@@ -5,6 +5,7 @@ import fallbackImage from '../../assets/images/porcelain-floor-tiles-copy.jpg.jp
 import Link from 'next/link'
 import { connectDB } from 'lib/mongodb'
 import Service from 'models/Service'
+import FadeIn from '@/Components/FadeIn'
 
 type ServiceDoc = {
     _id: string
@@ -31,8 +32,8 @@ export default async function ServicesListing() {
     return (
         <main>
             <section className="ServicesListing-main-section">
-                {services.map((service , index) => (
-                    <div key={service._id}>
+                {services.map((service, index) => (
+                    <FadeIn as="div" key={service._id} delay={index * 100}>
                         <Link href={service.slug} className='services-div'>
                             <div className="services-image">
                                 <Image
@@ -41,28 +42,21 @@ export default async function ServicesListing() {
                                     fill
                                     className='img rounded-[40px] object-cover'
                                     sizes="(max-width: 768px) 100vw, 50vw"
-                                    priority={index === 0} 
+                                    priority={index === 0}
                                 />
                             </div>
                             <h1>{service.title}</h1>
                             <p className='services-description'>{service.description}</p>
                             <div className='services-arrow'>
-                                <Image
-                                    src={arrow}
-                                    alt='arrow'
-                                    width={27}
-                                    height={27}
-                                />
+                                <Image src={arrow} alt='arrow' width={27} height={27} />
                             </div>
                         </Link>
                         <hr />
-                    </div>
+                    </FadeIn>
                 ))}
 
                 {services.length === 0 && (
-                    <p style={{ padding: '2rem', opacity: 0.5 }}>
-                        No services available yet.
-                    </p>
+                    <p style={{ padding: '2rem', opacity: 0.5 }}>No services available yet.</p>
                 )}
             </section>
         </main>

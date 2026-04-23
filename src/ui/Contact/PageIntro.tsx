@@ -1,10 +1,11 @@
 import Link from "next/link";
 import '../../styles/Contact/PageIntro.css'
 import CountUp from "@/Components/CountUp";
+import FadeIn from "@/Components/FadeIn";
 
 export default function ContactPageIntro() {
     return (
-        <main className="pageIntro-main-section">
+        <FadeIn as={'section'} delay={100} className="pageIntro-main-section">
             <section className="pageIntro-first-section">
                 <div className="first-section-child-1">
                     <div className="bread-crumb">
@@ -26,6 +27,6 @@ export default function ContactPageIntro() {
                     <CountUp value={80} symbol="+" label="Successful Launches" />
                 </div>
             </section>
-        </main>
+        </FadeIn>
     )
 }

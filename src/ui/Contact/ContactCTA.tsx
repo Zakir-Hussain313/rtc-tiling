@@ -1,9 +1,10 @@
 import Mainbutton from "@/Components/Mainbutton";
 import '../../styles/Contact/ContactCTA.css'
+import FadeIn from "@/Components/FadeIn";
 
 export default function ContactCTA() {
     return (
-        <main className="ContactCTA-main-section">
+        <FadeIn as={'section'} delay={100} className="ContactCTA-main-section">
             <h1>Let&apos;s Explore Our Recent Projects</h1>
             <p>See how our tiling work transforms real spaces.</p>
             <div className="ContactCTA-button">
@@ -15,6 +16,6 @@ export default function ContactCTA() {
                     arrowSize="clamp(38px, 4vw, 55px)"
                 />
             </div>
-        </main>
+        </FadeIn>
     )
 }

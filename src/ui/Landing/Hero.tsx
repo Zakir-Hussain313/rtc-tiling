@@ -8,6 +8,7 @@ import star from "../../assets/icons/star.svg";
 import Link from "next/link";
 import { connectDB } from "lib/mongodb";
 import Hero from "models/Hero";
+import FadeIn from "@/Components/FadeIn";
 
 type HeroDoc = {
     backgroundImage: string | null;
@@ -48,7 +49,7 @@ async function HeroSection() {
                     style={{ opacity: overlayOpacity }}
                 />
 
-                <div className="hero-content">
+                <FadeIn as="div" className="hero-content" delay={200}>
                     <h1 className="hero-text">
                         {headline}
                     </h1>
@@ -74,7 +75,7 @@ async function HeroSection() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </FadeIn>
 
             </div>
         </section>
