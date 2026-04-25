@@ -4,7 +4,7 @@
 }
 
 .testimonials-section > section {
-    max-width: 1400px;
+    max-width: 1600px;
     margin: 0 auto;
 }
 
@@ -160,12 +160,12 @@
 
 @media (max-width: 768px) {
     .testi-title-container h1 {
-        font-size: 38px;
+        font-size: 40px;
     }
 
     .testi-title-container p {
         max-width: 90%;
-        font-size: 17px;
+        font-size: 15px;
     }
 
     .testimonial-card {
@@ -189,12 +189,12 @@
     }
 
     .testi-title-container h1 {
-        font-size: 40px;
+        font-size: 36px;
     }
 
     .testi-title-container p {
         max-width: 100%;
-        font-size: 18px;
+        font-size: 13px;
     }
 
     .testimonial-card {

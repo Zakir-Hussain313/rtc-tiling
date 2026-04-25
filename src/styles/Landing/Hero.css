@@ -9,7 +9,7 @@
 
 .hero-grid {
     position: relative;
-    max-width: 1400px;
+    max-width: 1600px;
     width: 100%;
     min-height: calc(100dvh - 120px);
     overflow: hidden;
