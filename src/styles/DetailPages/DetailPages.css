@@ -1,9 +1,6 @@
-/* ═══════════════════════════════════════════════════════════
-   DetailPages.css  —  shared by ServiceDetailPage & ProjectDetailPage
-   ═══════════════════════════════════════════════════════════ */
 
 .detail-main {
-    max-width: 1400px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 150px 60px 100px;
     font-family: 'Jost', sans-serif;
@@ -158,7 +155,6 @@
     text-transform: uppercase;
 }
 
-/* ── Large desktop (1200–1400px) ──────────────────── */
 @media (max-width: 1400px) {
     .detail-main {
         padding: 140px 48px 90px;

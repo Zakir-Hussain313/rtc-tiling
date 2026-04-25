@@ -4,7 +4,7 @@
 }
 
 .expertise-main-section > section {
-    max-width: 1400px;
+    max-width: 1600px;
     margin: 0 auto;
 }
 
@@ -48,7 +48,7 @@
 }
 
 .marquee-track:hover {
-    animation-play-state: running !important;
+    animation-play-state: paused !important;
 }
 
 @keyframes marquee {
@@ -134,12 +134,12 @@ a.service-card .image-slider-container {
     }
 
     .title-container h1 {
-        font-size: 38px;
+        font-size: 40px;
     }
 
     .title-container p {
         max-width: 90%;
-        font-size: 17px;
+        font-size: 15px;
     }
 
     .image-slider-container {
@@ -160,19 +160,18 @@ a.service-card .image-slider-container {
     }
 }
 
-/* ── Small mobile ─────────────────────────────────── */
 @media (max-width: 540px) {
     .expertise-main-section {
         padding: 40px 0px;
     }
 
     .title-container h1 {
-        font-size: 40px;
+        font-size: 36px;
     }
 
     .title-container p {
         max-width: 100%;
-        font-size: 18px;
+        font-size: 13px;
     }
 
     .image-slider-container {

@@ -12,33 +12,22 @@ type Review = {
 }
 
 export default function TestimonialsTrack({ items }: { items: Review[] }) {
-    const trackRef = useRef<HTMLDivElement>(null)
     const [paused, setPaused] = useState(false)
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
-    const handleCardEnter = (i: number) => {
-        setPaused(true)
-        setHoveredIndex(i)
-    }
-
-    const handleCardLeave = () => {
-        setPaused(false)
-        setHoveredIndex(null)
-    }
-
     return (
-        <div className="marquee-outer">
-            <div
-                ref={trackRef}
-                className="marquee-track"
-                style={{ animationPlayState: paused ? 'paused' : 'running' }}
-            >
+        <div
+            className="marquee-outer"
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+        >
+            <div className={`marquee-track${paused ? ' marquee-track--paused' : ''}`}>
                 {items.map((review, index) => (
                     <div
                         className={`testimonial-card${hoveredIndex === index ? ' testimonial-card--dark' : ''}`}
                         key={index}
-                        onMouseEnter={() => handleCardEnter(index)}
-                        onMouseLeave={handleCardLeave}
+                        onMouseEnter={() => setHoveredIndex(index)}
+                        onMouseLeave={() => setHoveredIndex(null)}
                     >
                         {review.rating && (
                             <div className="testimonial-stars">

@@ -29,26 +29,82 @@ export default async function OurStory() {
 
     return (
         <section className="section">
-            {/* SVG clipPath — desktop only */}
             <svg width="0" height="0" style={{ position: "absolute" }}>
                 <defs>
+                    {/* Desktop clip */}
                     <clipPath id="storyClip" clipPathUnits="objectBoundingBox">
                         <path d="
-                M 0.08,0
-                Q 0,0 0,0.08
-                L 0,0.92
-                Q 0,1 0.08,1
-                L 0.50,1
-                Q 0.54,1 0.550,0.94
-                L 0.55,0.80
-                C 0.55,0.80 0.550,0.70 0.60,0.70
-                L 0.60,0.70
-                L 0.92,0.70
-                Q 1,0.70 1,0.62
-                L 1,0.08
-                Q 1,0 0.92,0
-                Z
-            " />
+    M 0.08,0
+    Q 0,0 0,0.08
+    L 0,0.92
+    Q 0,1 0.08,1
+    L 0.50,1
+    Q 0.54,1 0.55,0.94
+    L 0.55,0.86
+    Q 0.55,0.80 0.61,0.80
+    L 0.92,0.80
+    Q 1,0.80 1,0.72
+    L 1,0.07
+    Q 1,0 0.92,0
+    Z
+  " />
+                    </clipPath>
+
+                    {/* Tablet clip */}
+                    <clipPath id="storyClipTablet" clipPathUnits="objectBoundingBox">
+                        <path d="
+    M 0.07,0
+    Q 0,0 0,0.07
+    L 0,0.93
+    Q 0,1 0.07,1
+    L 0.60,1
+    Q 0.64,1 0.65,0.93
+    L 0.65,0.79
+    Q 0.65,0.72 0.70,0.72
+    L 0.92,0.72
+    Q 1,0.72 1,0.64
+    L 1,0.07
+    Q 1,0 0.93,0
+    Z
+  " />
+                    </clipPath>
+
+                    {/* Mobile clip */}
+                    <clipPath id="storyClipMobile" clipPathUnits="objectBoundingBox">
+                        <path d="
+  M 0.08,0
+  Q 0,0 0,0.08
+  L 0,0.92
+  Q 0,1 0.08,1
+  L 0.58,1
+  Q 0.62,1 0.63,0.94
+  L 0.63,0.80
+  C 0.63,0.80 0.63,0.70 0.67,0.70
+  L 0.92,0.70
+  Q 1,0.70 1,0.62
+  L 1,0.08
+  Q 1,0 0.92,0
+  Z
+" />
+                    </clipPath>
+
+                    {/* Small mobile clip */}
+                    <clipPath id="storyClipSmall" clipPathUnits="objectBoundingBox">
+                        <path d="
+    M 0.08,0
+    Q 0,0 0,0.08
+    L 0,0.92
+    Q 0,1 0.08,1
+    L 0.51,1
+    Q 0.55,1 0.56,0.94
+    L 0.56,0.80
+    C 0.56,0.80 0.56,0.70 0.60,0.70
+    L 0.92,0.70
+    Q 1,0.70 1,0.62
+    L 1,0.08
+    Q 1,0 0.92,0
+    Z
+  " />
                     </clipPath>
                 </defs>
             </svg>
