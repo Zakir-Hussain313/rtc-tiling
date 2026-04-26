@@ -1,4 +1,3 @@
-import VhFix from '@/Components/VhFix';
 import './globals.css';
 import LayoutWrapper from '@/Components/LayoutWrapper';
 
@@ -10,7 +9,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-full flex flex-col">
-        <LayoutWrapper><VhFix />{children}</LayoutWrapper>
+        <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
   );
