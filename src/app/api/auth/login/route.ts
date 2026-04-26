@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
         }
 
         const adminUsername = process.env.ADMIN_USERNAME;
-        const adminPasswordHash = '$2b$10$4j/EzH6iYxsCdTQn5LmYTekVp6LmovrfsQUr9lV8NVIQ68FWUXQdq';
+        const adminPasswordHash = "$2b$10$yay.y6ljDF07SxhJgdLA/uIO4KEgPacrkH1jpBSSE2AF9MPUv3CoG";
 
         if (!adminUsername || !adminPasswordHash) {
             console.error('Missing env credentials');
