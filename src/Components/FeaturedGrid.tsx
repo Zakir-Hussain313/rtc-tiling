@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import '../styles/Landing/featured.css';
+import { unstable_noStore as noStore } from 'next/cache';
 
 type Project = {
     _id: string;
@@ -27,6 +28,7 @@ export default function FeaturedGrid() {
 
     useEffect(() => {
         async function load() {
+            noStore();
             try {
                 const res  = await fetch('/api/projects?featured=true');
                 const json = await res.json();
