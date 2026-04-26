@@ -9,6 +9,7 @@ import Link from "next/link";
 import { connectDB } from "lib/mongodb";
 import Hero from "models/Hero";
 import FadeIn from "@/Components/FadeIn";
+import { unstable_noStore as noStore } from 'next/cache';
 
 type HeroDoc = {
     backgroundImage: string | null;
@@ -17,7 +18,9 @@ type HeroDoc = {
     overlayOpacity: number | null;
 };
 
+
 async function getHeroData(): Promise<HeroDoc> {
+    noStore();
     try {
         await connectDB();
         const hero = await Hero.findOne().lean();

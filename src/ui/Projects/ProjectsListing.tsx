@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { connectDB } from 'lib/mongodb'
 import Project from 'models/Project'
 import FadeIn from '@/Components/FadeIn'
+import { unstable_noStore as noStore } from 'next/cache';
 
 type ProjectDoc = {
     _id: string
@@ -25,7 +26,9 @@ function formatDate(dateStr: string): string {
     return `${day} / ${month} / ${year}`;
 }
 
+
 async function getProjects(): Promise<ProjectDoc[]> {
+    noStore(); // ← add this
     try {
         await connectDB()
         const projects = await Project.find().sort({ order: 1, createdAt: -1 }).lean()

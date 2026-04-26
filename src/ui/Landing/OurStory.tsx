@@ -4,8 +4,10 @@ import { connectDB } from "lib/mongodb";
 import Service from "models/Service";
 import StoryImageCycler from "./StoryImageCycler";
 import FadeIn from "@/Components/FadeIn";
+import { unstable_noStore as noStore } from 'next/cache';
 
 async function getServiceImages(): Promise<string[]> {
+    noStore();
     try {
         await connectDB();
         const services = await Service.find(

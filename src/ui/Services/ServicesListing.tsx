@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { connectDB } from 'lib/mongodb'
 import Service from 'models/Service'
 import FadeIn from '@/Components/FadeIn'
+import { unstable_noStore as noStore } from 'next/cache';
 
 type ServiceDoc = {
     _id: string
@@ -15,7 +16,9 @@ type ServiceDoc = {
     slug: string
 }
 
+
 async function getServices(): Promise<ServiceDoc[]> {
+    noStore();
     try {
         await connectDB()
         const services = await Service.find().sort({ order: 1, createdAt: -1 }).lean()
