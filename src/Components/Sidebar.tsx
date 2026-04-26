@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import '@/styles/Sidebar.css';
 import Image from 'next/image';
 import logo from '../assets/images/Rtc.png'
@@ -69,7 +69,6 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen, onClose, onOpen }: SidebarProps) {
     const pathname = usePathname();
-    const router = useRouter();
 
     async function handleLogout() {
         try {
@@ -78,7 +77,7 @@ export default function Sidebar({ isOpen, onClose, onOpen }: SidebarProps) {
                 credentials: 'include',
             });
 
-            router.push('/');
+            window.location.href = '/';
 
         } catch (err) {
             console.error('Logout failed:', err);

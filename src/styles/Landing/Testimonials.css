@@ -14,11 +14,17 @@
     gap: 4px;
     align-items: flex-start;
     text-align: left;
-    padding-left: 40px;
+    margin-bottom: 40px;
+}
+
+@media ( max-width : 1650px ) {
+    .testi-title-container {
+        padding: 0 32px;
+    }
 }
 
 .testi-title-container h1 {
-    font-size: 60px;
+    font-size: 48px;
     font-family: 'Playfair Display', serif;
     font-weight: 400;
     color: #000;
@@ -36,8 +42,7 @@
     width: 100%;
     position: relative;
     overflow: hidden;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-bottom: 0;
 }
 
 .marquee-track {
@@ -111,7 +116,7 @@
     display: flex;
     align-items: center;
     gap: 14px;
-    margin-top: auto; 
+    margin-top: auto;
 }
 
 .testimonial-image {
@@ -144,8 +149,12 @@
 }
 
 @media (max-width: 1024px) {
+    .testimonials-section {
+        padding: 64px 0;
+    }
+
     .testi-title-container {
-        padding: 0 20px;
+        margin-bottom: 32px;
     }
 
     .testi-title-container h1 {
@@ -159,6 +168,15 @@
 }
 
 @media (max-width: 768px) {
+    .testimonials-section {
+        padding: 48px 0;
+    }
+
+    .testi-title-container {
+        padding: 0 20px;
+        margin-bottom: 24px;
+    }
+
     .testi-title-container h1 {
         font-size: 40px;
     }
@@ -184,8 +202,13 @@
 }
 
 @media (max-width: 540px) {
+    .testimonials-section {
+        padding: 40px 0;
+    }
+
     .testi-title-container {
-        padding: 0 12px;
+        padding: 0 14px;
+        margin-bottom: 20px;
     }
 
     .testi-title-container h1 {
@@ -217,8 +240,13 @@
 }
 
 @media (max-width: 380px) {
+    .testimonials-section {
+        padding: 32px 0;
+    }
+
     .testi-title-container {
-        padding: 0 16px;
+        padding: 0 12px;
+        margin-bottom: 16px;
     }
 
     .testi-title-container h1 {

@@ -14,6 +14,7 @@ export default function ContactCTA() {
                     fontSize="clamp(16px, 2.5vw, 25px)"
                     padding="clamp(7px, 0.4vw, 7px) clamp(7px, 0.4vw, 5px) clamp(7px, 0.4vw, 7px) clamp(22px, 2vw, 30px)"
                     arrowSize="clamp(38px, 4vw, 55px)"
+                    hoverBubbleColor="#4d3d2d"
                 />
             </div>
         </FadeIn>

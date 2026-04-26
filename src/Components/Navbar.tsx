@@ -17,7 +17,6 @@ const links = [
   { href: "/contact", label: "Contact" },
 ];
 
-// "/" must be exact match, everything else uses startsWith
 function isActiveLink(href: string, pathname: string): boolean {
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(href + "/");
@@ -29,6 +28,7 @@ function Navbar() {
   const pathname = usePathname();
   const navPillRef = useRef<HTMLElement>(null);
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const hoveredRef = useRef<number | null>(null);
 
   const moveIndicatorTo = (el: HTMLAnchorElement | null) => {
     if (!el || !navPillRef.current) return;
@@ -41,9 +41,7 @@ function Navbar() {
   };
 
   useEffect(() => {
-    // Find the active link index using the smart matcher
     const activeIndex = links.findIndex((l) => isActiveLink(l.href, pathname));
-    // Fall back to Home (index 0) if nothing matches
     const index = activeIndex !== -1 ? activeIndex : 0;
     moveIndicatorTo(linkRefs.current[index]);
   }, [pathname]);
@@ -62,10 +60,13 @@ function Navbar() {
           <Image src={rtc} alt="RTC tiling" />
         </div>
 
+        {/* ← nav-pill: onMouseLeave here, onMouseEnter on each link */}
         <nav
           className="nav-pill"
           ref={navPillRef}
           onMouseLeave={() => {
+            linkRefs.current.forEach(l => l?.classList.remove('hovered'));
+            hoveredRef.current = null;
             const activeIndex = links.findIndex((l) => isActiveLink(l.href, pathname));
             const index = activeIndex !== -1 ? activeIndex : 0;
             moveIndicatorTo(linkRefs.current[index]);
@@ -84,7 +85,12 @@ function Navbar() {
               href={link.href}
               ref={(el) => { linkRefs.current[i] = el; }}
               className={isActiveLink(link.href, pathname) ? "active" : ""}
-              onMouseEnter={() => moveIndicatorTo(linkRefs.current[i])}
+              onMouseEnter={() => {
+                linkRefs.current.forEach(l => l?.classList.remove('hovered'));
+                linkRefs.current[i]?.classList.add('hovered');
+                hoveredRef.current = i;
+                moveIndicatorTo(linkRefs.current[i]);
+              }}
             >
               {link.label}
             </Link>
@@ -92,7 +98,7 @@ function Navbar() {
         </nav>
 
         <div className="nav-cta">
-          <Mainbutton data={"Get a free Quote"} href="/contact" />
+          <Mainbutton data={"Get a free Quote"} href="/contact" hoverBubbleColor="#4d3d2d" />
         </div>
 
         <span className={`burger ${isOpen ? "open" : ""}`} onClick={handleClick}>
@@ -105,19 +111,24 @@ function Navbar() {
       </div>
 
       <div className={`menu ${isOpen ? "" : "closed"}`}>
+        <div className="menu-logo">
+          <Image src={rtc} alt="RTC tiling" />
+        </div>
+
         <div className="menu-links">
+          {/* ← mobile menu: simple closeMenu, no hovered logic needed */}
           {links.map((link) => (
             <Link
               key={link.href}
-              className={`m-links${isActiveLink(link.href, pathname) ? " active" : ""}`}
               href={link.href}
+              className={`m-links${isActiveLink(link.href, pathname) ? " active" : ""}`}
               onClick={closeMenu}
             >
               {link.label}
             </Link>
           ))}
           <span onClick={closeMenu}>
-            <Mainbutton data="About Us" href="/about" />
+            <Mainbutton data={"Get a free Quote"} href="/contact" hoverBubbleColor="#4d3d2d" />
           </span>
         </div>
       </div>

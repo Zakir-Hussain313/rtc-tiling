@@ -13,7 +13,13 @@
     flex-direction: column;
     gap: 12px;
     text-align: left;
-    padding-left: 40px;
+    margin-bottom: 40px;
+}
+
+@media ( max-width : 1650px ) {
+    .title-container {
+        padding: 0 32px;
+    }
 }
 
 .title-container h1 {
@@ -90,7 +96,7 @@
 }
 
 .expertise-button-section {
-    margin-top: 40px;
+    padding: 0 50px;
 }
 
 a.service-card {
@@ -106,11 +112,11 @@ a.service-card .image-slider-container {
 
 @media (max-width: 1024px) {
     .expertise-main-section {
-        padding: 64px 0px;
+        padding: 64px 0;
     }
 
     .title-container {
-        padding-left: 10px;
+        margin-bottom: 32px;
     }
 
     .title-container h1 {
@@ -121,16 +127,20 @@ a.service-card .image-slider-container {
         max-width: 75%;
         font-size: 19px;
     }
+
+    .expertise-button-section {
+        padding: 0 32px;
+    }
 }
 
-/* ── Mobile ───────────────────────────────────────── */
 @media (max-width: 768px) {
     .expertise-main-section {
-        padding: 48px 0px;
+        padding: 48px 0;
     }
 
     .title-container {
-        margin-bottom: 32px;
+        padding: 0 20px;
+        margin-bottom: 24px;
     }
 
     .title-container h1 {
@@ -156,13 +166,19 @@ a.service-card .image-slider-container {
     }
 
     .expertise-button-section {
+        padding: 0 20px;
         margin-top: 32px;
     }
 }
 
 @media (max-width: 540px) {
     .expertise-main-section {
-        padding: 40px 0px;
+        padding: 40px 0;
+    }
+
+    .title-container {
+        padding: 0 14px;
+        margin-bottom: 20px;
     }
 
     .title-container h1 {
@@ -187,16 +203,21 @@ a.service-card .image-slider-container {
         font-size: 13px;
         padding: 12px 10px;
     }
+
+    .expertise-button-section {
+        padding: 0 14px;
+        margin-top: 20px;
+    }
 }
 
-/* ── XS ───────────────────────────────────────────── */
 @media (max-width: 380px) {
     .expertise-main-section {
-        padding: 32px 0px;
+        padding: 32px 0;
     }
 
     .title-container {
-        margin-bottom: 24px;
+        padding: 0 12px;
+        margin-bottom: 16px;
     }
 
     .title-container h1 {
@@ -219,5 +240,10 @@ a.service-card .image-slider-container {
     .card-label {
         font-size: 12px;
         padding: 10px 8px;
+    }
+
+    .expertise-button-section {
+        padding: 0 12px;
+        margin-top: 16px;
     }
 }

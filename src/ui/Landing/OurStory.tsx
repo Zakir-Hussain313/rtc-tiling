@@ -58,11 +58,11 @@ export default async function OurStory() {
     L 0,0.93
     Q 0,1 0.07,1
     L 0.60,1
-    Q 0.64,1 0.65,0.93
-    L 0.65,0.79
-    Q 0.65,0.72 0.70,0.72
-    L 0.92,0.72
-    Q 1,0.72 1,0.64
+    Q 0.64,1 0.65,0.96
+    L 0.65,0.87
+    Q 0.65,0.80 0.70,0.80
+    L 0.92,0.80
+    Q 1,0.80 1,0.64
     L 1,0.07
     Q 1,0 0.93,0
     Z
@@ -76,15 +76,34 @@ export default async function OurStory() {
   Q 0,0 0,0.08
   L 0,0.92
   Q 0,1 0.08,1
-  L 0.58,1
-  Q 0.62,1 0.63,0.94
-  L 0.63,0.80
-  C 0.63,0.80 0.63,0.70 0.67,0.70
-  L 0.92,0.70
-  Q 1,0.70 1,0.62
+  L 0.60,1
+  Q 0.64,1 0.65,0.94
+  L 0.65,0.87
+  C 0.65,0.87 0.65,0.77 0.69,0.77
+  L 0.92,0.77
+  Q 1,0.77 1,0.67
   L 1,0.08
   Q 1,0 0.92,0
   Z
+" />
+                    </clipPath>
+
+                    {/* Medium mobile clip - 640px to 510px */}
+                    <clipPath id="storyClipMedium" clipPathUnits="objectBoundingBox">
+                        <path d="
+M 0.08,0
+Q 0,0 0,0.08
+L 0,0.92
+Q 0,1 0.08,1
+L 0.57,1
+Q 0.64,1 0.65,0.94
+L 0.65,0.82
+C 0.65,0.84 0.65,0.77 0.69,0.77
+L 0.92,0.77
+Q 1,0.77 1,0.65
+L 1,0.08
+Q 1,0 0.92,0
+Z
 " />
                     </clipPath>
 
@@ -96,11 +115,29 @@ export default async function OurStory() {
     L 0,0.92
     Q 0,1 0.08,1
     L 0.51,1
-    Q 0.55,1 0.56,0.94
-    L 0.56,0.80
-    C 0.56,0.80 0.56,0.70 0.60,0.70
-    L 0.92,0.70
-    Q 1,0.70 1,0.62
+    Q 0.61,1 0.61,0.94
+    L 0.61,0.85
+    C 0.61,0.85 0.61,0.78 0.65,0.78
+    L 0.92,0.78
+    Q 1,0.78 1,0.62
+    L 1,0.08
+    Q 1,0 0.92,0
+    Z
+  " />
+                    </clipPath>
+                    {/* Extra Small mobile clip */}
+                    <clipPath id="storyClipExtraSmall" clipPathUnits="objectBoundingBox">
+                        <path d="
+    M 0.08,0
+    Q 0,0 0,0.08
+    L 0,0.92
+    Q 0,1 0.08,1
+    L 0.51,1
+    Q 0.58,1 0.58,0.94
+    L 0.58,0.87
+    C 0.58,0.87 0.58,0.80 0.62,0.80
+    L 0.92,0.80
+    Q 1,0.80 1,0.62
     L 1,0.08
     Q 1,0 0.92,0
     Z
@@ -149,6 +186,7 @@ export default async function OurStory() {
                             fontSize="clamp(30px, 2.5vw, 25px)"
                             padding="clamp(7px, 0.4vw, 7px) clamp(7px, 0.4vw, 5px) clamp(7px, 0.4vw, 7px) clamp(22px, 2vw, 30px)"
                             arrowSize="clamp(55px, 4vw, 55px)"
+                            hoverBubbleColor="#4d3d2d"
                         />
                     </FadeIn>
                 </div>
