@@ -1,5 +1,6 @@
 import { connectDB } from './mongodb';
 import About from '../models/About';
+import { unstable_noStore as noStore } from 'next/cache';
 
 export type AboutImage = {
     id: number;
@@ -8,6 +9,7 @@ export type AboutImage = {
 };
 
 export async function getAboutImages(): Promise<AboutImage[]> {
+    noStore();
     try {
         await connectDB();
         let about = await About.findOne().lean();

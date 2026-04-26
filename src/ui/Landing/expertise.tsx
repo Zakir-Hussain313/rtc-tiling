@@ -7,6 +7,7 @@ import fallbackImage from '../../assets/images/Airport-crossville-copy.jpg.jpeg'
 import Mainbutton from "@/Components/Mainbutton";
 import { connectDB } from "lib/mongodb";
 import Service from "models/Service";
+import { unstable_noStore as noStore } from 'next/cache';
 
 type ServiceDoc = {
     _id: string;
@@ -16,6 +17,7 @@ type ServiceDoc = {
 };
 
 async function getServices(): Promise<ServiceDoc[]> {
+    noStore();
     try {
         await connectDB();
         const services = await Service.find(
