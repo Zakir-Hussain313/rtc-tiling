@@ -1,6 +1,12 @@
 .featured-main-section {
-    padding: 80px 50px;
+    padding: 80px 0px;
     font-family: 'Jost', sans-serif;
+}
+
+@media (max-width:1650px) {
+    .featured-main-section {
+        padding: 80px 50px;
+    }
 }
 
 .featured-second-main-section {
@@ -55,7 +61,6 @@
 .image5 { grid-column: span 3; }
 .image6 { grid-column: span 4; }
 
-/* ── Clickable grid cell ──────────────────────────── */
 .featured-clickable {
     cursor: pointer;
 }
@@ -89,7 +94,6 @@
     letter-spacing: 0.02em;
 }
 
-/* ── Skeleton loader ──────────────────────────────── */
 .featured-skeleton {
     background: linear-gradient(90deg, #e8e8e8 25%, #f5f5f5 50%, #e8e8e8 75%);
     background-size: 200% 100%;
@@ -101,7 +105,6 @@
     100% { background-position: -200% 0; }
 }
 
-/* ── Lightbox ─────────────────────────────────────── */
 .featured-lightbox-overlay {
     position: fixed;
     inset: 0;
@@ -191,10 +194,13 @@
     animation: featuredFadeIn 0.4s ease;
 }
 
-/* ── Tablet ───────────────────────────────────────── */
 @media (max-width: 1024px) {
     .featured-main-section {
-        padding: 64px 24px;
+        padding: 64px 32px;
+    }
+
+    .title-section {
+        margin-bottom: 32px;
     }
 
     .title-section h1 {
@@ -218,14 +224,13 @@
     .image6 { grid-column: span 6; }
 }
 
-/* ── Mobile ───────────────────────────────────────── */
 @media (max-width: 768px) {
     .featured-main-section {
-        padding: 48px 16px;
+        padding: 48px 20px;
     }
 
     .title-section {
-        margin-bottom: 32px;
+        margin-bottom: 24px;
     }
 
     .title-section h1 {
@@ -254,18 +259,17 @@
     }
 
     .button-section {
-        margin-top: 32px;
+        margin-top: 24px;
     }
 }
 
-/* ── Small mobile ─────────────────────────────────── */
 @media (max-width: 540px) {
     .featured-main-section {
-        padding: 40px 12px;
+        padding: 40px 14px;
     }
 
     .title-section {
-        margin-bottom: 28px;
+        margin-bottom: 20px;
     }
 
     .title-section h1 {
@@ -296,18 +300,17 @@
     }
 
     .button-section {
-        margin-top: 28px;
+        margin-top: 20px;
     }
 }
 
-/* ── XS ───────────────────────────────────────────── */
 @media (max-width: 380px) {
     .featured-main-section {
         padding: 32px 12px;
     }
 
     .title-section {
-        margin-bottom: 24px;
+        margin-bottom: 16px;
     }
 
     .title-section h1 {
@@ -328,6 +331,6 @@
     }
 
     .button-section {
-        margin-top: 24px;
+        margin-top: 16px;
     }
 }

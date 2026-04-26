@@ -48,7 +48,6 @@ export async function POST(req: NextRequest) {
 
         let body;
         try {
-            console.log('ENV FULL CHECK:', process.env.ADMIN_PASSWORD);
             body = await req.json();
         } catch {
             return NextResponse.json(
@@ -80,7 +79,7 @@ export async function POST(req: NextRequest) {
         }
 
         const adminUsername = process.env.ADMIN_USERNAME;
-        const adminPasswordHash = process.env.ADMIN_PASSWORD; // MUST be hashed
+        const adminPasswordHash = '$2b$10$4j/EzH6iYxsCdTQn5LmYTekVp6LmovrfsQUr9lV8NVIQ68FWUXQdq';
 
         if (!adminUsername || !adminPasswordHash) {
             console.error('Missing env credentials');
@@ -96,6 +95,14 @@ export async function POST(req: NextRequest) {
             ? adminPasswordHash
             : DUMMY_HASH;
 
+        console.log('--- LOGIN DEBUG ---');
+        console.log('username received:', JSON.stringify(trimmedUsername));
+        console.log('ADMIN_USERNAME env:', JSON.stringify(adminUsername));
+        console.log('username match:', usernameMatch);
+        console.log('hash from env:', JSON.stringify(adminPasswordHash));
+        console.log('hash starts with $2:', adminPasswordHash?.startsWith('$2'));
+        console.log('password received:', JSON.stringify(trimmedPassword));
+
         const passwordMatch = await bcrypt.compare(
             trimmedPassword,
             hashToCompare
@@ -108,7 +115,6 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        // ✅ success
         const token = signToken();
         const cookie = buildCookieHeader(token);
 

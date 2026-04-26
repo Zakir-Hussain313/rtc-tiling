@@ -1,7 +1,13 @@
 .section {
-    padding: 80px 50px;
+    padding: 80px 0px;
     background: #ffffff;
     font-family: "Jost", sans-serif;
+}
+
+@media (max-width:1650px) {
+    .section {
+        padding: 80px 50px;
+    }
 }
 
 .section-inner {
@@ -46,7 +52,6 @@
     border-radius: 0;
 }
 
-/* ── Socials desktop ──────────────────────────────── */
 .socials {
     position: absolute;
     bottom: 30px;
@@ -99,15 +104,14 @@
     font-weight: 600;
 }
 
-/* ── Tablet ───────────────────────────────────────── */
 @media (max-width: 1024px) {
     .section {
-        padding: 64px 24px;
+        padding: 64px 32px;
     }
 
     .heading {
-        font-size: 60px;
-        margin-bottom: 40px;
+        font-size: 48px;
+        margin-bottom: 32px;
     }
 
     .body {
@@ -133,7 +137,7 @@
 
     .socials {
         position: absolute;
-        bottom: 30px;
+        bottom: 15px;
         right: 36px;
         display: flex;
         flex-direction: row;
@@ -150,28 +154,36 @@
 
 @media (max-width: 950px) {
     .socials {
-        bottom: 40px;
-        gap: 26px;
+        bottom: 20px;
+        gap: 30px;
     }
 
     .icon {
-        width: 58px;
-        height: 58px;
+        width: 63px;
+        height: 63px;
+    }
+}
+
+@media (max-width: 890px) {
+    .socials {
+        right: 28px;
+        gap: 25px;
+    }
+
+    .icon {
+        width: 57px;
+        height: 57px;
     }
 }
 
 @media (max-width: 768px) {
-    .imageWrapper {
-        clip-path: url(#storyClipMobile);
-    }
-
     .section {
-        padding: 48px 16px;
+        padding: 48px 20px;
     }
 
     .heading {
         font-size: 40px;
-        margin-bottom: 32px;
+        margin-bottom: 24px;
     }
 
     .body {
@@ -179,30 +191,51 @@
     }
 
     .imageCol {
-        height: 360px;
+        height: 420px;
         padding: 0 16px;
     }
 
+    .imageWrapper {
+        clip-path: url(#storyClipMobile);
+    }
+
     .socials {
-        bottom: 23px;
+        bottom: 20px;
         right: 20px;
-        gap: 23px;
+        gap: 25px;
     }
 
     .icon {
-        width: 52px;
-        height: 52px;
+        width: 55px;
+        height: 55px;
+    }
+}
+
+@media (max-width: 730px) {
+    .socials {
+        bottom: 20px;
+        right: 18px;
+        gap: 21px;
+    }
+
+    .icon {
+        width: 51px;
+        height: 51px;
     }
 }
 
 @media (max-width: 640px) {
     .section {
-        padding: 40px 12px;
+        padding: 40px 14px;
+    }
+
+    .imageWrapper {
+        clip-path: url(#storyClipMedium);
     }
 
     .heading {
         font-size: 40px;
-        margin-bottom: 28px;
+        margin-bottom: 20px;
     }
 
     .body {
@@ -211,7 +244,7 @@
 
     .imageCol {
         width: 100%;
-        height: 300px;
+        height: 350px;
         padding: 0 12px;
     }
 
@@ -225,6 +258,26 @@
         width: 45px;
         height: 45px;
         flex-shrink: 1;
+    }
+}
+
+@media (max-width: 580px) {
+    .socials {
+        bottom: 25px;
+        right: 16px;
+        gap: 18px;
+    }
+
+    .icon {
+        width: 42px;
+        height: 42px;
+    }
+}
+
+@media (max-width: 580px) {
+    .icon {
+        width: 40px;
+        height: 40px;
     }
 }
 
@@ -245,25 +298,44 @@
     }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 480px) {
+    .imageWrapper {
+        clip-path: url(#storyClipExtraSmall);
+    }
+
     .socials {
-        gap: 15px;
+        bottom: 20px;
+        right: 22px;
+        gap: 22px;
     }
 
     .icon {
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
     }
 }
 
-@media (max-width: 380px) {
+@media (max-width: 430px) {
+    .socials {
+        bottom: 20px;
+        right: 22px;
+        gap: 17px;
+    }
+
+    .icon {
+        width: 33px;
+        height: 33px;
+    }
+}
+
+@media (max-width: 390px) {
     .section {
         padding: 32px 12px;
     }
 
     .heading {
         font-size: 32px;
-        margin-bottom: 24px;
+        margin-bottom: 16px;
     }
 
     .body {
@@ -271,19 +343,31 @@
     }
 
     .imageCol {
-        height: 260px;
+        height: 300px;
         padding: 0 10px;
     }
 
     .socials {
         bottom: 20px;
-        right: 10px;
-        gap: 10px;
+        right: 22px;
+        gap: 15px;
     }
 
     .icon {
-        width: 32px;
-        height: 32px;
-        flex-shrink: 0;
+        width: 30px;
+        height: 30px;
+    }
+}
+
+@media (max-width: 360px) {
+    .socials {
+        bottom: 20px;
+        right: 20px;
+        gap: 12px;
+    }
+
+    .icon {
+        width: 27px;
+        height: 27px;
     }
 }

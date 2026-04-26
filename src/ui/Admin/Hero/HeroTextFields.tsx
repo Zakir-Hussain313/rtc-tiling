@@ -45,22 +45,6 @@ export default function HeroTextFields({
                     placeholder="Enter hero headline..."
                 />
             </div>
-
-            <div className="heroFieldGroup">
-                <label className="heroFieldLabel" htmlFor="subheading">
-                    Subheading
-                    <span className="heroCharCount">{subheading.length} / 180</span>
-                </label>
-                <textarea
-                    id="subheading"
-                    className="heroFieldTextarea"
-                    value={subheading}
-                    maxLength={180}
-                    rows={3}
-                    onChange={(e) => onSubheadingChange(e.target.value)}
-                    placeholder="Enter hero subheading..."
-                />
-            </div>
         </div>
     );
 }

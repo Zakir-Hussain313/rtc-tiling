@@ -1,3 +1,8 @@
+html,
+body {
+  overflow-x: hidden;
+}
+
 .hero {
     width: 100%;
     display: flex;
@@ -201,8 +206,8 @@
 
     .hero-grid {
         min-height: unset;
-        height: calc(100dvh - 100px);
-        max-height: calc(100dvh - 100px);
+        height: calc(var(--vh, 1dvh) * 100 - 100px);
+        max-height: calc(var(--vh, 1dvh) * 100 - 100px);
         border-radius: 32px;
     }
 
@@ -258,8 +263,8 @@
     .hero-grid {
         border-radius: 24px;
         min-height: unset;
-        height: calc(100dvh - 95px);
-        max-height: calc(100dvh - 95px);
+        height: calc(var(--vh, 1dvh) * 100 - 95px);
+        max-height: calc(var(--vh, 1dvh) * 100 - 95px);
     }
 
     .hero-overlay { border-radius: 24px; }

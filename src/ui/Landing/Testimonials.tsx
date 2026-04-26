@@ -2,6 +2,7 @@
 import "../../styles/Landing/Testimonials.css"
 import TestimonialsTrack from "./TestimonialStrack"
 import avatar from "../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg"
+import FadeIn from "@/Components/FadeIn"
 
 type Review = {
     name: string
@@ -36,7 +37,7 @@ const FALLBACK_REVIEWS: Review[] = [
 ]
 
 async function getGoogleReviews(): Promise<Review[]> {
-    const apiKey  = process.env.GOOGLE_PLACES_API_KEY
+    const apiKey = process.env.GOOGLE_PLACES_API_KEY
     const placeId = process.env.GOOGLE_PLACE_ID
 
     if (!apiKey || !placeId) {
@@ -69,11 +70,11 @@ async function getGoogleReviews(): Promise<Review[]> {
         const mapped: Review[] = raw
             .filter((r) => r.rating >= 4)
             .map((r) => ({
-                name:   r.authorAttribution?.displayName  ?? 'Anonymous',
-                role:   'Google Review',
-                image:  r.authorAttribution?.photoUri
-                            ? `${r.authorAttribution.photoUri}=s80-c`
-                            : avatar.src,
+                name: r.authorAttribution?.displayName ?? 'Anonymous',
+                role: 'Google Review',
+                image: r.authorAttribution?.photoUri
+                    ? `${r.authorAttribution.photoUri}=s80-c`
+                    : avatar.src,
                 review: r.text?.text ?? '',
                 rating: r.rating,
             }))
@@ -94,10 +95,10 @@ export default async function Testimonials() {
     return (
         <main className="testimonials-section">
             <section>
-                <section className="testi-title-container">
+                <FadeIn as={'section'} className="testi-title-container" delay={300}>
                     <h1>TESTIMONIALS</h1>
                     <p>Trusted by Homeowners &amp; Builders</p>
-                </section>
+                </FadeIn>
 
                 <TestimonialsTrack items={items} />
             </section>
