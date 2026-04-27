@@ -3,7 +3,6 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import '../styles/Landing/featured.css';
-import { unstable_noStore as noStore } from 'next/cache';
 
 type Project = {
     _id: string;
@@ -16,7 +15,6 @@ const GRID_CLASSES = ['image1', 'image2', 'image3', 'image4', 'image5', 'image6'
 
 export default function FeaturedGrid() {
     const [projects, setProjects]   = useState<Project[]>([]);
-    const [loading, setLoading]     = useState(true);
     const [lightbox, setLightbox]   = useState<Project | null>(null);
 
     const [scale, setScale]         = useState(1);
@@ -28,16 +26,13 @@ export default function FeaturedGrid() {
 
     useEffect(() => {
         async function load() {
-            noStore();
             try {
-                const res  = await fetch('/api/projects?featured=true');
+                const res  = await fetch('/api/projects?featured=true', { cache: 'no-store' });
                 const json = await res.json();
                 const all: Project[] = json.data ?? [];
                 setProjects(all.filter((p) => p.image).slice(0, 6));
             } catch (err) {
                 console.error('[FeaturedGrid] fetch failed', err);
-            } finally {
-                setLoading(false);
             }
         }
         load();
@@ -131,12 +126,9 @@ export default function FeaturedGrid() {
 
     return (
         <>
-            <section className="image-section">
-                {loading
-                    ? GRID_CLASSES.map((cls) => (
-                        <div key={cls} className={`image-div ${cls} featured-skeleton`} />
-                    ))
-                    : projects.map((project, i) => (
+            {projects.length > 0 && (
+                <section className="image-section">
+                    {projects.map((project, i) => (
                         <div
                             key={project._id}
                             className={`image-div ${GRID_CLASSES[i]} featured-clickable`}
@@ -157,9 +149,9 @@ export default function FeaturedGrid() {
                                 <span>{project.title}</span>
                             </div>
                         </div>
-                    ))
-                }
-            </section>
+                    ))}
+                </section>
+            )}
 
             {lightbox && (
                 <div className="featured-lightbox-overlay" onClick={closeLightbox}>
