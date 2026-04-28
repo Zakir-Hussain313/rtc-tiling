@@ -56,11 +56,10 @@ function Navbar() {
   return (
     <header className="navbar">
       <div className="navbar-inner">
-        <div className="logo">
+        <Link href={'/'} className="logo">
           <Image src={rtc} alt="RTC tiling" />
-        </div>
+        </Link>
 
-        {/* ← nav-pill: onMouseLeave here, onMouseEnter on each link */}
         <nav
           className="nav-pill"
           ref={navPillRef}
@@ -111,12 +110,11 @@ function Navbar() {
       </div>
 
       <div className={`menu ${isOpen ? "" : "closed"}`}>
-        <div className="menu-logo">
+        <Link href={'/'} className="menu-logo">
           <Image src={rtc} alt="RTC tiling" />
-        </div>
+        </Link>
 
         <div className="menu-links">
-          {/* ← mobile menu: simple closeMenu, no hovered logic needed */}
           {links.map((link) => (
             <Link
               key={link.href}

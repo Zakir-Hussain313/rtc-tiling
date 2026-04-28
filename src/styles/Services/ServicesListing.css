@@ -55,6 +55,7 @@
     background: #C4A473;
     padding: 14px;
     flex-shrink: 0;
+    transition: transform 0.3s ease;
 }
 
 .services-div:hover {
@@ -64,6 +65,10 @@
 .services-div:hover h1,
 .services-div:hover p {
     color: white;
+}
+
+.services-div:hover .services-arrow {
+    transform: rotate(30deg);
 }
 
 /* ── Tablet (≤1024px) ── */

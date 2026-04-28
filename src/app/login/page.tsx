@@ -69,7 +69,6 @@ export default function LoginPage() {
                             className='object-cover'
                         />
                     </div>
-                    <div className="loginLogoText">Admin Logo</div>
                     <div className="loginLogoSub">RTC Tiling — Content Manager</div>
                 </div>
 

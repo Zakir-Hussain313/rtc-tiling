@@ -1,4 +1,7 @@
+.contactIntro-main-section {
+    padding: 140px 70px 4px 70px;
 
+}
 
 .pageIntro-first-section {
     display: flex;
@@ -27,6 +30,9 @@
 }
 
 @media (max-width: 1024px) {
+    .contactIntro-main-section {
+        padding: 120px 50px 4px 50px;
+    }
 
     .first-section-child-1 h1 {
         font-size: 28px;
@@ -40,6 +46,9 @@
 }
 
 @media (max-width: 768px) {
+    .contactIntro-main-section {
+        padding: 110px 24px 4px 24px;
+    }
 
     .pageIntro-first-section {
         flex-direction: column;
@@ -52,16 +61,7 @@
     }
 
     .first-section-child-2 {
-        align-items: flex-start;
-    }
-
-    .first-section-child-2 h1,
-    .first-section-child-2 h1 span {
-        font-size: 56px;
-    }
-
-    .first-section-child-2 p {
-        font-size: 16px;
+        display: none;
     }
 
     .bread-crumb {
@@ -70,6 +70,9 @@
 }
 
 @media (max-width: 480px) {
+    .contactIntro-main-section {
+        padding: 100px 16px 4px 16px;
+    }
 
     .first-section-child-1 h1 {
         font-size: 22px;

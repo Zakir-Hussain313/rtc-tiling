@@ -1,5 +1,7 @@
 .services-main-section {
     padding: 140px 70px 4px 70px;
+    max-width: 1600px;
+    margin: 0 auto;
 }
 
 @media (max-width: 1024px) {
