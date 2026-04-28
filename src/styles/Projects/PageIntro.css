@@ -61,16 +61,7 @@
     }
 
     .first-section-child-2 {
-        align-items: flex-start;
-    }
-
-    .first-section-child-2 h1,
-    .first-section-child-2 h1 span {
-        font-size: 56px;
-    }
-
-    .first-section-child-2 p {
-        font-size: 16px;
+        display: none;
     }
 
     .bread-crumb {
