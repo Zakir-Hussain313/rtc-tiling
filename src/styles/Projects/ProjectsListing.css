@@ -1,7 +1,10 @@
+.projectsListing-main-main-section {
+    padding: 0px 70px;
+}
+
 .projectsListing-main-section {
     display: flex;
     flex-direction: column;
-    width: 100%;
 }
 
 .projectsListing-main-section hr {
@@ -10,9 +13,9 @@
 
 .projects-div {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    padding: 28px 0;
+    padding: 28px 20px;
     border-radius: 50px;
     transition: background 0.35s ease;
 }
@@ -21,7 +24,8 @@
     font-size: 40px;
     font-family: Playfair Display, Playfair Display-400;
     font-weight: 400;
-    max-width: 20%;
+    max-width: 30%;
+    flex: 1;
     text-align: left;
     transition: color 0.35s ease;
     text-transform: uppercase;
@@ -48,6 +52,7 @@
     background: #C4A473;
     padding: 14px;
     flex-shrink: 0;
+    transition: transform 0.35s ease;
 }
 
 .projects-div:hover {
@@ -59,8 +64,16 @@
     color: white;
 }
 
+.projects-div:hover .project-arrow {
+    transform: rotate(30deg);
+}
+
 /* ── Tablet (≤1024px) ── */
 @media (max-width: 1024px) {
+    .projectsListing-main-main-section {
+        padding: 0px 40px;
+    }
+
     .projects-div {
         padding: 24px 16px;
         gap: 16px;
@@ -84,6 +97,10 @@
 
 /* ── Large mobile (≤768px) ── */
 @media (max-width: 768px) {
+    .projectsListing-main-main-section {
+        padding: 0px 24px;
+    }
+
     .projects-div {
         flex-direction: column;
         align-items: flex-start;
@@ -113,6 +130,10 @@
 
 /* ── Small mobile (≤480px) ── */
 @media (max-width: 480px) {
+    .projectsListing-main-main-section {
+        padding: 0px 16px;
+    }
+
     .projects-div {
         padding: 16px 12px;
         gap: 12px;

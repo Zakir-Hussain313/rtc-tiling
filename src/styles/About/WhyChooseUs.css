@@ -1,6 +1,6 @@
 /* ── Base styles ── */
 .choose-main-section {
-    padding: 50px 70px 60px 70px;
+    padding: 40px 70px 40px 70px;
 }
 
 .choose-heading {
@@ -43,7 +43,7 @@
 /* ── Tablet (≤1024px) ── */
 @media (max-width: 1024px) {
     .choose-main-section {
-        padding: 50px 40px 60px 40px;
+        padding: 40px;
     }
 
     .choose-body {

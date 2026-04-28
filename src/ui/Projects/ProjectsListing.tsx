@@ -41,9 +41,8 @@ async function getProjects(): Promise<ProjectDoc[]> {
 
 export default async function ProjectsListing() {
     const projects = await getProjects()
-
     return (
-        <main>
+        <section className='projectsListing-main-main-section'>
             <section className="projectsListing-main-section">
                 {projects.map((project, index) => (
                     <FadeIn as={'div'} delay={index * 100} key={project._id}>
@@ -81,6 +80,6 @@ export default async function ProjectsListing() {
                     </p>
                 )}
             </section>
-        </main>
+        </section>
     )
 }

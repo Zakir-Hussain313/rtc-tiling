@@ -1,4 +1,6 @@
-
+.projectsIntro-main-section {
+    padding: 140px 70px 4px 70px;
+}
 
 .pageIntro-first-section {
     display: flex;
@@ -28,6 +30,9 @@
 
 
 @media (max-width: 1024px) {
+    .projectsIntro-main-section {
+        padding: 120px 50px 4px 50px;
+    }
 
     .first-section-child-1 h1 {
         font-size: 28px;
@@ -41,6 +46,9 @@
 }
 
 @media (max-width: 768px) {
+    .projectsIntro-main-section {
+        padding: 100px 24px 4px 24px;
+    }
 
     .pageIntro-first-section {
         flex-direction: column;
@@ -71,6 +79,9 @@
 }
 
 @media (max-width: 480px) {
+    .projectsIntro-main-section {
+        padding: 90px 16px 4px 16px;
+    }
 
     .first-section-child-1 h1 {
         font-size: 22px;

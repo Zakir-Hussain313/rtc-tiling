@@ -4,7 +4,6 @@ import { SiMaterialformkdocs } from "react-icons/si";
 import { GiStoneCrafting } from "react-icons/gi";
 import { SlCalender } from "react-icons/sl";
 import { IoCallSharp } from "react-icons/io5";
-import ServicesCTA from '../Services/ServicesCTA';
 
 export default function WhyChooseUs(){
     return(
@@ -30,7 +29,6 @@ export default function WhyChooseUs(){
                     <h2>Free Consultation</h2>
                 </div>
             </section>
-            <ServicesCTA />
         </main>
     )
 }

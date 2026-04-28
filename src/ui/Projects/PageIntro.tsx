@@ -5,7 +5,7 @@ import FadeIn from "@/Components/FadeIn";
 
 export default function ProjectsPageIntro() {
     return (
-        <main>
+        <section className="projectsIntro-main-section">
             <FadeIn as={'section'} delay={100} className="pageIntro-first-section">
                 <div className="first-section-child-1">
                     <div className="bread-crumb">
@@ -27,6 +27,6 @@ export default function ProjectsPageIntro() {
                     <CountUp value={99} symbol="%" label="Projects Completed" />
                 </div>
             </FadeIn>
-        </main>
+        </section>
     )
 }
