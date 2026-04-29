@@ -93,60 +93,62 @@ export default async function ServiceDetailPage({ params }: Props) {
     );
 
     return (
-        <main className="detail-main">
-            <nav className="detail-breadcrumb" aria-label="Breadcrumb">
-                <Link href="/">Home</Link>
-                <span className="detail-breadcrumb-sep">/</span>
-                <Link href="/services">Services</Link>
-                <span className="detail-breadcrumb-sep">/</span>
-                <span className="detail-breadcrumb-current">{service.title}</span>
-            </nav>
-            <section className="detail-hero">
-                <div className="detail-img-wrap">
-                    {service.image ? (
-                        <Image
-                            src={service.image}
-                            alt={service.title}
-                            fill
-                            className="detail-img"
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                            priority
-                        />
-                    ) : (
-                        <div className="detail-img-placeholder">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
-                                <rect x="3" y="3" width="18" height="18" rx="2" />
-                                <circle cx="8.5" cy="8.5" r="1.5" />
-                                <polyline points="21 15 16 10 5 21" />
-                            </svg>
-                        </div>
-                    )}
-                </div>
-                <div className="detail-info">
-                    <h1 className="detail-title">{service.title}</h1>
-                    {service.description && (
-                        <p className="detail-desc">{service.description}</p>
-                    )}
-                    {hasDetails && (
-                        <div className="detail-table">
-                            {DETAIL_FIELDS.map(({ key, label }) =>
-                                service[key] ? (
-                                    <div key={key} className="detail-row">
-                                        <span className="detail-row-label">{label}</span>
-                                        <span className="detail-row-dash">—</span>
-                                        <span className="detail-row-value">{service[key]}</span>
-                                    </div>
-                                ) : null
-                            )}
-                        </div>
-                    )}
-                </div>
-            </section>
-            <section className='project-gallery-in-detail-page'>
+        <div className="detail-main-section">
+            <main className="detail-main">
+                <nav className="detail-breadcrumb" aria-label="Breadcrumb">
+                    <Link href="/">Home</Link>
+                    <span className="detail-breadcrumb-sep">/</span>
+                    <Link href="/services">Services</Link>
+                    <span className="detail-breadcrumb-sep">/</span>
+                    <span className="detail-breadcrumb-current">{service.title}</span>
+                </nav>
+                <section className="detail-hero">
+                    <div className="detail-img-wrap">
+                        {service.image ? (
+                            <Image
+                                src={service.image}
+                                alt={service.title}
+                                fill
+                                className="detail-img"
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                                priority
+                            />
+                        ) : (
+                            <div className="detail-img-placeholder">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                                    <circle cx="8.5" cy="8.5" r="1.5" />
+                                    <polyline points="21 15 16 10 5 21" />
+                                </svg>
+                            </div>
+                        )}
+                    </div>
+                    <div className="detail-info">
+                        <h1 className="detail-title">{service.title}</h1>
+                        {service.description && (
+                            <p className="detail-desc">{service.description}</p>
+                        )}
+                        {hasDetails && (
+                            <div className="detail-table">
+                                {DETAIL_FIELDS.map(({ key, label }) =>
+                                    service[key] ? (
+                                        <div key={key} className="detail-row">
+                                            <span className="detail-row-label">{label}</span>
+                                            <span className="detail-row-dash">—</span>
+                                            <span className="detail-row-value">{service[key]}</span>
+                                        </div>
+                                    ) : null
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </section>
+                <section className='project-gallery-in-detail-page'>
                     <h1>Project Gallery</h1>
                     <FeaturedGrid />
-            </section>
-            <ServicesCTA />
-        </main>
+                </section>
+                <ServicesCTA />
+            </main>
+        </div>
     );
 }

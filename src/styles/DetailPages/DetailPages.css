@@ -1,7 +1,9 @@
-
-.detail-main {
+.detail-main-section {
     max-width: 1600px;
     margin: 0 auto;
+    width: 100%;
+}
+.detail-main {
     padding: 150px 60px 100px;
     font-family: 'Jost', sans-serif;
 }
@@ -51,7 +53,7 @@
     position: relative;
     width: 100%;
     aspect-ratio: 4 / 4.5;
-    border-radius: 28px;
+    border-radius: 50px;
     overflow: hidden;
     background: #f0f0f0;
 }
@@ -85,7 +87,7 @@
 
 .detail-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(26px, 3.5vw, 48px);
+    font-size: 48px;
     font-weight: 400;
     color: #111;
     line-height: 1.15;
@@ -190,7 +192,6 @@
 
     .detail-img-wrap {
         aspect-ratio: 4 / 5;
-        border-radius: 22px;
     }
 
     .detail-row {
@@ -217,7 +218,6 @@
 
     .detail-img-wrap {
         aspect-ratio: 16 / 10;
-        border-radius: 20px;
     }
 
     .detail-info {
@@ -255,7 +255,6 @@
 
     .detail-img-wrap {
         aspect-ratio: 4 / 3;
-        border-radius: 18px;
     }
 
     .detail-title {
@@ -285,7 +284,6 @@
     }
 
     .detail-img-wrap {
-        border-radius: 14px;
         aspect-ratio: 1 / 1;
     }
 

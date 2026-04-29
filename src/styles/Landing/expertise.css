@@ -1,9 +1,9 @@
 .expertise-main-section {
     font-family: 'Jost', sans-serif;
-    padding: 80px 0;
+    padding-top: 40px;
 }
 
-.expertise-main-section > section {
+.expertise-main-section>section {
     max-width: 1600px;
     margin: 0 auto;
 }
@@ -16,14 +16,14 @@
     margin-bottom: 40px;
 }
 
-@media ( max-width : 1650px ) {
+@media (max-width : 1650px) {
     .title-container {
-        padding: 0 32px;
+        padding: 40px 50px 0 50px;
     }
 }
 
 .title-container h1 {
-    font-size: 60px;
+    font-size: 48px;
     font-family: 'Playfair', serif;
     font-weight: 400;
     color: #000000;
@@ -58,8 +58,13 @@
 }
 
 @keyframes marquee {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-33.333%); }
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-33.333%);
+    }
 }
 
 .service-card {
@@ -112,7 +117,7 @@ a.service-card .image-slider-container {
 
 @media (max-width: 1024px) {
     .expertise-main-section {
-        padding: 64px 0;
+        padding-top: 32px;
     }
 
     .title-container {
@@ -135,7 +140,7 @@ a.service-card .image-slider-container {
 
 @media (max-width: 768px) {
     .expertise-main-section {
-        padding: 48px 0;
+        padding-top: 40px;
     }
 
     .title-container {
@@ -173,7 +178,7 @@ a.service-card .image-slider-container {
 
 @media (max-width: 540px) {
     .expertise-main-section {
-        padding: 40px 0;
+        padding-top: 24px;
     }
 
     .title-container {
