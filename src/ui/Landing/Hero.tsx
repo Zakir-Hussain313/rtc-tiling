@@ -3,7 +3,7 @@ import Image from "next/image";
 import heroBackground from "../../assets/images/Hero-background.webp";
 import google from "../../assets/images/Google.webp";
 import facebook from "../../assets/images/Facebook.webp";
-import trustpilot from "../../assets/images/trustpilot.webp";
+import instagram from '../../assets/images/instagram.jpg'
 import star from "../../assets/icons/star.svg";
 import Link from "next/link";
 import { connectDB } from "lib/mongodb";
@@ -42,7 +42,6 @@ async function HeroSection() {
         <section className="hero">
             <div className="hero-grid">
 
-                {/* Background Image */}
                 <div
                     className="hero-bg"
                     style={{ backgroundImage: `url(${bgImage})` }}
@@ -65,7 +64,7 @@ async function HeroSection() {
                         <div className="hero-left">
                             <Image className="hero-icons" src={google} alt="Google icon" />
                             <Image className="hero-icons" src={facebook} alt="Facebook icon" />
-                            <Image className="hero-icons" src={trustpilot} alt="Trustpilot icon" />
+                            <Image className="hero-icons" src={instagram} alt="Instagram icon" />
                         </div>
                         <div className="hero-right">
                             <div className="stars">
@@ -74,7 +73,7 @@ async function HeroSection() {
                                 ))}
                             </div>
                             <div className="rating-text">
-                                <span>3K+ User Reviews</span>
+                                <span>Full User Reviews</span>
                             </div>
                         </div>
                     </div>

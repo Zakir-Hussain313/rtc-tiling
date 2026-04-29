@@ -1,11 +1,11 @@
 .featured-main-section {
-    padding: 80px 0px;
+    padding-top: 80px;
     font-family: 'Jost', sans-serif;
 }
 
 @media (max-width:1650px) {
     .featured-main-section {
-        padding: 80px 50px;
+        padding: 80px 50px 0 50px;
     }
 }
 
@@ -22,7 +22,7 @@
 }
 
 .title-section h1 {
-    font-size: 60px;
+    font-size: 48px;
     font-family: 'Playfair Display', serif;
     font-weight: 400;
     color: #000000;
@@ -196,7 +196,7 @@
 
 @media (max-width: 1024px) {
     .featured-main-section {
-        padding: 64px 32px;
+        padding: 32px;
     }
 
     .title-section {
@@ -226,7 +226,7 @@
 
 @media (max-width: 768px) {
     .featured-main-section {
-        padding: 48px 20px;
+        padding: 20px;
     }
 
     .title-section {
@@ -265,7 +265,7 @@
 
 @media (max-width: 540px) {
     .featured-main-section {
-        padding: 40px 14px;
+        padding: 14px;
     }
 
     .title-section {
@@ -306,7 +306,7 @@
 
 @media (max-width: 380px) {
     .featured-main-section {
-        padding: 32px 12px;
+        padding: 12px;
     }
 
     .title-section {

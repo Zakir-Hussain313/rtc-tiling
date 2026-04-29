@@ -67,13 +67,13 @@ export async function generateMetadata({ params }: Props) {
 }
 
 const DETAIL_FIELDS = [
-    { key: 'type',           label: 'Project Type'    },
-    { key: 'location',       label: 'Location'        },
+    { key: 'type', label: 'Project Type' },
+    { key: 'location', label: 'Location' },
     { key: 'completionYear', label: 'Completion Year' },
-    { key: 'size',           label: 'Size'            },
-    { key: 'designStyle',    label: 'Design Style'    },
-    { key: 'client',         label: 'Client'          },
-    { key: 'date',           label: 'Date'            },
+    { key: 'size', label: 'Size' },
+    { key: 'designStyle', label: 'Design Style' },
+    { key: 'client', label: 'Client' },
+    { key: 'date', label: 'Date' },
 ] as const
 
 export default async function ProjectDetailPage({ params }: Props) {
@@ -85,65 +85,65 @@ export default async function ProjectDetailPage({ params }: Props) {
     const hasDetails = DETAIL_FIELDS.some(({ key }) => project[key]?.trim())
 
     return (
-        <main className="detail-main">
+        <div className='detail-main-section'>
+            <main className="detail-main">
 
-            {/* ── Breadcrumb ── */}
-            <nav className="detail-breadcrumb" aria-label="Breadcrumb">
-                <Link href="/">Home</Link>
-                <span className="detail-breadcrumb-sep">/</span>
-                <Link href="/projects">Projects</Link>
-                <span className="detail-breadcrumb-sep">/</span>
-                <span className="detail-breadcrumb-current">{project.title}</span>
-            </nav>
+                <nav className="detail-breadcrumb" aria-label="Breadcrumb">
+                    <Link href="/">Home</Link>
+                    <span className="detail-breadcrumb-sep">/</span>
+                    <Link href="/projects">Projects</Link>
+                    <span className="detail-breadcrumb-sep">/</span>
+                    <span className="detail-breadcrumb-current">{project.title}</span>
+                </nav>
 
-            {/* ── Hero ── */}
-            <section className="detail-hero">
+                {/* ── Hero ── */}
+                <section className="detail-hero">
 
-                <div className="detail-img-wrap">
-                    <Image
-                        src={project.image || fallbackImage}
-                        alt={project.title}
-                        fill
-                        className="detail-img"
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                        priority
-                    />
-                </div>
+                    <div className="detail-img-wrap">
+                        <Image
+                            src={project.image || fallbackImage}
+                            alt={project.title}
+                            fill
+                            className="detail-img"
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            priority
+                        />
+                    </div>
 
-                <div className="detail-info">
-                    <h1 className="detail-title">{project.title}</h1>
+                    <div className="detail-info">
+                        <h1 className="detail-title">{project.title}</h1>
 
-                    {project.date && (
-                        <p className="detail-meta">{project.date}</p>
-                    )}
+                        {project.date && (
+                            <p className="detail-meta">{project.date}</p>
+                        )}
 
-                    {project.description && (
-                        <p className="detail-desc">{project.description}</p>
-                    )}
+                        {project.description && (
+                            <p className="detail-desc">{project.description}</p>
+                        )}
 
-                    {hasDetails && (
-                        <div className="detail-table">
-                            {DETAIL_FIELDS.map(({ key, label }) =>
-                                project[key] ? (
-                                    <div key={key} className="detail-row">
-                                        <span className="detail-row-label">{label}</span>
-                                        <span className="detail-row-dash">—</span>
-                                        <span className="detail-row-value">{project[key]}</span>
-                                    </div>
-                                ) : null
-                            )}
-                        </div>
-                    )}
-                </div>
+                        {hasDetails && (
+                            <div className="detail-table">
+                                {DETAIL_FIELDS.map(({ key, label }) =>
+                                    project[key] ? (
+                                        <div key={key} className="detail-row">
+                                            <span className="detail-row-label">{label}</span>
+                                            <span className="detail-row-dash">—</span>
+                                            <span className="detail-row-value">{project[key]}</span>
+                                        </div>
+                                    ) : null
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </section>
 
-            </section>
+                <section className="project-gallery-in-detail-page">
+                    <h1>Project Gallery</h1>
+                    <FeaturedGrid />
+                </section>
+                <ServicesCTA />
+            </main>
+        </div>
 
-            {/* ── Gallery ── */}
-            <section className="project-gallery-in-detail-page">
-                <h1>Project Gallery</h1>
-                <FeaturedGrid />
-            </section>
-            <ServicesCTA />
-        </main>
     )
 }

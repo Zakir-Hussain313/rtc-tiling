@@ -65,7 +65,7 @@
 }
 
 .projects-div:hover .project-arrow {
-    transform: rotate(30deg);
+    transform: rotate(130deg);
 }
 
 /* ── Tablet (≤1024px) ── */
