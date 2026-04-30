@@ -141,11 +141,11 @@ export default function ContactForm() {
                                     onClick={handleSubmit}
                                 >
                                     <Mainbutton
-                                     data={status === 'sending' ? 'Sending…' : 'Submit'}
+                                        data={status === 'sending' ? 'Sending…' : 'Submit'}
                                         href=""
-                                        fontSize="clamp(20px, 1.5vw, 25px)"
-                                        padding="clamp(5px, 0.5vw, 7px) clamp(5px, 0.4vw, 7px) clamp(5px, 0.4vw, 7px) clamp(18px, 1.5vw, 24px)"
-                                        arrowSize="clamp(36px, 3.5vw, 48px)"
+                                        fontSize="clamp(15px, 2vw, 20px)"
+                                        padding="5px 5px 5px 20px"
+                                        arrowSize="clamp(38px, 4vw, 50px)"
                                         hoverBubbleColor="#4d3d2d"
                                     />
                                 </div>

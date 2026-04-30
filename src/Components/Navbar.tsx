@@ -25,10 +25,10 @@ function isActiveLink(href: string, pathname: string): boolean {
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const pathname = usePathname();
   const navPillRef = useRef<HTMLElement>(null);
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
-  const hoveredRef = useRef<number | null>(null);
 
   const moveIndicatorTo = (el: HTMLAnchorElement | null) => {
     if (!el || !navPillRef.current) return;
@@ -53,6 +53,15 @@ function Navbar() {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
   }, [isOpen]);
 
+  const activeIndex = links.findIndex((l) => isActiveLink(l.href, pathname));
+
+  const getLinkColor = (i: number) => {
+    if (hoveredIndex !== null) {
+      return i === hoveredIndex ? "#111" : "#fff";
+    }
+    return i === activeIndex ? "#111" : "#fff";
+  };
+
   return (
     <header className="navbar">
       <div className="navbar-inner">
@@ -64,9 +73,7 @@ function Navbar() {
           className="nav-pill"
           ref={navPillRef}
           onMouseLeave={() => {
-            linkRefs.current.forEach(l => l?.classList.remove('hovered'));
-            hoveredRef.current = null;
-            const activeIndex = links.findIndex((l) => isActiveLink(l.href, pathname));
+            setHoveredIndex(null);
             const index = activeIndex !== -1 ? activeIndex : 0;
             moveIndicatorTo(linkRefs.current[index]);
           }}
@@ -84,10 +91,12 @@ function Navbar() {
               href={link.href}
               ref={(el) => { linkRefs.current[i] = el; }}
               className={isActiveLink(link.href, pathname) ? "active" : ""}
+              style={{
+                color: getLinkColor(i),
+                transition: "color 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+              }}
               onMouseEnter={() => {
-                linkRefs.current.forEach(l => l?.classList.remove('hovered'));
-                linkRefs.current[i]?.classList.add('hovered');
-                hoveredRef.current = i;
+                setHoveredIndex(i);
                 moveIndicatorTo(linkRefs.current[i]);
               }}
             >
@@ -97,7 +106,14 @@ function Navbar() {
         </nav>
 
         <div className="nav-cta">
-          <Mainbutton data={"Get a free Quote"} href="/contact" hoverBubbleColor="#4d3d2d" />
+          <Mainbutton
+            data={"Get a free Quote"}
+            href="/contact"
+            hoverBubbleColor="#4d3d2d"
+            fontSize="clamp(15px, 2vw, 20px)"
+            padding="5px 5px 5px 20px"
+            arrowSize="clamp(38px, 4vw, 50px)"
+          />
         </div>
 
         <span className={`burger ${isOpen ? "open" : ""}`} onClick={handleClick}>
@@ -126,7 +142,14 @@ function Navbar() {
             </Link>
           ))}
           <span onClick={closeMenu}>
-            <Mainbutton data={"Get a free Quote"} href="/contact" hoverBubbleColor="#4d3d2d" />
+            <Mainbutton
+              data={"Get a free Quote"}
+              href="/contact"
+              hoverBubbleColor="#4d3d2d"
+              fontSize="clamp(15px, 2vw, 20px)"
+              padding="5px 5px 5px 20px"
+              arrowSize="clamp(38px, 4vw, 50px)"
+            />
           </span>
         </div>
       </div>
