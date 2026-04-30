@@ -8,11 +8,9 @@ import { FaTelegramPlane, FaInstagram, FaPhone } from 'react-icons/fa'
 import Link from 'next/link'
 import FadeIn from '@/Components/FadeIn'
 
-// ── Replace these with your real EmailJS credentials ──────────────
-const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID'
-const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID'
-const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY'
-// ──────────────────────────────────────────────────────────────────
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!
+const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
 
 type Status = 'idle' | 'sending' | 'success' | 'error'
 
