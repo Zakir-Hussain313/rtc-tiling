@@ -67,36 +67,10 @@ body {
   border-radius: 999px;
   font-size: 0.9rem;
   font-weight: 500;
-  color: #ffffff;
   text-decoration: none;
-  transition: color 0.25s ease;
   font-family: jost;
   position: relative;
   z-index: 1;
-}
-
-.nav-pill:hover a {
-  color: #ffffff;
-}
-
-.nav-pill a:hover {
-  color: #111;
-}
-
-.nav-pill a.active {
-  color: #111;
-}
-
-.nav-pill:hover a.active {
-  color: #ffffff;
-}
-
-.nav-pill a.active:hover {
-  color: #111;
-}
-
-.nav-pill a.hovered {
-  color: #111;
 }
 
 .burger {

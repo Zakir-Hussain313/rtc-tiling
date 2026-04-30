@@ -11,9 +11,9 @@ export default function ServicesCTA() {
                 <Mainbutton
                     data="Call Now"
                     href="tel:0468 264 894"
-                    fontSize="clamp(16px, 2.5vw, 25px)"
-                    padding="clamp(7px, 0.4vw, 7px) clamp(7px, 0.4vw, 5px) clamp(7px, 0.4vw, 7px) clamp(22px, 2vw, 30px)"
-                    arrowSize="clamp(38px, 4vw, 55px)"
+                    fontSize="clamp(15px, 2vw, 20px)"
+                    padding="5px 5px 5px 20px"
+                    arrowSize="clamp(38px, 4vw, 50px)"
                     hoverBubbleColor="#4d3d2d"
                 />
             </div>
