@@ -1,50 +1,89 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import fallbackImage from "../../assets/images/noroot -copy.png";
-import type { StaticImageData } from "next/image";
 
 type Props = {
     images: string[];
 };
 
 export default function StoryImageCycler({ images }: Props) {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [visible, setVisible] = useState(true);
+    const [topIndex, setTopIndex] = useState(0);   // image on top (visible)
+    const [botIndex, setBotIndex] = useState(1);   // image underneath (preloaded)
+    const [fading, setFading] = useState(false);
+    const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    const resolvedImages = images.length > 0 ? images : null;
+    const imgs = images.length > 0 ? images : null;
 
     useEffect(() => {
-        if (!resolvedImages || resolvedImages.length <= 1) return;
+        if (!imgs || imgs.length <= 1) return;
 
-        const interval = setInterval(() => {
-            // Fade out
-            setVisible(false);
+        const cycle = () => {
+            setFading(true); // fade out top image
 
-            setTimeout(() => {
-                setCurrentIndex((prev) => (prev + 1) % resolvedImages.length);
-                setVisible(true);
-            }, 400);
-        }, 5000);
+            timerRef.current = setTimeout(() => {
+                setTopIndex((prev) => {
+                    const next = (prev + 1) % imgs.length;
+                    setBotIndex((next + 1) % imgs.length); // preload the one after
+                    return next;
+                });
+                setFading(false); // snap top back to visible with new src
+            }, 600);
+        };
 
-        return () => clearInterval(interval);
-    }, [resolvedImages]);
+        const interval = setInterval(cycle, 5000);
+        return () => {
+            clearInterval(interval);
+            if (timerRef.current) clearTimeout(timerRef.current);
+        };
+    }, [imgs]);
 
-    const currentSrc: string | StaticImageData =
-        resolvedImages ? resolvedImages[currentIndex] : fallbackImage;
+    if (!imgs) {
+        return (
+            <div className="imageWrapper">
+                <Image
+                    src={fallbackImage}
+                    alt="Our story"
+                    fill
+                    style={{ objectFit: "cover" }}
+                    sizes="(max-width: 768px) 100vw, 560px"
+                    priority
+                />
+            </div>
+        );
+    }
 
     return (
-        <div className="imageWrapper">
+        <div className="imageWrapper" style={{ position: "relative" }}>
             <Image
-                src={currentSrc}
+                key={`bot-${botIndex}`}
+                src={imgs[botIndex]}
                 alt="Our story"
                 fill
-                className="image"
                 style={{
                     objectFit: "cover",
-                    opacity: visible ? 1 : 0,
-                    transition: "opacity 0.4s ease-in-out",
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    zIndex: 1,
+                }}
+                sizes="(max-width: 768px) 100vw, 560px"
+            />
+
+            <Image
+                key={`top-${topIndex}`}
+                src={imgs[topIndex]}
+                alt="Our story"
+                fill
+                style={{
+                    objectFit: "cover",
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    zIndex: 2,
+                    opacity: fading ? 0 : 1,
+                    transition: "opacity 0.6s ease-in-out",
                 }}
                 sizes="(max-width: 768px) 100vw, 560px"
                 priority

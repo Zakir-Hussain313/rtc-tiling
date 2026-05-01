@@ -16,11 +16,15 @@ export default function Featured() {
                     <Mainbutton
                         data="View Projects"
                         href="/projects"
-                        textColor="white"
-                        hoverBubbleColor="#4d3d2d"
                         fontSize="clamp(15px, 2vw, 20px)"
                         padding="5px 5px 5px 20px"
                         arrowSize="clamp(38px, 4vw, 50px)"
+                        backgroundColor="#fff"
+                        textColor="#111"
+                        border="2px solid #444"
+                        borderOnHover="2px solid transparent"
+                        hoverBubbleColor="#4d3d2d"
+                        hoverTextColor="white"
                     />
                 </FadeIn>
             </section>

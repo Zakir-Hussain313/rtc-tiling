@@ -12,7 +12,7 @@ import { unstable_noStore as noStore } from 'next/cache';
 type ServiceDoc = {
     _id: string;
     title: string;
-    image: string;
+    images: string[];
     slug: string;
 };
 
@@ -22,7 +22,7 @@ async function getServices(): Promise<ServiceDoc[]> {
         await connectDB();
         const services = await Service.find(
             {},
-            { title: 1, image: 1, slug: 1 }
+            { title: 1, images: 1, slug: 1 }  // ✅ images
         )
             .sort({ order: 1, createdAt: -1 })
             .lean();
@@ -55,7 +55,6 @@ export default async function Expertise() {
                     <section className="marquee-outer">
                         <div className="marquee-track">
                             {items.map((service, index) => {
-                                // strip any /services/ prefix so we always get a clean slug
                                 const slug = service.slug.startsWith('/services/')
                                     ? service.slug.replace('/services/', '')
                                     : service.slug;
@@ -68,7 +67,7 @@ export default async function Expertise() {
                                     >
                                         <div className="image-slider-container">
                                             <Image
-                                                src={typeof service.image === "string" && service.image !== "" ? service.image : fallbackImage}
+                                                src={service.images?.length > 0 ? service.images[0] : fallbackImage}
                                                 alt={service.title}
                                                 fill
                                                 className="card-image object-cover"
@@ -92,11 +91,15 @@ export default async function Expertise() {
                     <Mainbutton
                         data="All Services"
                         href="/services"
-                        textColor="white"
-                        hoverBubbleColor="#4d3d2d"
                         fontSize="clamp(15px, 2vw, 20px)"
                         padding="5px 5px 5px 20px"
                         arrowSize="clamp(38px, 4vw, 50px)"
+                        backgroundColor="#fff"
+                        textColor="#111"
+                        border="2px solid #444"
+                        borderOnHover="2px solid transparent"
+                        hoverBubbleColor="#4d3d2d"
+                        hoverTextColor="white"
                     />
                 </div>
             </section>
