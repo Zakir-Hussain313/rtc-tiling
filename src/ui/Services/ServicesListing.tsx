@@ -12,7 +12,7 @@ type ServiceDoc = {
     _id: string
     title: string
     description: string
-    image: string
+    images: string[]
     slug: string
 }
 
@@ -40,7 +40,7 @@ export default async function ServicesListing() {
                         <Link href={service.slug} className='services-div'>
                             <div className="services-image">
                                 <Image
-                                    src={service.image || fallbackImage}
+                                    src={service.images?.[0] || fallbackImage}
                                     alt={service.title}
                                     fill
                                     className='img rounded-[40px] object-cover'

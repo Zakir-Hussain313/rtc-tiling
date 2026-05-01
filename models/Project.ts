@@ -3,8 +3,8 @@ import mongoose, { Schema, Document, Model } from 'mongoose';
 export interface IProject extends Document {
     title: string;
     description: string;
-    image: string;
-    imagePublicId: string;
+    images: string[];
+    imagePublicIds: string[];
     type: string;
     location: string;
     completionYear: string;
@@ -23,8 +23,8 @@ const ProjectSchema = new Schema<IProject>(
     {
         title:          { type: String, required: true, trim: true },
         description:    { type: String, default: '', trim: true },
-        image:          { type: String, default: '' },
-        imagePublicId:  { type: String, default: '' },
+        images:         { type: [String], default: [] },
+        imagePublicIds: { type: [String], default: [] },
         type:           { type: String, default: '', trim: true },
         location:       { type: String, default: '', trim: true },
         completionYear: { type: String, default: '', trim: true },

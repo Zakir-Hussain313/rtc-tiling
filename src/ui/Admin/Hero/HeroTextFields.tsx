@@ -11,9 +11,7 @@ interface HeroTextFieldsProps {
 
 export default function HeroTextFields({
     headline,
-    subheading,
     onHeadlineChange,
-    onSubheadingChange,
 }: HeroTextFieldsProps) {
     return (
         <div className="heroTextCard">
@@ -26,7 +24,7 @@ export default function HeroTextFields({
                 </div>
                 <div>
                     <h3 className="heroTextCardTitle">Hero Text</h3>
-                    <p className="heroTextCardSub">Edit the headline and subheading shown on the hero section</p>
+                    <p className="heroTextCardSub">Edit the headline shown on the hero section</p>
                 </div>
             </div>
 

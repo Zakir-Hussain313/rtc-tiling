@@ -9,6 +9,8 @@ export type Project = {
     _id: string;
     title: string;
     description: string;
+    images: string[];
+    imagePublicIds: string[];
     type: string;
     location: string;
     completionYear: string;
@@ -16,7 +18,6 @@ export type Project = {
     designStyle: string;
     client: string;
     date: string;
-    image: string | null;
     slug: string;
     featured: boolean;
 };
@@ -70,14 +71,22 @@ export default function ProjectsEditor() {
         }
     }
 
-    async function handleSave(data: Omit<Project, '_id' | 'slug'>) {
+    type SaveData = Omit<Project, '_id' | 'slug'> & {
+        removedPublicIds?: string[];
+        keptImages?: string[];
+    };
+
+    async function handleSave(data: SaveData) {
         setSaving(true);
         try {
             if (editingProject) {
                 const res = await fetch(`/api/projects/${editingProject._id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data),
+                    body: JSON.stringify({
+                        ...data,
+                        removedPublicIds: data.removedPublicIds ?? [],
+                    }),
                 });
                 if (!res.ok) {
                     const err = await res.json();

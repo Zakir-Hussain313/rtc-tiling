@@ -24,8 +24,8 @@ type MainbuttonProps = {
 function Mainbutton({
   data,
   backgroundColor,
-  textColor,
-  fontSize,
+  textColor = 'white',
+  fontSize, 
   arrowColor,
   href = "",
   padding,
@@ -59,12 +59,10 @@ function Mainbutton({
     bubble.style.top = `${y - size / 2}px`;
     bubble.style.transition = 'none';
     bubble.style.transform = 'scale(0)';
-    // 👇 always fully visible, no opacity tricks
     bubble.style.opacity = '1';
 
     bubble.getBoundingClientRect();
 
-    // 👇 faster: 0.35s instead of 0.55s
     bubble.style.transition = 'transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
     bubble.style.transform = 'scale(1)';
 
@@ -83,7 +81,6 @@ function Mainbutton({
 
     bubble.style.left = `${x - size / 2}px`;
     bubble.style.top = `${y - size / 2}px`;
-    // 👇 faster exit: 0.3s, no opacity transition
     bubble.style.transition = 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
     bubble.style.transform = 'scale(0)';
 

@@ -6,6 +6,7 @@ import Service from 'models/Service';
 import '../../../styles/DetailPages/DetailPages.css';
 import FeaturedGrid from '@/Components/FeaturedGrid';
 import ServicesCTA from '@/ui/Services/ServicesCTA';
+import StoryImageCycler from '@/ui/Landing/StoryImageCycler';
 
 type Props = {
     params: Promise<{ slug: string }>;
@@ -15,7 +16,7 @@ type ServiceDoc = {
     _id: string;
     title: string;
     description: string;
-    image: string;
+    images: string[];
     serviceType: string;
     location: string;
     estimatedDuration: string;
@@ -68,7 +69,7 @@ export async function generateMetadata({ params }: Props) {
         openGraph: {
             title: service.title,
             description: service.description,
-            images: service.image ? [{ url: service.image }] : [],
+            images: service.images?.length ? [{ url: service.images[0] }] : [],
         },
     };
 }
@@ -104,24 +105,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </nav>
                 <section className="detail-hero">
                     <div className="detail-img-wrap">
-                        {service.image ? (
-                            <Image
-                                src={service.image}
-                                alt={service.title}
-                                fill
-                                className="detail-img"
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                                priority
-                            />
-                        ) : (
-                            <div className="detail-img-placeholder">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
-                                    <rect x="3" y="3" width="18" height="18" rx="2" />
-                                    <circle cx="8.5" cy="8.5" r="1.5" />
-                                    <polyline points="21 15 16 10 5 21" />
-                                </svg>
-                            </div>
-                        )}
+                        <StoryImageCycler images={service.images ?? []} />
                     </div>
                     <div className="detail-info">
                         <h1 className="detail-title">{service.title}</h1>

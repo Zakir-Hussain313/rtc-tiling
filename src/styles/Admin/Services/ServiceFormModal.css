@@ -10,6 +10,80 @@
     animation: svcFadeIn 0.2s ease;
 }
 
+.svcModalImageGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.svcModalImageThumb {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 2px solid var(--border);
+}
+
+.svcModalImageThumb.toRemove {
+    opacity: 0.5;
+    border-color: var(--danger);
+}
+
+.svcModalImageThumb.isNew {
+    border-color: var(--success);
+}
+
+.svcModalImageRemoveBtn {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.6);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    z-index: 2;
+}
+
+.svcModalImageNewBadge {
+    position: absolute;
+    bottom: 4px;
+    left: 4px;
+    background: var(--success);
+    color: white;
+    font-size: 9px;
+    font-weight: 600;
+    font-family: var(--font-body);
+    padding: 2px 6px;
+    border-radius: 20px;
+}
+
+.svcModalImageRemoveBtn svg {
+    width: 12px;
+    height: 12px;
+}
+
+.svcModalImageRemoveOverlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(139, 58, 58, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+    color: white;
+    font-family: var(--font-body);
+    text-align: center;
+    padding: 4px;
+}
+
 .svcModalBox {
     background: var(--white);
     border-radius: var(--radius-lg);

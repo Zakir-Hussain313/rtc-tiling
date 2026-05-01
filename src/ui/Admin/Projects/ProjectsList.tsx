@@ -39,7 +39,7 @@ export default function ProjectsList({ projects, onEdit, onDelete, onToggleFeatu
                 <span>Image</span>
                 <span>Title</span>
                 <span>Date</span>
-                <span>Featured</span>        {/* 👈 new */}
+                <span>Featured</span>
                 <span>Auto Link</span>
                 <span>Actions</span>
             </div>
@@ -48,8 +48,8 @@ export default function ProjectsList({ projects, onEdit, onDelete, onToggleFeatu
                     <div key={project._id} className="projectsListRow">
 
                         <div className="projectsListImg">
-                            {project.image ? (
-                                <img src={project.image} alt={project.title} />
+                            {project.images && project.images.length > 0 ? (
+                                <img src={project.images[0]} alt={project.title} />
                             ) : (
                                 <div className="projectsListImgPlaceholder">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">

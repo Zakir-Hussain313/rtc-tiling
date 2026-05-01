@@ -1,17 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { connectDB } from '../../../../lib/mongodb';
-import { uploadImage } from '../../../../lib/cloudinary';
-import Service from '../../../../models/Service';
+import { connectDB } from 'lib/mongodb';
+import { uploadImage } from 'lib/cloudinary';
+import Service from 'models/Service';
 
 function generateSlug(title: string): string {
-    return (
-        '/services/' +
-        title
-            .toLowerCase()
-            .trim()
-            .replace(/\s+/g, '-')
-            .replace(/[^a-z0-9-]/g, '')
-    );
+    return '/services/' + title.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 }
 
 export async function GET() {
@@ -30,44 +23,39 @@ export async function POST(req: NextRequest) {
         await connectDB();
 
         let body: unknown;
-        try {
-            body = await req.json();
-        } catch {
-            return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
-        }
+        try { body = await req.json(); }
+        catch { return NextResponse.json({ error: 'Invalid request body' }, { status: 400 }); }
 
-        if (typeof body !== 'object' || body === null) {
+        if (typeof body !== 'object' || body === null)
             return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
-        }
 
         const {
-            title, description, image,
+            title, description, images,
             serviceType, location, estimatedDuration,
             maximumArea, finishStyle, suitableFor,
         } = body as Record<string, unknown>;
 
-        if (typeof title !== 'string' || !title.trim()) {
+        if (typeof title !== 'string' || !title.trim())
             return NextResponse.json({ error: 'Title is required' }, { status: 400 });
-        }
 
         const trimmedTitle = title.trim();
         const slug = generateSlug(trimmedTitle);
 
         const existing = await Service.findOne({ slug });
-        if (existing) {
-            return NextResponse.json(
-                { error: 'A service with this title already exists' },
-                { status: 409 }
-            );
-        }
+        if (existing)
+            return NextResponse.json({ error: 'A service with this title already exists' }, { status: 409 });
 
-        let imageUrl = '';
-        let imagePublicId = '';
+        const imageUrls: string[] = [];
+        const imagePublicIds: string[] = [];
 
-        if (typeof image === 'string' && image.startsWith('data:image/')) {
-            const result = await uploadImage(image, 'rtc/services');
-            imageUrl = result.url;
-            imagePublicId = result.publicId;
+        if (Array.isArray(images)) {
+            for (const img of images) {
+                if (typeof img === 'string' && img.startsWith('data:image/')) {
+                    const result = await uploadImage(img, 'rtc/services');
+                    imageUrls.push(result.url);
+                    imagePublicIds.push(result.publicId);
+                }
+            }
         }
 
         const count = await Service.countDocuments();
@@ -75,8 +63,8 @@ export async function POST(req: NextRequest) {
         const service = await Service.create({
             title:             trimmedTitle,
             description:       typeof description       === 'string' ? description.trim()       : '',
-            image:             imageUrl,
-            imagePublicId,
+            images:            imageUrls,
+            imagePublicIds,
             serviceType:       typeof serviceType       === 'string' ? serviceType.trim()       : '',
             location:          typeof location          === 'string' ? location.trim()          : '',
             estimatedDuration: typeof estimatedDuration === 'string' ? estimatedDuration.trim() : '',

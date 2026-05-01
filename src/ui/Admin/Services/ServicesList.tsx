@@ -1,7 +1,7 @@
 'use client';
 
 import { Service, generateServiceSlug } from './ServicesEditor';
-import "@/styles/Admin/Services/ServicesList.css";
+import '@/styles/Admin/Services/ServicesList.css';
 
 interface ServicesListProps {
     services: Service[];
@@ -21,7 +21,7 @@ export default function ServicesList({ services, onEdit, onDelete }: ServicesLis
                     </svg>
                 </div>
                 <p className="servicesEmptyText">No services yet</p>
-                <p className="servicesEmptySub">Click &qout;Add Service&qout; to get started</p>
+                <p className="servicesEmptySub">Click &quot;Add Service&quot; to get started</p>
             </div>
         );
     }
@@ -40,8 +40,8 @@ export default function ServicesList({ services, onEdit, onDelete }: ServicesLis
                     <div key={service._id} className="servicesListRow">
 
                         <div className="servicesListImg">
-                            {service.image ? (
-                                <img src={service.image} alt={service.title} />
+                            {service.images && service.images.length > 0 ? (
+                                <img src={service.images[0]} alt={service.title} />
                             ) : (
                                 <div className="servicesListImgPlaceholder">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -59,12 +59,12 @@ export default function ServicesList({ services, onEdit, onDelete }: ServicesLis
                         </div>
 
                         <div className="servicesListMeta">
-                            {service.serviceType       && <span> {service.serviceType}</span>}, 
-                            {service.location          && <span> {service.location}</span>}, 
-                            {service.estimatedDuration && <span> {service.estimatedDuration}</span>}, 
-                            {service.maximumArea       && <span> {service.maximumArea}</span>}, 
-                            {service.finishStyle       && <span> {service.finishStyle}</span>}, 
-                            {service.suitableFor       && <span> {service.suitableFor}</span>}
+                            {service.serviceType && <span>{service.serviceType}</span>}
+                            {service.location && <span>{service.location}</span>}
+                            {service.estimatedDuration && <span>{service.estimatedDuration}</span>}
+                            {service.maximumArea && <span>{service.maximumArea}</span>}
+                            {service.finishStyle && <span>{service.finishStyle}</span>}
+                            {service.suitableFor && <span>{service.suitableFor}</span>}
                         </div>
 
                         <div className="servicesListLink">
@@ -91,7 +91,6 @@ export default function ServicesList({ services, onEdit, onDelete }: ServicesLis
                                 <span>Delete</span>
                             </button>
                         </div>
-
                     </div>
                 ))}
             </div>

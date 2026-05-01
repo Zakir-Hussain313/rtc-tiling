@@ -9,13 +9,14 @@ export type Service = {
     _id: string;
     title: string;
     description: string;
+    images: string[];
+    imagePublicIds: string[];
     serviceType: string;
     location: string;
     estimatedDuration: string;
     maximumArea: string;
     finishStyle: string;
     suitableFor: string;
-    image: string | null;
     slug: string;
 };
 
@@ -68,14 +69,22 @@ export default function ServicesEditor() {
         }
     }
 
-    async function handleSave(data: Omit<Service, '_id' | 'slug'>) {
+    type SaveData = Omit<Service, '_id' | 'slug'> & {
+        removedPublicIds?: string[];
+        keptImages?: string[];
+    };
+
+    async function handleSave(data: SaveData) {
         setSaving(true);
         try {
             if (editingService) {
                 const res = await fetch(`/api/services/${editingService._id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data),
+                    body: JSON.stringify({
+                        ...data,
+                        removedPublicIds: data.removedPublicIds ?? [],
+                    }),
                 });
                 if (!res.ok) {
                     const err = await res.json();
