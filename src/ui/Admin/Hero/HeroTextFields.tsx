@@ -31,14 +31,14 @@ export default function HeroTextFields({
             <div className="heroFieldGroup">
                 <label className="heroFieldLabel" htmlFor="headline">
                     Headline
-                    <span className="heroCharCount">{headline.length} / 80</span>
+                    <span className="heroCharCount">{headline.length} / 40</span>
                 </label>
                 <input
                     id="headline"
                     type="text"
                     className="heroFieldInput"
                     value={headline}
-                    maxLength={80}
+                    maxLength={40}
                     onChange={(e) => onHeadlineChange(e.target.value)}
                     placeholder="Enter hero headline..."
                 />

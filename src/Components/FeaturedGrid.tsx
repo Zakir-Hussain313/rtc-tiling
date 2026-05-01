@@ -7,7 +7,7 @@ import '../styles/Landing/featured.css';
 type Project = {
     _id: string;
     title: string;
-    image: string;
+    images: string[];
     slug: string;
 };
 
@@ -30,7 +30,7 @@ export default function FeaturedGrid() {
                 const res  = await fetch('/api/projects?featured=true', { cache: 'no-store' });
                 const json = await res.json();
                 const all: Project[] = json.data ?? [];
-                setProjects(all.filter((p) => p.image).slice(0, 6));
+                setProjects(all.filter((p) => p.images?.[0]).slice(0, 6));
             } catch (err) {
                 console.error('[FeaturedGrid] fetch failed', err);
             }
@@ -139,7 +139,7 @@ export default function FeaturedGrid() {
                             onKeyDown={(e) => e.key === 'Enter' && openLightbox(project)}
                         >
                             <Image
-                                src={project.image}
+                                src={project.images?.[0]}
                                 alt={project.title}
                                 fill
                                 sizes="(max-width: 540px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -183,7 +183,7 @@ export default function FeaturedGrid() {
                         }}
                     >
                         <img
-                            src={lightbox.image}
+                            src={lightbox.images?.[0]}
                             alt={lightbox.title}
                             className="featured-lightbox-img"
                             draggable={false}

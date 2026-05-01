@@ -12,7 +12,7 @@ type ProjectDoc = {
     _id: string
     title: string
     date: string
-    image: string
+    images: string[]
     slug: string
 }
 
@@ -49,7 +49,7 @@ export default async function ProjectsListing() {
                         <Link href={`/projects/${project.slug}`} className='projects-div'>
                             <div className="project-image">
                                 <Image
-                                    src={project.image || fallbackImage}
+                                    src={project.images?.[0] || fallbackImage}
                                     alt={project.title}
                                     fill
                                     className='img rounded-[40px] object-cover'
