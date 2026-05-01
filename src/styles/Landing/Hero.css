@@ -19,6 +19,7 @@ body {
     min-height: calc(100svh - 120px);
     overflow: hidden;
     border-radius: 50px;
+    display: flex;
 }
 
 .hero-overlay {
@@ -42,6 +43,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: center;
     margin: 50px;
 }
 
@@ -50,7 +52,7 @@ body {
     font-size: 90px;
     font-family: playfair;
     font-weight: 100;
-    max-width: 50%;
+    max-width: 60%;
 }
 
 .hero-button {
@@ -193,7 +195,7 @@ body {
         flex-direction: column;
         align-items: flex-start;
         gap: 20px;
-        margin-top: 2rem;
+        margin-top: 5rem;
     }
 }
 
@@ -215,7 +217,8 @@ body {
 
     .hero-content {
         justify-content: flex-end;
-        margin: 20px;
+        margin: 30px;
+        margin-bottom: 70px;
     }
 
     .hero-text {
@@ -249,11 +252,9 @@ body {
         flex-direction: column;
         align-items: flex-end;
         gap: 16px;
-        margin-top: 10rem;
     }
 }
 
-/* ── Small mobile ─────────────────────────────────── */
 @media (max-width: 540px) {
     .hero {
         margin-top: 90px;
@@ -294,7 +295,7 @@ body {
 
     .hero-ratings {
         gap: 12px;
-        margin-top: 1.5rem;
+        margin: 5rem 0;
     }
 }
 
