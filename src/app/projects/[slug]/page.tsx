@@ -12,9 +12,8 @@ type ProjectDetail = {
     _id: string
     title: string
     description?: string
-    image: string
+    images: string[]
     slug: string
-    // actual DB fields
     date?: string
     type?: string
     location?: string
@@ -61,7 +60,7 @@ export async function generateMetadata({ params }: Props) {
         openGraph: {
             title: project.title,
             description: project.description || `Details about ${project.title}`,
-            images: project.image ? [{ url: project.image }] : [],
+            images: project.images?.[0] ? [{ url: project.images?.[0] }] : [],
         },
     }
 }
@@ -101,7 +100,7 @@ export default async function ProjectDetailPage({ params }: Props) {
 
                     <div className="detail-img-wrap">
                         <Image
-                            src={project.image || fallbackImage}
+                            src={project.images?.[0] || fallbackImage}
                             alt={project.title}
                             fill
                             className="detail-img"
