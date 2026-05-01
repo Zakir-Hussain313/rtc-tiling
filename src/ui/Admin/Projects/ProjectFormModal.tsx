@@ -6,12 +6,24 @@ import '@/styles/Admin/Projects/ProjectFormModal.css';
 
 interface ProjectFormModalProps {
     project: Project | null;
-    onSave: (data: Omit<Project, '_id' | 'slug'>) => void;
+    onSave: (data: any) => void;
     onClose: () => void;
     saving: boolean;
 }
 
-const TODAY = new Date().toISOString().split('T')[0]; // YYYY-MM-DD, used as max date
+type ExistingImage = {
+    url: string;
+    publicId: string;
+    toRemove: boolean;
+};
+
+type NewImage = {
+    preview: string;
+    base64: string;
+    name: string;
+};
+
+const TODAY = new Date().toISOString().split('T')[0];
 
 export default function ProjectFormModal({ project, onSave, onClose, saving }: ProjectFormModalProps) {
     const [title, setTitle] = useState('');
@@ -24,8 +36,10 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
     const [client, setClient] = useState('');
     const [date, setDate] = useState('');
     const [dateError, setDateError] = useState('');
-    const [image, setImage] = useState<string | null>(null);
-    const [imageName, setImageName] = useState<string | null>(null);
+    const [featured, setFeatured] = useState(false);
+    const [existingImages, setExistingImages] = useState<ExistingImage[]>([]);
+    const [newImages, setNewImages] = useState<NewImage[]>([]);
+
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -38,9 +52,21 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
         setDesignStyle(project?.designStyle ?? '');
         setClient(project?.client ?? '');
         setDate(project?.date ?? '');
+        setFeatured(project?.featured ?? false);
         setDateError('');
-        setImage(project?.image ?? null);
-        setImageName(project?.image ? 'Current image' : null);
+        setNewImages([]);
+
+        if (project?.images && project?.imagePublicIds) {
+            setExistingImages(
+                project.images.map((url, i) => ({
+                    url,
+                    publicId: project.imagePublicIds[i] ?? '',
+                    toRemove: false,
+                }))
+            );
+        } else {
+            setExistingImages([]);
+        }
     }, [project]);
 
     useEffect(() => {
@@ -51,30 +77,38 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
         return () => window.removeEventListener('keydown', onKey);
     }, [onClose]);
 
-    function handleImage(file: File) {
-        if (!file.type.startsWith('image/')) return;
-        setImageName(file.name);
-        const reader = new FileReader();
-        reader.onload = (e) => setImage(e.target?.result as string);
-        reader.readAsDataURL(file);
+    function handleFiles(files: FileList) {
+        Array.from(files).forEach((file) => {
+            if (!file.type.startsWith('image/')) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                setNewImages((prev) => [
+                    ...prev,
+                    { preview: e.target?.result as string, base64: e.target?.result as string, name: file.name },
+                ]);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    function toggleRemoveExisting(idx: number) {
+        setExistingImages((prev) =>
+            prev.map((img, i) => i === idx ? { ...img, toRemove: !img.toRemove } : img)
+        );
+    }
+
+    function removeNewImage(idx: number) {
+        setNewImages((prev) => prev.filter((_, i) => i !== idx));
     }
 
     function validateDate(value: string): string {
-        if (!value) return ''; // date is optional
-
-        // Must match YYYY-MM-DD
+        if (!value) return '';
         const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
         if (!dateRegex.test(value)) return 'Invalid date format.';
-
         const parsed = new Date(value);
         if (isNaN(parsed.getTime())) return 'Invalid date.';
-
-        const year = parsed.getFullYear();
-        if (year < 1900) return 'Date must be after 1900.';
-
-        const today = new Date(TODAY);
-        if (parsed > today) return 'Date cannot be in the future.';
-
+        if (parsed.getFullYear() < 1900) return 'Date must be after 1900.';
+        if (parsed > new Date(TODAY)) return 'Date cannot be in the future.';
         return '';
     }
 
@@ -89,7 +123,7 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
         const y = Number(completionYear);
         const currentYear = new Date().getFullYear();
         if (completionYear && (y < 1900 || y > currentYear + 5)) {
-            alert('Enter a valid completion year (between 1900 and ' + (currentYear + 5) + ')');
+            alert('Enter a valid completion year');
             return;
         }
 
@@ -99,17 +133,44 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
             return;
         }
 
-        onSave({ title, description, type, location, completionYear, size, designStyle, client, date, image, featured: false });
+        const removedPublicIds = existingImages
+            .filter((img) => img.toRemove)
+            .map((img) => img.publicId);
+
+        const keptImages = existingImages
+            .filter((img) => !img.toRemove)
+            .map((img) => img.url);
+
+        const keptPublicIds = existingImages
+            .filter((img) => !img.toRemove)
+            .map((img) => img.publicId);
+
+        onSave({
+            title,
+            description,
+            type,
+            location,
+            completionYear,
+            size,
+            designStyle,
+            client,
+            date,
+            featured,
+            images: newImages.map((img) => img.base64),
+            imagePublicIds: keptPublicIds,
+            removedPublicIds,
+            keptImages,
+        } as any);
     }
+
+    const totalImages = existingImages.filter(i => !i.toRemove).length + newImages.length;
 
     return (
         <div className="modalOverlay" onClick={onClose}>
             <div className="modalBox" onClick={(e) => e.stopPropagation()}>
 
                 <div className="modalHeader">
-                    <h2 className="modalTitle">
-                        {project ? 'Edit Project' : 'Add Project'}
-                    </h2>
+                    <h2 className="modalTitle">{project ? 'Edit Project' : 'Add Project'}</h2>
                     <button className="modalCloseBtn" onClick={onClose}>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <line x1="18" y1="6" x2="6" y2="18" />
@@ -120,40 +181,91 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
 
                 <div className="modalBody">
 
-                    {/* Image */}
+                    {/* Images */}
                     <div className="modalField">
-                        <label className="modalLabel">Project Image</label>
+                        <label className="modalLabel">
+                            Project Images
+                            <span className="modalLabelCount">{totalImages} image{totalImages !== 1 ? 's' : ''}</span>
+                        </label>
+
+                        {/* Existing images */}
+                        {existingImages.length > 0 && (
+                            <div className="modalImageGrid">
+                                {existingImages.map((img, idx) => (
+                                    <div key={idx} className={`modalImageThumb ${img.toRemove ? 'toRemove' : ''}`}>
+                                        <img src={img.url} alt={`Image ${idx + 1}`} />
+                                        <button
+                                            type="button"
+                                            className="modalImageRemoveBtn"
+                                            onClick={() => toggleRemoveExisting(idx)}
+                                            title={img.toRemove ? 'Undo remove' : 'Remove'}
+                                        >
+                                            {img.toRemove ? (
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                    <path d="M3 12a9 9 0 1018 0 9 9 0 00-18 0" />
+                                                    <path d="M9 12l2 2 4-4" />
+                                                </svg>
+                                            ) : (
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                    <line x1="18" y1="6" x2="6" y2="18" />
+                                                    <line x1="6" y1="6" x2="18" y2="18" />
+                                                </svg>
+                                            )}
+                                        </button>
+                                        {img.toRemove && <div className="modalImageRemoveOverlay">Will be removed</div>}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        {/* New images */}
+                        {newImages.length > 0 && (
+                            <div className="modalImageGrid">
+                                {newImages.map((img, idx) => (
+                                    <div key={idx} className="modalImageThumb isNew">
+                                        <img src={img.preview} alt={img.name} />
+                                        <button
+                                            type="button"
+                                            className="modalImageRemoveBtn"
+                                            onClick={() => removeNewImage(idx)}
+                                            title="Remove"
+                                        >
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                <line x1="18" y1="6" x2="6" y2="18" />
+                                                <line x1="6" y1="6" x2="18" y2="18" />
+                                            </svg>
+                                        </button>
+                                        <div className="modalImageNewBadge">New</div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        {/* Upload dropzone */}
                         <div
-                            className={`modalDropzone ${image ? 'hasImage' : ''}`}
+                            className="modalDropzone"
                             onClick={() => inputRef.current?.click()}
                         >
-                            {image ? (
-                                <>
-                                    <img src={image} alt="preview" className="modalImagePreview" />
-                                    <div className="modalDropzoneOverlay">Click to replace</div>
-                                </>
-                            ) : (
-                                <div className="modalDropzoneInner">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                        <polyline points="16 16 12 12 8 16" />
-                                        <line x1="12" y1="12" x2="12" y2="21" />
-                                        <path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3" />
-                                    </svg>
-                                    <span>Click to upload image</span>
-                                </div>
-                            )}
+                            <div className="modalDropzoneInner">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <polyline points="16 16 12 12 8 16" />
+                                    <line x1="12" y1="12" x2="12" y2="21" />
+                                    <path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3" />
+                                </svg>
+                                <span>Click to add images</span>
+                                <span className="modalDropzoneHint">You can select multiple</span>
+                            </div>
                             <input
                                 ref={inputRef}
                                 type="file"
                                 accept="image/*"
+                                multiple
                                 style={{ display: 'none' }}
                                 onChange={(e) => {
-                                    const file = e.target.files?.[0];
-                                    if (file) handleImage(file);
+                                    if (e.target.files) handleFiles(e.target.files);
                                 }}
                             />
                         </div>
-                        {imageName && <p className="modalImageName">{imageName}</p>}
                     </div>
 
                     {/* Title */}
@@ -191,83 +303,32 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
                         />
                     </div>
 
-                    {/* Two-column grid */}
+                    {/* Grid fields */}
                     <div className="modalGrid">
-
                         <div className="modalField">
                             <label className="modalLabel" htmlFor="proj-type">Type</label>
-                            <input
-                                id="proj-type"
-                                type="text"
-                                className="modalInput"
-                                value={type}
-                                onChange={(e) => setType(e.target.value)}
-                                placeholder="e.g. Residential"
-                            />
+                            <input id="proj-type" type="text" className="modalInput" value={type} onChange={(e) => setType(e.target.value)} placeholder="e.g. Residential" />
                         </div>
-
                         <div className="modalField">
                             <label className="modalLabel" htmlFor="proj-location">Location</label>
-                            <input
-                                id="proj-location"
-                                type="text"
-                                className="modalInput"
-                                value={location}
-                                onChange={(e) => setLocation(e.target.value)}
-                                placeholder="e.g. Dubai, UAE"
-                            />
+                            <input id="proj-location" type="text" className="modalInput" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="e.g. Dubai, UAE" />
                         </div>
-
                         <div className="modalField">
                             <label className="modalLabel" htmlFor="proj-year">Completion Year</label>
-                            <input
-                                id="proj-year"
-                                type="text"
-                                className="modalInput"
-                                value={completionYear}
-                                onChange={(e) => setCompletionYear(e.target.value)}
-                                placeholder="e.g. 2024"
-                                maxLength={4}
-                            />
+                            <input id="proj-year" type="text" className="modalInput" value={completionYear} onChange={(e) => setCompletionYear(e.target.value)} placeholder="e.g. 2024" maxLength={4} />
                         </div>
-
                         <div className="modalField">
                             <label className="modalLabel" htmlFor="proj-size">Size</label>
-                            <input
-                                id="proj-size"
-                                type="text"
-                                className="modalInput"
-                                value={size}
-                                onChange={(e) => setSize(e.target.value)}
-                                placeholder="e.g. 450 sqm"
-                            />
+                            <input id="proj-size" type="text" className="modalInput" value={size} onChange={(e) => setSize(e.target.value)} placeholder="e.g. 450 sqm" />
                         </div>
-
                         <div className="modalField">
                             <label className="modalLabel" htmlFor="proj-style">Design Style</label>
-                            <input
-                                id="proj-style"
-                                type="text"
-                                className="modalInput"
-                                value={designStyle}
-                                onChange={(e) => setDesignStyle(e.target.value)}
-                                placeholder="e.g. Modern Minimalist"
-                            />
+                            <input id="proj-style" type="text" className="modalInput" value={designStyle} onChange={(e) => setDesignStyle(e.target.value)} placeholder="e.g. Modern Minimalist" />
                         </div>
-
                         <div className="modalField">
                             <label className="modalLabel" htmlFor="proj-client">Client</label>
-                            <input
-                                id="proj-client"
-                                type="text"
-                                className="modalInput"
-                                value={client}
-                                onChange={(e) => setClient(e.target.value)}
-                                placeholder="e.g. Private Client"
-                            />
+                            <input id="proj-client" type="text" className="modalInput" value={client} onChange={(e) => setClient(e.target.value)} placeholder="e.g. Private Client" />
                         </div>
-
-                        {/* Date */}
                         <div className="modalField">
                             <label className="modalLabel" htmlFor="proj-date">Project Date</label>
                             <input
@@ -279,11 +340,8 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
                                 min="1900-01-01"
                                 onChange={(e) => handleDateChange(e.target.value)}
                             />
-                            {dateError && (
-                                <p className="modalInputError">{dateError}</p>
-                            )}
+                            {dateError && <p className="modalInputError">{dateError}</p>}
                         </div>
-
                     </div>
                 </div>
 
@@ -297,7 +355,6 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
                         {saving ? 'Saving...' : project ? 'Save Changes' : 'Add Project'}
                     </button>
                 </div>
-
             </div>
         </div>
     );

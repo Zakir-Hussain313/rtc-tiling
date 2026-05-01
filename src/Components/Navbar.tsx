@@ -113,6 +113,7 @@ function Navbar() {
             fontSize="clamp(15px, 2vw, 20px)"
             padding="5px 5px 5px 20px"
             arrowSize="clamp(38px, 4vw, 50px)"
+            textColor="white"
           />
         </div>
 
@@ -149,6 +150,7 @@ function Navbar() {
               fontSize="clamp(15px, 2vw, 20px)"
               padding="5px 5px 5px 20px"
               arrowSize="clamp(38px, 4vw, 50px)"
+              textColor="white"
             />
           </span>
         </div>

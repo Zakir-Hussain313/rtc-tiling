@@ -3,8 +3,8 @@ import mongoose, { Schema, Document, Model } from 'mongoose';
 export interface IService extends Document {
     title: string;
     description: string;
-    image: string;
-    imagePublicId: string;
+    images: string[];
+    imagePublicIds: string[];
     serviceType: string;
     location: string;
     estimatedDuration: string;
@@ -13,6 +13,7 @@ export interface IService extends Document {
     suitableFor: string;
     slug: string;
     order: number;
+    featured: boolean;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -21,8 +22,8 @@ const ServiceSchema = new Schema<IService>(
     {
         title:             { type: String, required: true, trim: true },
         description:       { type: String, default: '', trim: true },
-        image:             { type: String, default: '' },
-        imagePublicId:     { type: String, default: '' },
+        images:            { type: [String], default: [] },
+        imagePublicIds:    { type: [String], default: [] },
         serviceType:       { type: String, default: '', trim: true },
         location:          { type: String, default: '', trim: true },
         estimatedDuration: { type: String, default: '', trim: true },

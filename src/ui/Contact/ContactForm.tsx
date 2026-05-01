@@ -145,6 +145,7 @@ export default function ContactForm() {
                                         padding="5px 5px 5px 20px"
                                         arrowSize="clamp(38px, 4vw, 50px)"
                                         hoverBubbleColor="#4d3d2d"
+                                        textColor="white"
                                     />
                                 </div>
                             )}

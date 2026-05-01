@@ -89,19 +89,21 @@ function NumBox() {
   if (loading) return null;
 
   return (
-    <main className="stats-container" ref={statsRef}>
-      {statsData.map((stat, i) => (
-        <section className="stats" key={i}>
-          <div className="stats-up">
-            <h1>{counts[i]}</h1>
-            <span>{stat.symbol}</span>
-          </div>
-          <div className="stats-down">
-            <h1>{stat.label}</h1>
-          </div>
-        </section>
-      ))}
-    </main>
+    <div className="stats-main-container">
+      <main className="stats-container" ref={statsRef}>
+        {statsData.map((stat, i) => (
+          <section className="stats" key={i}>
+            <div className="stats-up">
+              <h1 className="stat-h1">{counts[i]}</h1>
+              <span className="stat-symbol">{stat.symbol}</span>
+            </div>
+            <div className="stats-down">
+              <h1 className="stat-h1">{stat.label}</h1>
+            </div>
+          </section>
+        ))}
+      </main>
+    </div>
   );
 }
 

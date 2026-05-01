@@ -92,7 +92,7 @@ export default async function Expertise() {
                     <Mainbutton
                         data="All Services"
                         href="/services"
-                        textColor="black"
+                        textColor="white"
                         hoverBubbleColor="#4d3d2d"
                         fontSize="clamp(15px, 2vw, 20px)"
                         padding="5px 5px 5px 20px"

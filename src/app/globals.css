@@ -25,7 +25,23 @@
   --sidebar-width: 248px;
   --header-height: 64px;
   --font-body: 'Jost', sans-serif;
-  --font-heading: 'Playfair Display', serif;
+  --font-heading: 'Playfair', serif;
+}
+
+@font-face {
+  font-family: 'Jost';
+  src: url('/Fonts/Jost-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Playfair';
+  src: url('/Fonts/PlayfairDisplay-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 body {
@@ -41,22 +57,7 @@ code {
   font-family: 'Source Code Pro', Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-@font-face {
-  font-family: 'Jost';
-  src: url(../styles/Fonts/Jost-Regular.ttf) format('truetype');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Playfair';
-  src: url(../styles/Fonts/PlayfairDisplay-Regular.ttf) format('truetype');
-  font-weight: 400;
-  font-style: normal;
-}
-
 a {
-  color: black;
   text-decoration: none;
 }
 

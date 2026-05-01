@@ -69,7 +69,7 @@ export default function LoginPage() {
                             className='object-cover'
                         />
                     </div>
-                    <div className="loginLogoSub">RTC Tiling — Content Manager</div>
+                    <div className="loginLogoSub">RTC Projects — Content Manager</div>
                 </div>
 
                 <form className="loginForm" onSubmit={handleSubmit} noValidate>

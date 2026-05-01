@@ -1,26 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { connectDB } from '../../../../lib/mongodb';
-import { uploadImage } from '../../../../lib/cloudinary';
-import Project from '../../../../models/Project';
+import { connectDB } from 'lib/mongodb';
+import { uploadImage } from 'lib/cloudinary';
+import Project from 'models/Project';
 
 function generateSlug(title: string): string {
-    return title
-        .toLowerCase()
-        .trim()
-        .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9-]/g, '');
+    return title.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
 }
 
 export async function GET(req: NextRequest) {
     try {
         await connectDB();
-
         const { searchParams } = new URL(req.url);
         const featuredOnly = searchParams.get('featured') === 'true';
-
         const query = featuredOnly ? { featured: true } : {};
         const projects = await Project.find(query).sort({ order: 1, createdAt: -1 });
-
         return NextResponse.json({ success: true, data: projects }, { status: 200 });
     } catch (error) {
         console.error('[GET /api/projects]', error);
@@ -44,7 +37,7 @@ export async function POST(req: NextRequest) {
         }
 
         const {
-            title, description, image,
+            title, description, images,
             type, location, completionYear,
             size, designStyle, client, date,
         } = body as Record<string, unknown>;
@@ -58,19 +51,20 @@ export async function POST(req: NextRequest) {
 
         const existing = await Project.findOne({ slug });
         if (existing) {
-            return NextResponse.json(
-                { error: 'A project with this title already exists' },
-                { status: 409 }
-            );
+            return NextResponse.json({ error: 'A project with this title already exists' }, { status: 409 });
         }
 
-        let imageUrl = '';
-        let imagePublicId = '';
+        const imageUrls: string[] = [];
+        const imagePublicIds: string[] = [];
 
-        if (typeof image === 'string' && image.startsWith('data:image/')) {
-            const result = await uploadImage(image, 'rtc/projects');
-            imageUrl = result.url;
-            imagePublicId = result.publicId;
+        if (Array.isArray(images)) {
+            for (const img of images) {
+                if (typeof img === 'string' && img.startsWith('data:image/')) {
+                    const result = await uploadImage(img, 'rtc/projects');
+                    imageUrls.push(result.url);
+                    imagePublicIds.push(result.publicId);
+                }
+            }
         }
 
         const count = await Project.countDocuments();
@@ -78,8 +72,8 @@ export async function POST(req: NextRequest) {
         const project = await Project.create({
             title: trimmedTitle,
             description: typeof description === 'string' ? description.trim() : '',
-            image: imageUrl,
-            imagePublicId,
+            images: imageUrls,
+            imagePublicIds,
             type: typeof type === 'string' ? type.trim() : '',
             location: typeof location === 'string' ? location.trim() : '',
             completionYear: typeof completionYear === 'string' ? completionYear.trim() : '',
