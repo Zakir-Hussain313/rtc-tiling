@@ -2,6 +2,9 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import { connectDB } from 'lib/mongodb';
 
+const USERNAME = 'admin13579';
+const PASSWORD = 'admin13579';
+
 async function seedAdmin() {
     await connectDB();
 
@@ -10,15 +13,12 @@ async function seedAdmin() {
 
     const collection = db.collection('admins');
 
-    const existing = await collection.findOne({ username: 'admin1234' });
-    if (existing) {
-        console.log('Admin already exists');
-        process.exit(0);
-    }
+    await collection.deleteMany({});
+    console.log('Cleared admins collection');
 
-    const hashedPassword = await bcrypt.hash('admin13579', 10);
+    const hashedPassword = await bcrypt.hash(PASSWORD, 10);
     await collection.insertOne({
-        username: 'admin13579',
+        username: USERNAME,
         passwordHash: hashedPassword,
     });
 
