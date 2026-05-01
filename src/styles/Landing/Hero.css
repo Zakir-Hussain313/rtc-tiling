@@ -321,6 +321,6 @@ body {
     .rating-text span { font-size: 13px; }
 
     .hero-ratings {
-        margin: 1rem 0;
+        margin: 0;
     }
 }
