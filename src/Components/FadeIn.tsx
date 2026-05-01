@@ -1,10 +1,7 @@
 'use client';
 
-import { ElementType, useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { ElementType, useLayoutEffect, useRef } from 'react';
+import gsap from 'lib/gsap';
 
 interface FadeInProps {
   children: React.ReactNode;
@@ -13,7 +10,6 @@ interface FadeInProps {
   y?: number;
   duration?: number;
   as?: ElementType;
-  withShadow?: boolean;
 }
 
 export default function FadeIn({
@@ -24,13 +20,15 @@ export default function FadeIn({
   duration = 0.8,
   as: Tag = 'div',
 }: FadeInProps) {
+
   const ref = useRef<HTMLElement | null>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
 
     const ctx = gsap.context(() => {
+
       gsap.fromTo(
         el,
         { opacity: 0, y },
@@ -39,17 +37,19 @@ export default function FadeIn({
           y: 0,
           duration,
           delay: delay / 1000,
-          ease: 'power3.out',
+          ease: "power3.out",
           scrollTrigger: {
             trigger: el,
-            start: 'top 90%',
+            start: "top 85%",
             once: true,
           },
         }
       );
-    });
+
+    }, ref);
 
     return () => ctx.revert();
+
   }, [delay, y, duration]);
 
   return (
