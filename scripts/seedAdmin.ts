@@ -19,7 +19,7 @@ async function seedAdmin() {
     const hashedPassword = await bcrypt.hash('admin1357', 10);
     await collection.insertOne({
         username: 'admin1357',
-        password: hashedPassword,
+        passwordHash: hashedPassword,
     });
 
     console.log('Admin created successfully');
