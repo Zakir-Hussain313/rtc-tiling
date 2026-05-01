@@ -10,16 +10,18 @@ async function getServiceImages(): Promise<string[]> {
     noStore();
     try {
         await connectDB();
-        const services = await Service.find(
-            { image: { $ne: "" } },
-            { image: 1 }
-        )
-            .sort({ order: 1, createdAt: -1 })
-            .lean();
+        const services = await Service.find({}, { images: 1, title: 1 }).lean();
 
-        return services
-            .map((s) => (s as unknown as { image: string }).image)
-            .filter(Boolean);
+        console.log("[OurStory] raw services:", JSON.stringify(services, null, 2));
+
+        const allImages = services.flatMap((s) => (s as unknown as { images: string[] }).images).filter(Boolean);
+
+        console.log("[OurStory] services found:", services.length);
+        console.log("[OurStory] total images:", allImages.length);
+        console.log("[OurStory] sample:", allImages[0]);
+        console.log("[OurStory] collection name:", Service.collection.collectionName);
+
+        return allImages;
     } catch (err) {
         console.error("[OurStory] Failed to fetch images", err);
         return [];
@@ -188,8 +190,12 @@ Z
                             fontSize="clamp(15px, 2vw, 20px)"
                             padding="5px 5px 5px 20px"
                             arrowSize="clamp(38px, 4vw, 50px)"
+                            backgroundColor="#fff"
+                            textColor="#111"
+                            border="2px solid #444"
+                            borderOnHover="2px solid transparent"
                             hoverBubbleColor="#4d3d2d"
-                            textColor="#fff"
+                            hoverTextColor="white"
                         />
                     </FadeIn>
                 </div>

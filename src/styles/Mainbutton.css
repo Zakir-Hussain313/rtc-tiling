@@ -7,12 +7,16 @@
   border-radius: 999px;
   font-family: jost;
   background-color: var(--btn-bg, #5b4630);
-  color: var(--btn-color, #fff) !important;
+  color: var(--btn-color, #fff);
   font-size: var(--btn-font-size, inherit);
   border: var(--btn-border, none);
+  box-sizing: border-box;
   position: relative;
   overflow: hidden;
-  transition: color 0.25s ease;
+
+  transition:
+    color 0.25s ease,
+    border 0.25s ease;
 }
 
 .btn-bubble {
@@ -25,22 +29,25 @@
   z-index: 0;
 }
 
-
 .btn-label {
   position: relative;
   z-index: 1;
 }
 
-
 .main-button .arrow {
   width: var(--btn-arrow-size, 44px);
   height: var(--btn-arrow-size, 44px);
+
   background-color: var(--btn-arrow-bg, #e3c28d);
+
   border-radius: 50%;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   flex-shrink: 0;
+
   position: relative;
   z-index: 1;
 }
@@ -49,6 +56,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
   transition: transform 0.3s ease;
   transform-origin: center;
 }

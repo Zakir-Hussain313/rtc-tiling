@@ -109,11 +109,14 @@ function Navbar() {
           <Mainbutton
             data={"Get a free Quote"}
             href="/contact"
-            hoverBubbleColor="#4d3d2d"
+            hoverBubbleColor="#ffffff"
+            border="2px solid transparent"
             fontSize="clamp(15px, 2vw, 20px)"
             padding="5px 5px 5px 20px"
+            borderOnHover="2px solid #444"
             arrowSize="clamp(38px, 4vw, 50px)"
             textColor="white"
+            hoverTextColor="#111"
           />
         </div>
 
