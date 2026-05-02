@@ -7,7 +7,7 @@ interface ProjectsListProps {
     projects: Project[];
     onEdit: (project: Project) => void;
     onDelete: (id: string) => void;
-    onToggleFeatured: (id: string, current: boolean) => void;   // 👈 new
+    onToggleFeatured: (id: string, current: boolean) => void;
 }
 
 function formatDate(dateStr: string): string {
@@ -28,7 +28,7 @@ export default function ProjectsList({ projects, onEdit, onDelete, onToggleFeatu
                     </svg>
                 </div>
                 <p className="projectsEmptyText">No projects yet</p>
-                <p className="projectsEmptySub">Click "Add Project" to get started</p>
+                <p className="projectsEmptySub">Click &quot;Add Project&quot; to get started</p>
             </div>
         );
     }

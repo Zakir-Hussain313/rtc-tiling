@@ -33,8 +33,7 @@ export async function PUT(
 
         const {
             title, description, images,
-            removedPublicIds,
-            type, location, completionYear,
+            removedPublicIds, type, location,
             size, designStyle, client, date,
             featured,
         } = body as Record<string, unknown>;
@@ -55,7 +54,6 @@ export async function PUT(
         if (typeof description === 'string') updates.description = description.trim();
         if (typeof type === 'string') updates.type = type.trim();
         if (typeof location === 'string') updates.location = location.trim();
-        if (typeof completionYear === 'string') updates.completionYear = completionYear.trim();
         if (typeof size === 'string') updates.size = size.trim();
         if (typeof designStyle === 'string') updates.designStyle = designStyle.trim();
         if (typeof client === 'string') updates.client = client.trim();

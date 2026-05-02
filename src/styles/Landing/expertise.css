@@ -39,25 +39,25 @@
     line-height: 1.6;
 }
 
-.marquee-outer {
+.expertise-marquee-outer {
     width: 100vw;
     position: relative;
     overflow: hidden;
     margin-bottom: 40px;
 }
 
-.marquee-track {
+.expertise-marquee-track {
     display: flex;
     gap: 15px;
     width: max-content;
-    animation: marquee 30s linear infinite;
+    animation: expertise-marquee 10s linear infinite;
 }
 
-.marquee-track:hover {
+.expertise-marquee-track:hover {
     animation-play-state: paused !important;
 }
 
-@keyframes marquee {
+@keyframes expertise-marquee {
     0% {
         transform: translateX(0);
     }

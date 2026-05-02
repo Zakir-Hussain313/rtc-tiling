@@ -25,7 +25,7 @@ export default async function OurStory() {
                     <h1>PRECISION IN EVERY PROJECT</h1>
                 </div>
                 <div className="first-section-child-2">
-                    <CountUp value={100} symbol="%" label="Customer Satisfaction" />
+                    <CountUp  statIndex={0} />
                 </div>
             </FadeIn>
 

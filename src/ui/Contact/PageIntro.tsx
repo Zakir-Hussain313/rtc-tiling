@@ -25,7 +25,7 @@ export default function ContactPageIntro() {
                         <h1>Every Tile. Perfectly Placed.</h1>
                     </div>
                     <div className="first-section-child-2">
-                        <CountUp value={80} symbol="+" label="Successful Launches" />
+                        <CountUp statIndex={3}/>
                     </div>
                 </section>
             </FadeIn>

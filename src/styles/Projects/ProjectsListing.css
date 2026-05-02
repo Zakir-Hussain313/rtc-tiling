@@ -1,5 +1,5 @@
 .projectsListing-main-main-section {
-    padding: 0px 70px;
+    padding: 0px 24px;
 }
 
 .projectsListing-main-section {
@@ -65,7 +65,7 @@
 }
 
 .projects-div:hover .project-arrow {
-    transform: rotate(90deg);
+    transform: rotate(40deg);
 }
 
 /* ── Tablet (≤1024px) ── */

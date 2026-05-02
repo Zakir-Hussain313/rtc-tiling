@@ -59,12 +59,12 @@ export default function ServicesList({ services, onEdit, onDelete }: ServicesLis
                         </div>
 
                         <div className="servicesListMeta">
-                            {service.serviceType && <span>{service.serviceType}</span>}
-                            {service.location && <span>{service.location}</span>}
-                            {service.estimatedDuration && <span>{service.estimatedDuration}</span>}
-                            {service.maximumArea && <span>{service.maximumArea}</span>}
-                            {service.finishStyle && <span>{service.finishStyle}</span>}
-                            {service.suitableFor && <span>{service.suitableFor}</span>}
+                            {service.serviceType && <span>{service.serviceType}</span>} - 
+                            {service.location && <span> {service.location}</span>} - 
+                            {service.estimatedDuration && <span> {service.estimatedDuration}</span>} - 
+                            {service.maximumArea && <span> {service.maximumArea}</span>} - 
+                            {service.finishStyle && <span> {service.finishStyle}</span>} - 
+                            {service.suitableFor && <span> {service.suitableFor}</span>} - 
                         </div>
 
                         <div className="servicesListLink">
