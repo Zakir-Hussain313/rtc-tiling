@@ -22,7 +22,7 @@ async function getServices(): Promise<ServiceDoc[]> {
         await connectDB();
         const services = await Service.find(
             {},
-            { title: 1, images: 1, slug: 1 }  // ✅ images
+            { title: 1, images: 1, slug: 1 }
         )
             .sort({ order: 1, createdAt: -1 })
             .lean();
@@ -52,8 +52,8 @@ export default async function Expertise() {
                 </section>
 
                 {items.length > 0 ? (
-                    <section className="marquee-outer">
-                        <div className="marquee-track">
+                    <section className="expertise-marquee-outer">
+                        <div className="expertise-marquee-track">
                             {items.map((service, index) => {
                                 const slug = service.slug.startsWith('/services/')
                                     ? service.slug.replace('/services/', '')

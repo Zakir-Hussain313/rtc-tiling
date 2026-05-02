@@ -7,7 +7,6 @@ export interface IProject extends Document {
     imagePublicIds: string[];
     type: string;
     location: string;
-    completionYear: string;
     size: string;
     designStyle: string;
     client: string;
@@ -27,7 +26,6 @@ const ProjectSchema = new Schema<IProject>(
         imagePublicIds: { type: [String], default: [] },
         type:           { type: String, default: '', trim: true },
         location:       { type: String, default: '', trim: true },
-        completionYear: { type: String, default: '', trim: true },
         size:           { type: String, default: '', trim: true },
         designStyle:    { type: String, default: '', trim: true },
         client:         { type: String, default: '', trim: true },

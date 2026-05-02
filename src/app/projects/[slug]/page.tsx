@@ -1,9 +1,9 @@
-import Image from 'next/image'
+
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { connectDB } from 'lib/mongodb'
 import Project from 'models/Project'
-import fallbackImage from '../../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
+import ProjectHeroImage from '@/Components/ProjectHeroImage'
 import '../../../styles/DetailPages/DetailPages.css'
 import FeaturedGrid from '@/Components/FeaturedGrid'
 import ServicesCTA from '@/ui/Services/ServicesCTA'
@@ -17,7 +17,6 @@ type ProjectDetail = {
     date?: string
     type?: string
     location?: string
-    completionYear?: string
     size?: string
     designStyle?: string
     client?: string
@@ -68,7 +67,6 @@ export async function generateMetadata({ params }: Props) {
 const DETAIL_FIELDS = [
     { key: 'type', label: 'Project Type' },
     { key: 'location', label: 'Location' },
-    { key: 'completionYear', label: 'Completion Year' },
     { key: 'size', label: 'Size' },
     { key: 'designStyle', label: 'Design Style' },
     { key: 'client', label: 'Client' },
@@ -99,13 +97,9 @@ export default async function ProjectDetailPage({ params }: Props) {
                 <section className="detail-hero">
 
                     <div className="detail-img-wrap">
-                        <Image
-                            src={project.images?.[0] || fallbackImage}
-                            alt={project.title}
-                            fill
-                            className="detail-img"
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                            priority
+                        <ProjectHeroImage
+                            images={project.images}
+                            title={project.title}
                         />
                     </div>
 
@@ -113,7 +107,9 @@ export default async function ProjectDetailPage({ params }: Props) {
                         <h1 className="detail-title">{project.title}</h1>
 
                         {project.date && (
-                            <p className="detail-meta">{project.date}</p>
+                            <p className="detail-meta">
+                                {new Date(project.date).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}
+                            </p>
                         )}
 
                         {project.description && (
@@ -127,7 +123,11 @@ export default async function ProjectDetailPage({ params }: Props) {
                                         <div key={key} className="detail-row">
                                             <span className="detail-row-label">{label}</span>
                                             <span className="detail-row-dash">—</span>
-                                            <span className="detail-row-value">{project[key]}</span>
+                                            <span className="detail-row-value">
+                                                {key === 'date'
+                                                    ? new Date(project[key] ?? '').toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })
+                                                    : project[key]}
+                                            </span>
                                         </div>
                                     ) : null
                                 )}

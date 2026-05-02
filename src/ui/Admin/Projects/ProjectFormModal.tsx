@@ -30,7 +30,6 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
     const [description, setDescription] = useState('');
     const [type, setType] = useState('');
     const [location, setLocation] = useState('');
-    const [completionYear, setCompletionYear] = useState('');
     const [size, setSize] = useState('');
     const [designStyle, setDesignStyle] = useState('');
     const [client, setClient] = useState('');
@@ -47,7 +46,6 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
         setDescription(project?.description ?? '');
         setType(project?.type ?? '');
         setLocation(project?.location ?? '');
-        setCompletionYear(project?.completionYear ?? '');
         setSize(project?.size ?? '');
         setDesignStyle(project?.designStyle ?? '');
         setClient(project?.client ?? '');
@@ -120,13 +118,6 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
     function handleSubmit() {
         if (!title.trim() || saving) return;
 
-        const y = Number(completionYear);
-        const currentYear = new Date().getFullYear();
-        if (completionYear && (y < 1900 || y > currentYear + 5)) {
-            alert('Enter a valid completion year');
-            return;
-        }
-
         const dateValidationError = validateDate(date);
         if (dateValidationError) {
             setDateError(dateValidationError);
@@ -150,7 +141,6 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
             description,
             type,
             location,
-            completionYear,
             size,
             designStyle,
             client,
@@ -312,10 +302,6 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
                         <div className="modalField">
                             <label className="modalLabel" htmlFor="proj-location">Location</label>
                             <input id="proj-location" type="text" className="modalInput" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="e.g. Dubai, UAE" />
-                        </div>
-                        <div className="modalField">
-                            <label className="modalLabel" htmlFor="proj-year">Completion Year</label>
-                            <input id="proj-year" type="text" className="modalInput" value={completionYear} onChange={(e) => setCompletionYear(e.target.value)} placeholder="e.g. 2024" maxLength={4} />
                         </div>
                         <div className="modalField">
                             <label className="modalLabel" htmlFor="proj-size">Size</label>

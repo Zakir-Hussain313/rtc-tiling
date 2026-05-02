@@ -16,7 +16,7 @@ export default function ServicesPageIntro() {
                     <h1>Excellence in Every Detail.</h1>
                 </div>
                 <div className="first-section-child-2">
-                    <CountUp value={92} symbol="%" label="Client Retention" />
+                    <CountUp statIndex={1}/>
                 </div>
             </FadeIn>
         </main>

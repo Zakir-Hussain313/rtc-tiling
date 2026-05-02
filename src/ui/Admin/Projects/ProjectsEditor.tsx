@@ -13,7 +13,6 @@ export type Project = {
     imagePublicIds: string[];
     type: string;
     location: string;
-    completionYear: string;
     size: string;
     designStyle: string;
     client: string;

@@ -68,7 +68,7 @@
 }
 
 .services-div:hover .services-arrow {
-    transform: rotate(90deg);
+    transform: rotate(40deg);
 }
 
 /* ── Tablet (≤1024px) ── */

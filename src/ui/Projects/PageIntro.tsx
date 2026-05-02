@@ -24,7 +24,7 @@ export default function ProjectsPageIntro() {
                     <h1>Every Tile. Perfectly Placed.</h1>
                 </div>
                 <div className="first-section-child-2">
-                    <CountUp value={99} symbol="+" label="Projects Completed" />
+                    <CountUp statIndex={2} />
                 </div>
             </FadeIn>
         </section>

@@ -37,9 +37,8 @@ export async function POST(req: NextRequest) {
         }
 
         const {
-            title, description, images,
-            type, location, completionYear,
-            size, designStyle, client, date,
+            title, description, images, type, 
+            location, size, designStyle, client, date,
         } = body as Record<string, unknown>;
 
         if (typeof title !== 'string' || !title.trim()) {
@@ -76,7 +75,6 @@ export async function POST(req: NextRequest) {
             imagePublicIds,
             type: typeof type === 'string' ? type.trim() : '',
             location: typeof location === 'string' ? location.trim() : '',
-            completionYear: typeof completionYear === 'string' ? completionYear.trim() : '',
             size: typeof size === 'string' ? size.trim() : '',
             designStyle: typeof designStyle === 'string' ? designStyle.trim() : '',
             client: typeof client === 'string' ? client.trim() : '',
