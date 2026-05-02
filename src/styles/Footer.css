@@ -22,7 +22,7 @@
 
 .columnHeading {
   font-size: 30px;
-  font-family: Jost, Jost-400;
+  font-family: var(--font-body);
   margin-bottom: 15px;
   font-weight: 400;
   text-align: left;
@@ -45,7 +45,7 @@
 .link,
 .address {
   font-size: 22px;
-  font-family: Jost, Jost-400;
+  font-family: var(--font-body);
   font-weight: 400;
   text-align: left;
   color: rgba(0, 0, 0, 0.70);
@@ -76,7 +76,7 @@
   color: rgba(0, 0, 0, 0.70);
   flex-shrink: 0;
   font-size: 22px;
-  font-family: Jost, Jost-400;
+  font-family: var(--font-body);
   font-weight: 400;
   text-align: left;
 }

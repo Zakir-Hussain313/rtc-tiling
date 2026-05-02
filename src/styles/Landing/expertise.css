@@ -1,5 +1,5 @@
 .expertise-main-section {
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     padding-top: 20px;
 }
 
@@ -24,7 +24,7 @@
 
 .title-container h1 {
     font-size: 48px;
-    font-family: 'Playfair', serif;
+    font-family: var(--font-heading);
     font-weight: 400;
     color: #000000;
 }
@@ -32,7 +32,7 @@
 .title-container p {
     max-width: 60%;
     font-size: 21px;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-weight: 400;
     text-align: left;
     color: #626262;
@@ -95,7 +95,7 @@
     margin: 0;
     padding: 20px 16px;
     font-size: 16px;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     font-weight: 400;
     color: #626262;
 }

@@ -1,7 +1,7 @@
 .section {
     padding-top: 40px;
     background: #ffffff;
-    font-family: "Jost", sans-serif;
+    font-family: var(--font-body);
 }
 
 @media (max-width:1650px) {
@@ -16,7 +16,7 @@
 }
 
 .heading {
-    font-family: "Playfair Display", serif;
+    font-family: var(--font-heading);
     font-size: 48px;
     font-weight: 400;
     color: #111;

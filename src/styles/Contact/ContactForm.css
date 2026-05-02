@@ -28,7 +28,7 @@
 }
 
 .contact-form-group label {
-    font-family: Jost, sans-serif;
+    font-family: var(--font-body);
     font-size: 20px;
     font-weight: 500;
     color: #111;
@@ -41,7 +41,7 @@
 
 .contact-form-group input,
 .contact-form-group textarea {
-    font-family: Jost, sans-serif;
+    font-family: var(--font-body);
     font-size: 15px;
     color: #333;
     background: #fff;
@@ -91,7 +91,7 @@
 
 /* native button styled to match the site's design language */
 .cf-submit-btn {
-    font-family: Jost, sans-serif;
+    font-family: var(--font-body);
     font-size: clamp(16px, 1.5vw, 20px);
     font-weight: 500;
     color: #fff;
@@ -134,7 +134,7 @@
 
 /* ── Reassurance text ─────────────────────────────── */
 .cf-reassurance {
-    font-family: Jost, sans-serif;
+    font-family: var(--font-body);
     font-size: 13px;
     color: #3a9e5f;
     font-weight: 400;
@@ -150,7 +150,7 @@
     gap: 10px;
     padding: 14px 20px;
     border-radius: 12px;
-    font-family: Jost, sans-serif;
+    font-family: var(--font-body);
     font-size: 15px;
     font-weight: 500;
     width: 100%;
@@ -203,7 +203,7 @@
 }
 
 .contact-info-block h3 {
-    font-family: Jost, sans-serif;
+    font-family: var(--font-body);
     font-size: 22px;
     font-weight: 600;
     color: #111;
@@ -211,7 +211,7 @@
 }
 
 .contact-info-block p {
-    font-family: Jost, sans-serif;
+    font-family: var(--font-body);
     font-size: 18px;
     color: #777;
     margin: 0;
@@ -228,7 +228,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    font-family: Jost, sans-serif;
+    font-family: var(--font-body);
     font-size: 18px;
     color: #333;
     text-decoration: underline;

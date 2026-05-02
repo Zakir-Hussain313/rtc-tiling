@@ -1,6 +1,6 @@
 .stat-h1,
 .stat-symbol {
-    font-family: Jost, Jost-400;
+    font-family: var(--font-body);
     font-weight: 400;
     color: #000;
 }

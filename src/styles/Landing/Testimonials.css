@@ -1,5 +1,5 @@
 .testimonials-section {
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body);
     padding: 40px 0;
 }
 
@@ -25,7 +25,7 @@
 
 .testi-title-container h1 {
     font-size: 48px;
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-heading);
     font-weight: 400;
     color: #000;
 }
@@ -149,7 +149,7 @@
 
 .testimonial-name {
     font-size: 16px;
-    font-family: Jost, sans-serif;
+    font-family: var(--font-body);
     font-weight: 500;
     color: #000;
     margin: 0;

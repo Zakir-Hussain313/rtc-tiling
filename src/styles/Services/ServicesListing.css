@@ -19,7 +19,7 @@
 
 .services-div h1 {
     font-size: 40px;
-    font-family: Playfair Display, Playfair Display-400;
+    font-family: var(--font-heading);
     font-weight: 400;
     max-width: 20%;
     text-align: left;
@@ -39,7 +39,7 @@
 .services-description {
     font-size: 15px;
     max-width: 29%;
-    font-family: Jost, Jost-400;
+    font-family: var(--font-body);
     font-weight: 400;
     color: #555;
     transition: color 0.35s ease;

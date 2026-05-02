@@ -22,7 +22,7 @@
 
 .first-section-child-1 h1 {
     font-size: 48px;
-    font-family: Playfair Display, Playfair Display-400;
+    font-family: var(--font-heading);
     font-weight: 400;
     max-width: 80%;
 }
@@ -59,7 +59,7 @@
 
 .second-section-child-2 h1 {
     font-size: 45px;
-    font-family: Playfair Display, Playfair Display-400;
+    font-family: var(--font-heading);
     font-weight: 400;
 }
 

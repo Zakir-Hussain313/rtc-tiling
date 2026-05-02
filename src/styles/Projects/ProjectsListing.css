@@ -22,7 +22,7 @@
 
 .projects-div h1 {
     font-size: 40px;
-    font-family: Playfair Display, Playfair Display-400;
+    font-family: var(--font-heading);
     font-weight: 400;
     max-width: 30%;
     flex: 1;
@@ -40,7 +40,7 @@
 
 .project-date {
     font-size: 25px;
-    font-family: Jost, Jost-400;
+    font-family: var(--font-body);
     font-weight: 400;
     color: #555;
     transition: color 0.35s ease;
