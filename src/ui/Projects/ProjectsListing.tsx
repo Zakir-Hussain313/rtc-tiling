@@ -23,9 +23,15 @@ function formatDate(dateStr: string): string {
     return d.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
 }
 
+function getTitleSize(title: string): string {
+    const len = title.length;
+    if (len > 30) return '24px';
+    if (len > 20) return '32px';
+    return '40px';
+}
 
 async function getProjects(): Promise<ProjectDoc[]> {
-    noStore(); // ← add this
+    noStore();
     try {
         await connectDB()
         const projects = await Project.find().sort({ order: 1, createdAt: -1 }).lean()
@@ -54,7 +60,7 @@ export default async function ProjectsListing() {
                                     priority={index === 0}
                                 />
                             </div>
-                            <h1>{project.title}</h1>
+                            <h1 style={{ fontSize: getTitleSize(project.title) }}>{project.title}</h1>
                             <p className='project-date'>
                                 {formatDate(project.date)}
                             </p>

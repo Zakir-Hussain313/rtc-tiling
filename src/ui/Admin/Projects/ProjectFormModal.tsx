@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Project, generateSlug } from './ProjectsEditor';
 import '@/styles/Admin/Projects/ProjectFormModal.css';
+import Image from 'next/image';
 
 interface ProjectFormModalProps {
     project: Project | null;
@@ -183,7 +184,7 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
                             <div className="modalImageGrid">
                                 {existingImages.map((img, idx) => (
                                     <div key={idx} className={`modalImageThumb ${img.toRemove ? 'toRemove' : ''}`}>
-                                        <img src={img.url} alt={`Image ${idx + 1}`} />
+                                        <Image src={img.url} alt={`Image ${idx + 1}`} fill style={{ objectFit: 'cover' }} />
                                         <button
                                             type="button"
                                             className="modalImageRemoveBtn"
@@ -213,7 +214,7 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
                             <div className="modalImageGrid">
                                 {newImages.map((img, idx) => (
                                     <div key={idx} className="modalImageThumb isNew">
-                                        <img src={img.preview} alt={img.name} />
+                                        <Image src={img.preview} alt={img.name} fill style={{ objectFit: 'cover' }} />
                                         <button
                                             type="button"
                                             className="modalImageRemoveBtn"

@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import '@/styles/Admin/Hero/HeroImageUpload.css';
+import Image from 'next/image';
 
 interface HeroImageUploadProps {
     value: string | null;
@@ -53,7 +54,12 @@ export default function HeroImageUpload({ value, onChange }: HeroImageUploadProp
             >
                 {value ? (
                     <>
-                        <img src={value} alt="Hero preview" className="heroPreviewImg" />
+                        <Image
+                            src={value}
+                            alt="Hero preview"
+                            fill
+                            style={{ objectFit: 'cover' }}
+                        />
                         <div className="heroPreviewOverlay">
                             <span className="heroPreviewOverlayText">Click to replace</span>
                         </div>

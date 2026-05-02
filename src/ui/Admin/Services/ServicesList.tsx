@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Service, generateServiceSlug } from './ServicesEditor';
 import '@/styles/Admin/Services/ServicesList.css';
 
@@ -41,7 +42,12 @@ export default function ServicesList({ services, onEdit, onDelete }: ServicesLis
 
                         <div className="servicesListImg">
                             {service.images && service.images.length > 0 ? (
-                                <img src={service.images[0]} alt={service.title} />
+                                <Image
+                                    src={service.images[0]}
+                                    alt={service.title}
+                                    fill
+                                    style={{ objectFit: 'cover' }}
+                                />
                             ) : (
                                 <div className="servicesListImgPlaceholder">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -59,12 +65,12 @@ export default function ServicesList({ services, onEdit, onDelete }: ServicesLis
                         </div>
 
                         <div className="servicesListMeta">
-                            {service.serviceType && <span>{service.serviceType}</span>} - 
-                            {service.location && <span> {service.location}</span>} - 
-                            {service.estimatedDuration && <span> {service.estimatedDuration}</span>} - 
-                            {service.maximumArea && <span> {service.maximumArea}</span>} - 
-                            {service.finishStyle && <span> {service.finishStyle}</span>} - 
-                            {service.suitableFor && <span> {service.suitableFor}</span>} - 
+                            {service.serviceType && <span>{service.serviceType}</span>} -
+                            {service.location && <span> {service.location}</span>} -
+                            {service.estimatedDuration && <span> {service.estimatedDuration}</span>} -
+                            {service.maximumArea && <span> {service.maximumArea}</span>} -
+                            {service.finishStyle && <span> {service.finishStyle}</span>} -
+                            {service.suitableFor && <span> {service.suitableFor}</span>} -
                         </div>
 
                         <div className="servicesListLink">

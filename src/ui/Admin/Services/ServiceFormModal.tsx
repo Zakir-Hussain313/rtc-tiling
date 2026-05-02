@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Service, generateServiceSlug } from './ServicesEditor';
 import '@/styles/Admin/Services/ServiceFormModal.css';
+import Image from 'next/image';
 
 interface ServiceFormModalProps {
     service: Service | null;
@@ -24,28 +25,28 @@ type NewImage = {
 };
 
 export default function ServiceFormModal({ service, onSave, onClose, saving }: ServiceFormModalProps) {
-    const [title,             setTitle]             = useState('');
-    const [description,       setDescription]       = useState('');
-    const [serviceType,       setServiceType]       = useState('');
-    const [location,          setLocation]          = useState('');
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [serviceType, setServiceType] = useState('');
+    const [location, setLocation] = useState('');
     const [estimatedDuration, setEstimatedDuration] = useState('');
-    const [maximumArea,       setMaximumArea]       = useState('');
-    const [finishStyle,       setFinishStyle]       = useState('');
-    const [suitableFor,       setSuitableFor]       = useState('');
-    const [existingImages,    setExistingImages]    = useState<ExistingImage[]>([]);
-    const [newImages,         setNewImages]         = useState<NewImage[]>([]);
+    const [maximumArea, setMaximumArea] = useState('');
+    const [finishStyle, setFinishStyle] = useState('');
+    const [suitableFor, setSuitableFor] = useState('');
+    const [existingImages, setExistingImages] = useState<ExistingImage[]>([]);
+    const [newImages, setNewImages] = useState<NewImage[]>([]);
 
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        setTitle            (service?.title             ?? '');
-        setDescription      (service?.description       ?? '');
-        setServiceType      (service?.serviceType       ?? '');
-        setLocation         (service?.location          ?? '');
+        setTitle(service?.title ?? '');
+        setDescription(service?.description ?? '');
+        setServiceType(service?.serviceType ?? '');
+        setLocation(service?.location ?? '');
         setEstimatedDuration(service?.estimatedDuration ?? '');
-        setMaximumArea      (service?.maximumArea       ?? '');
-        setFinishStyle      (service?.finishStyle       ?? '');
-        setSuitableFor      (service?.suitableFor       ?? '');
+        setMaximumArea(service?.maximumArea ?? '');
+        setFinishStyle(service?.finishStyle ?? '');
+        setSuitableFor(service?.suitableFor ?? '');
         setNewImages([]);
 
         if (service?.images && service?.imagePublicIds) {
@@ -153,7 +154,7 @@ export default function ServiceFormModal({ service, onSave, onClose, saving }: S
                             <div className="svcModalImageGrid">
                                 {existingImages.map((img, idx) => (
                                     <div key={idx} className={`svcModalImageThumb ${img.toRemove ? 'toRemove' : ''}`}>
-                                        <img src={img.url} alt={`Image ${idx + 1}`} />
+                                        <Image src={img.url} alt={`Image ${idx + 1}`} fill style={{ objectFit: 'cover' }} />
                                         <button
                                             type="button"
                                             className="svcModalImageRemoveBtn"
@@ -182,7 +183,7 @@ export default function ServiceFormModal({ service, onSave, onClose, saving }: S
                             <div className="svcModalImageGrid">
                                 {newImages.map((img, idx) => (
                                     <div key={idx} className="svcModalImageThumb isNew">
-                                        <img src={img.preview} alt={img.name} />
+                                        <Image src={img.preview} alt={img.name} fill style={{ objectFit: 'cover' }} />
                                         <button
                                             type="button"
                                             className="svcModalImageRemoveBtn"

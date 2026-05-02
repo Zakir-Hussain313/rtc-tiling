@@ -125,15 +125,6 @@
     display: none;
 }
 
-/* ── Preview ──────────────────────────────────────── */
-
-.heroPreviewImg {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    display: block;
-}
-
 .heroPreviewOverlay {
     position: absolute;
     inset: 0;

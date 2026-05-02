@@ -277,13 +277,6 @@
     stroke: var(--brand-muted);
 }
 
-.svcModalImagePreview {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    display: block;
-}
-
 .svcModalDropzoneOverlay {
     position: absolute;
     inset: 0;
@@ -302,14 +295,6 @@
 .svcModalDropzone:hover .svcModalDropzoneOverlay {
     opacity: 1;
 }
-
-.svcModalImageName {
-    font-size: 11px;
-    color: var(--text-muted);
-    font-family: var(--font-body);
-}
-
-/* ── Footer ───────────────────────────────────────── */
 
 .svcModalFooter {
     display: flex;
