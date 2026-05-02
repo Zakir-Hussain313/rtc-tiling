@@ -16,6 +16,12 @@ type ServiceDoc = {
     slug: string
 }
 
+function getTitleSize(title: string): string {
+    const len = title.length;
+    if (len > 30) return '24px';
+    if (len > 20) return '32px';
+    return '40px';
+}
 
 async function getServices(): Promise<ServiceDoc[]> {
     noStore();
@@ -48,7 +54,7 @@ export default async function ServicesListing() {
                                     priority={index === 0}
                                 />
                             </div>
-                            <h1>{service.title}</h1>
+                            <h1 style={{ fontSize: getTitleSize(service.title) }}>{service.title}</h1>
                             <p className='services-description'>{service.description}</p>
                             <div className='services-arrow'>
                                 <Image src={arrow} alt='arrow' width={27} height={27} />

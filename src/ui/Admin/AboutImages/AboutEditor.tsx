@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import '@/styles/Admin/AboutImages/AboutEditor.css';
+import Image from 'next/image';
 
 type ImageSlot = {
     id: number;
@@ -59,10 +60,10 @@ export default function AboutEditor() {
                 prev.map((s) =>
                     s.id === id
                         ? {
-                              ...s,
-                              preview: e.target?.result as string,
-                              fileName: file.name,
-                          }
+                            ...s,
+                            preview: e.target?.result as string,
+                            fileName: file.name,
+                        }
                         : s
                 )
             );
@@ -185,19 +186,20 @@ function AboutImageSlot({
     return (
         <div className="aboutImageSlot">
             <div
-                className={`aboutDropzone ${dragging ? 'dragging' : ''} ${
-                    displaySrc ? 'hasImage' : ''
-                }`}
+                className={`aboutDropzone ${dragging ? 'dragging' : ''} ${displaySrc ? 'hasImage' : ''
+                    }`}
                 onClick={() => inputRef.current?.click()}
                 onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
                 onDragLeave={() => setDragging(false)}
                 onDrop={handleDrop}
             >
                 {displaySrc ? (
-                    <img
+                    <Image
                         src={displaySrc}
                         alt={slot.label}
+                        fill
                         className="aboutPreviewImg"
+                        style={{ objectFit: 'cover' }}
                     />
                 ) : (
                     <p>Drag & drop or click to upload</p>

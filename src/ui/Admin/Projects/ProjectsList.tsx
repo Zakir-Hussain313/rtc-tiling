@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Project, generateSlug } from './ProjectsEditor';
 import '@/styles/Admin/Projects/PorjectsListing.css';
 
@@ -49,7 +50,12 @@ export default function ProjectsList({ projects, onEdit, onDelete, onToggleFeatu
 
                         <div className="projectsListImg">
                             {project.images && project.images.length > 0 ? (
-                                <img src={project.images[0]} alt={project.title} />
+                                <Image
+                                    src={project.images[0]}
+                                    alt={project.title}
+                                    fill
+                                    style={{ objectFit: 'cover' }}
+                                />
                             ) : (
                                 <div className="projectsListImgPlaceholder">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
