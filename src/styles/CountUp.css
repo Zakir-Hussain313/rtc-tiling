@@ -12,7 +12,7 @@
 }
 
 .countup-number {
-    font-family: Jost, Jost-400;
+    font-family: var(--font-body);
     font-weight: 400;
     font-size: 85px;
     color: #000;
@@ -20,7 +20,7 @@
 }
 
 .countup-symbol {
-    font-family: Jost, Jost-400;
+    font-family: var(--font-body);
     font-weight: 400;
     font-size: 85px;
     color: #c4a473;
@@ -28,7 +28,7 @@
 }
 
 .countup-label {
-    font-family: Jost, Jost-400;
+    font-family: var(--font-body);
     font-size: 18px;
     color: #444;
     text-align: center;

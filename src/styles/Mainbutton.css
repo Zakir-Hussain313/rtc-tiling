@@ -5,7 +5,7 @@
   padding: var(--btn-padding, 5px 5px 5px 10px);
   text-decoration: none;
   border-radius: 999px;
-  font-family: jost;
+  font-family: var(--font-body);
   background-color: var(--btn-bg, #5b4630);
   color: var(--btn-color, #fff);
   font-size: var(--btn-font-size, inherit);

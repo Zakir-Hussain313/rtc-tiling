@@ -17,14 +17,14 @@
 
 .projectsCTA-main-section h1 {
     font-size: 32px;
-    font-family: Playfair Display, Playfair Display-400;
+    font-family: var(--font-heading);
     font-weight: 400;
     text-transform: uppercase;
 }
 
 .projectsCTA-main-section p {
     font-size: 20px;
-    font-family: Jost, Jost-400;
+    font-family: var(--font-body);
     font-weight: 400;
 }
 

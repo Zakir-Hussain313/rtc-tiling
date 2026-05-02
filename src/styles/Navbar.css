@@ -68,7 +68,7 @@ body {
   font-size: 0.9rem;
   font-weight: 500;
   text-decoration: none;
-  font-family: jost;
+  font-family: var(--font-body);
   position: relative;
   z-index: 1;
 }
@@ -76,7 +76,7 @@ body {
 .burger {
   width: auto;
   font-size: 15px;
-  font-family: jost;
+  font-family: var(--font-body);
   color: #fff;
   padding: 0.6rem 1.2rem;
   background-color: #5b4630;
@@ -126,7 +126,7 @@ body {
 .m-links {
   color: black;
   font-size: 30px;
-  font-family: jost;
+  font-family: var(--font-body);
 }
 
 .menu-logo {
