@@ -25,7 +25,7 @@ const getHeroData = unstable_cache(
         return (hero as unknown as HeroDoc) ?? {};
     },
     ['hero-data'],
-    { revalidate: 3600 }
+    { revalidate: 60 }
 );
 
 async function HeroSection() {
