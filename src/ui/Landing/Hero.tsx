@@ -3,13 +3,13 @@ import Image from "next/image";
 import heroBackground from "../../assets/images/Hero-background.webp";
 import google from "../../assets/images/Google.webp";
 import facebook from "../../assets/images/Facebook.webp";
-import instagram from '../../assets/images/instagram.jpg'
+import instagram from '../../assets/images/instagram.jpg';
 import star from "../../assets/icons/star.svg";
 import Link from "next/link";
 import { connectDB } from "lib/mongodb";
 import Hero from "models/Hero";
 import FadeIn from "@/Components/FadeIn";
-import { unstable_noStore as noStore } from 'next/cache';
+import { unstable_cache } from 'next/cache';
 
 type HeroDoc = {
     backgroundImage: string | null;
@@ -18,23 +18,19 @@ type HeroDoc = {
     overlayOpacity: number | null;
 };
 
-
-async function getHeroData(): Promise<HeroDoc> {
-    noStore();
-    try {
+const getHeroData = unstable_cache(
+    async () => {
         await connectDB();
         const hero = await Hero.findOne().lean();
         return (hero as unknown as HeroDoc) ?? {};
-    } catch (err) {
-        console.error('[Hero] Failed to fetch hero data', err);
-        return { backgroundImage: null, headline: null, subheading: null, overlayOpacity: null };
-    }
-}
+    },
+    ['hero-data'],
+    { revalidate: 3600 }
+);
 
 async function HeroSection() {
     const hero = await getHeroData();
 
-    const bgImage = hero.backgroundImage ?? heroBackground.src;
     const headline = hero.headline?.trim() || 'Redefining Your Surfaces';
     const overlayOpacity = (hero.overlayOpacity ?? 40) / 100;
 
@@ -42,10 +38,27 @@ async function HeroSection() {
         <section className="hero">
             <div className="hero-grid">
 
-                <div
-                    className="hero-bg"
-                    style={{ backgroundImage: `url(${bgImage})` }}
-                />
+                {hero.backgroundImage ? (
+                    <Image
+                        src={hero.backgroundImage}
+                        alt="Hero background"
+                        fill
+                        priority
+                        className="hero-bg"
+                        style={{ objectFit: 'cover' }}
+                    />
+                ) : (
+                    <Image
+                        src={heroBackground}
+                        alt="Hero background"
+                        fill
+                        priority
+                        placeholder="blur"
+                        className="hero-bg"
+                        style={{ objectFit: 'cover' }}
+                    />
+                )}
+
                 <div
                     className="hero-overlay"
                     style={{ opacity: overlayOpacity }}
@@ -62,14 +75,22 @@ async function HeroSection() {
 
                     <div className="hero-ratings">
                         <div className="hero-left">
-                            <Image className="hero-icons" src={google} alt="Google icon" />
-                            <Image className="hero-icons" src={facebook} alt="Facebook icon" />
-                            <Image className="hero-icons" src={instagram} alt="Instagram icon" />
+                            <div className="hero-icon-wrap">
+                                <Image src={google} alt="Google" fill style={{ objectFit: 'contain' }} />
+                            </div>
+                            <div className="hero-icon-wrap">
+                                <Image src={facebook} alt="Facebook" fill style={{ objectFit: 'contain' }} />
+                            </div>
+                            <div className="hero-icon-wrap">
+                                <Image src={instagram} alt="Instagram" fill style={{ objectFit: 'contain' }} />
+                            </div>
                         </div>
                         <div className="hero-right">
                             <div className="stars">
                                 {[...Array(5)].map((_, i) => (
-                                    <Image key={i} src={star} alt="star" className="star" />
+                                    <div key={i} className="star-wrap">
+                                        <Image src={star} alt="" fill style={{ objectFit: 'contain' }} />
+                                    </div>
                                 ))}
                             </div>
                             <div className="rating-text">
