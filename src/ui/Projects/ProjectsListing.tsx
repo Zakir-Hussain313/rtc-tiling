@@ -7,6 +7,7 @@ import { connectDB } from 'lib/mongodb'
 import Project from 'models/Project'
 import FadeIn from '@/Components/FadeIn'
 import { unstable_noStore as noStore } from 'next/cache';
+import { optimizeCloudinaryUrl } from 'lib/cloudinary'
 
 type ProjectDoc = {
     _id: string
@@ -52,7 +53,7 @@ export default async function ProjectsListing() {
                         <Link href={`/projects/${project.slug}`} className='projects-div'>
                             <div className="project-image">
                                 <Image
-                                    src={project.images?.[0] || fallbackImage}
+                                    src={project.images?.[0] ? optimizeCloudinaryUrl(project.images[0], 800) : fallbackImage}
                                     alt={project.title}
                                     fill
                                     className='img rounded-[40px] object-cover'

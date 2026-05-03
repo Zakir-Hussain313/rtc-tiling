@@ -7,6 +7,7 @@ import { MdDiamond } from "react-icons/md"
 import { BsHouseFill } from "react-icons/bs"
 import { getAboutImages } from 'lib/getAboutImages';
 import FadeIn from "@/Components/FadeIn"
+import { optimizeCloudinaryUrl } from "lib/cloudinary"
 
 const features = [
     {
@@ -44,7 +45,7 @@ export default async function OurCraft() {
             <FadeIn className="our-craft-section" delay={150}>
                 <div className="our-craft-left">
                     <Image
-                        src={craftImageUrl ?? fallbackImage}
+                        src={craftImageUrl ? optimizeCloudinaryUrl(craftImageUrl, 800) : fallbackImage}
                         alt="RTC Tiling craftsmanship"
                         fill
                         className="object-cover"

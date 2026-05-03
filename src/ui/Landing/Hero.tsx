@@ -10,6 +10,7 @@ import { connectDB } from "lib/mongodb";
 import Hero from "models/Hero";
 import FadeIn from "@/Components/FadeIn";
 import { unstable_cache } from 'next/cache';
+import { optimizeCloudinaryUrl } from "lib/cloudinary";
 
 type HeroDoc = {
     backgroundImage: string | null;
@@ -40,7 +41,7 @@ async function HeroSection() {
 
                 {hero.backgroundImage ? (
                     <Image
-                        src={hero.backgroundImage}
+                        src={optimizeCloudinaryUrl(hero.backgroundImage, 1600)}
                         alt="Hero background"
                         fill
                         priority

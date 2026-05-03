@@ -40,3 +40,20 @@ export async function uploadImage(
 export async function deleteImage(publicId: string): Promise<void> {
     await cloudinary.uploader.destroy(publicId);
 }
+
+/**
+ * Adds Cloudinary URL transformations for optimized delivery.
+ * Use this when rendering images from DB URLs.
+ *
+ * @param url   - The Cloudinary secure_url stored in DB
+ * @param width - Optional max width (use viewport-appropriate values)
+ */
+export function optimizeCloudinaryUrl(url: string, width?: number): string {
+    if (!url?.includes('res.cloudinary.com')) return url;
+
+    const params = width
+        ? `f_auto,q_auto,w_${width},c_limit`
+        : `f_auto,q_auto`;
+
+    return url.replace('/upload/', `/upload/${params}/`);
+}

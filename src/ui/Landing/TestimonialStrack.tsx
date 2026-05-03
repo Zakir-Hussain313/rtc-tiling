@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import { optimizeCloudinaryUrl } from 'lib/cloudinary'
 
 type Review = {
     name: string
@@ -38,7 +39,7 @@ export default function TestimonialsTrack({ items }: { items: Review[] }) {
                         <div className="testimonial-footer">
                             <div className="testimonial-image">
                                 <Image
-                                    src={review.image}
+                                    src={optimizeCloudinaryUrl(review.image, 100)}
                                     alt={review.name}
                                     fill
                                     style={{ borderRadius: '50%', objectFit: 'cover' }}

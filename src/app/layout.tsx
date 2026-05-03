@@ -1,6 +1,13 @@
 import { jost, playfair } from 'lib/fonts';
 import './globals.css';
 import LayoutWrapper from '@/Components/LayoutWrapper';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: 'https://rtc-tiling.vercel.app',
+  },
+};
 
 export default function RootLayout({
   children,

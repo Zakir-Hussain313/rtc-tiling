@@ -7,6 +7,7 @@ import { connectDB } from 'lib/mongodb'
 import Service from 'models/Service'
 import FadeIn from '@/Components/FadeIn'
 import { unstable_noStore as noStore } from 'next/cache';
+import { optimizeCloudinaryUrl } from 'lib/cloudinary'
 
 type ServiceDoc = {
     _id: string
@@ -18,7 +19,7 @@ type ServiceDoc = {
 
 function getTitleSize(title: string): string {
     const longestWord = Math.max(...title.split(' ').map(w => w.length));
-    
+
     if (longestWord > 14) return '28px';
     if (longestWord > 11) return '34px';
     return '40px';
@@ -47,7 +48,7 @@ export default async function ServicesListing() {
                         <Link href={service.slug} className='services-div'>
                             <div className="services-image">
                                 <Image
-                                    src={service.images?.[0] || fallbackImage}
+                                    src={service.images?.[0] ? optimizeCloudinaryUrl(service.images[0], 800) : fallbackImage}
                                     alt={service.title}
                                     fill
                                     className='img rounded-[40px] object-cover'
