@@ -147,12 +147,13 @@
         min-width: unset;
         flex-shrink: 1;
         margin: 0;
-        font-size: 17px;
+        font-size: 14px; /* ← was 17px */
         -webkit-line-clamp: 3;
     }
 
     .services-arrow {
         align-self: flex-end;
+        padding: 11px; /* ← slightly smaller */
     }
 }
 
@@ -172,10 +173,10 @@
     }
 
     .services-description {
-        font-size: 15px;
+        font-size: 13px; /* ← was 15px */
     }
 
     .services-arrow {
-        padding: 10px;
+        padding: 9px; /* ← was 10px */
     }
 }

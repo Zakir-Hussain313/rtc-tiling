@@ -24,9 +24,9 @@ function formatDate(dateStr: string): string {
 }
 
 function getTitleSize(title: string): string {
-    const len = title.length;
-    if (len > 30) return '24px';
-    if (len > 20) return '32px';
+    const longestWord = Math.max(...title.split(' ').map(w => w.length));
+    if (longestWord > 14) return '28px';
+    if (longestWord > 11) return '34px';
     return '40px';
 }
 
@@ -60,7 +60,9 @@ export default async function ProjectsListing() {
                                     priority={index === 0}
                                 />
                             </div>
-                            <h1 style={{ fontSize: getTitleSize(project.title) }}>{project.title}</h1>
+                            <h1 style={{ '--title-size': getTitleSize(project.title) } as React.CSSProperties}>
+                                {project.title}
+                            </h1>
                             <p className='project-date'>
                                 {formatDate(project.date)}
                             </p>
