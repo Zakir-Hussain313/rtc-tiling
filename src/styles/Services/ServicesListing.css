@@ -102,7 +102,7 @@
     }
 
     .services-div h1 {
-        font-size: min(26px, var(--title-size, 26px));
+        font-size: min(18px, var(--title-size, 18px));
         width: 200px;
         min-width: 200px;
     }
