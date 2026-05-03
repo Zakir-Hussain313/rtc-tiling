@@ -3,7 +3,7 @@
 import Image from "next/image";
 import fallbackImage from "../../assets/images/noroot -copy.png";
 import { useImageCycler } from "../../../hooks/useImageCycler";
-import { optimizeCloudinaryUrl } from "lib/cloudinary";
+import { optimizeCloudinaryUrl } from "lib/cloudinaryUtils";
 
 type Props = {
     images: string[];
