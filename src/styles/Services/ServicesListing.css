@@ -79,7 +79,7 @@
     .services-div h1 {
         width: 180px;
         min-width: 180px;
-        font-size: 28px;
+        font-size: min(28px, var(--title-size, 28px));
     }
 
     .services-image {
@@ -102,7 +102,7 @@
     }
 
     .services-div h1 {
-        font-size: 30px;
+        font-size: min(30px, var(--title-size, 30px));
         width: 200px;
         min-width: 200px;
     }
@@ -133,7 +133,7 @@
     .services-div h1 {
         width: 100%;
         min-width: unset;
-        font-size: 26px;
+        font-size: min(26px, var(--title-size, 26px));
     }
 
     .services-image {
@@ -164,7 +164,7 @@
     }
 
     .services-div h1 {
-        font-size: 22px;
+        font-size: min(22px, var(--title-size, 22px));
     }
 
     .services-image {
