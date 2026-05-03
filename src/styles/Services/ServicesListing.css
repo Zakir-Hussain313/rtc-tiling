@@ -119,7 +119,6 @@
     }
 }
 
-/* ── Large mobile (≤768px) ── */
 @media (max-width: 768px) {
     .services-div {
         flex-direction: column;
@@ -132,7 +131,7 @@
     .services-div h1 {
         width: 100%;
         min-width: unset;
-        font-size: 22px;
+        font-size: 20px;
     }
 
     .services-image {
@@ -163,7 +162,7 @@
     }
 
     .services-div h1 {
-        font-size: 18px;
+        font-size: 13px;
     }
 
     .services-image {
