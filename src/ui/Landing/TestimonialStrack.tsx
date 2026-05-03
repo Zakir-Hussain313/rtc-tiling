@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { optimizeCloudinaryUrl } from 'lib/cloudinary'
+import { optimizeCloudinaryUrl } from 'lib/cloudinaryUtils'
 
 type Review = {
     name: string

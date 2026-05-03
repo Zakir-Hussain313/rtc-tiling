@@ -40,7 +40,6 @@
     text-align: center;
 }
 
-/* ── Tablet (≤1024px) ── */
 @media (max-width: 1024px) {
     .choose-main-section {
         padding: 40px;
