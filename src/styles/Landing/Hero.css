@@ -155,7 +155,6 @@ body {
     font-size: 20px;
 }
 
-/* ── Tablet ───────────────────────────────────────── */
 @media (min-width: 769px) and (max-width: 1024px) {
     .hero-content {
         justify-content: flex-end;
@@ -197,7 +196,6 @@ body {
     }
 }
 
-/* ── Mobile ───────────────────────────────────────── */
 @media (max-width: 768px) {
     .hero {
         margin-top: 95px;
@@ -216,7 +214,6 @@ body {
     .hero-content {
         justify-content: flex-end;
         margin: 30px;
-        margin-bottom: 70px;
     }
 
     .hero-text {
@@ -255,7 +252,6 @@ body {
     }
 }
 
-/* ── Small Mobile ─────────────────────────────────── */
 @media (max-width: 540px) {
     .hero {
         margin-top: 90px;
@@ -304,7 +300,6 @@ body {
     }
 }
 
-/* ── XS ───────────────────────────────────────────── */
 @media (max-width: 380px) {
     .hero-grid { border-radius: 18px; }
     .hero-overlay { border-radius: 18px; }
