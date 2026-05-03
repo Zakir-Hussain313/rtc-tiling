@@ -80,6 +80,7 @@
     opacity: 0;
     transition: opacity 0.25s ease;
     border-radius: inherit;
+    z-index: 3;
 }
 
 .featured-clickable:hover .featured-image-overlay {
