@@ -33,7 +33,7 @@ export default async function OurCraft() {
 
     return (
         <main className="our-craft-main-section">
-            <FadeIn className="our-craft-heading">
+            <FadeIn className="our-craft-heading" delay={150}>
                 <h2>OUR CRAFT</h2>
                 <h1>
                     <span>**</span>We Build With Precision —{" "}

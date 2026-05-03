@@ -140,7 +140,7 @@
 /* ── Small mobile (≤480px) ── */
 @media (max-width: 480px) {
     .our-craft-main-section {
-        padding: 70px 16px 40px 16px;
+        padding: 40px 16px;
     }
 
     .our-craft-left {
