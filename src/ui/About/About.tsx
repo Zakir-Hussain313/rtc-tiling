@@ -1,6 +1,6 @@
 import OurStory from "./AboutOurStory";
 import OurCraft from "./OurCraft";
-import WhyChooseUs from "./WhyChooseUs";
+import WhyChooseUs from "../../Components/WhyChooseUs";
 import '../../styles/About/About.css'
 import ProjectsCTA from "../Projects/ProjectsCTA";
 

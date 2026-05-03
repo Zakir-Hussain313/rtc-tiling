@@ -3,6 +3,7 @@
 import Image from "next/image";
 import fallbackImage from "../../assets/images/noroot -copy.png";
 import { useImageCycler } from "../../../hooks/useImageCycler";
+import { optimizeCloudinaryUrl } from "lib/cloudinary";
 
 type Props = {
     images: string[];
@@ -30,7 +31,7 @@ export default function StoryImageCycler({ images }: Props) {
         <div className="imageWrapper" style={{ position: "relative" }}>
             <Image
                 key={`bot-${botIndex}`}
-                src={images[botIndex]}
+                src={optimizeCloudinaryUrl(images[botIndex], 800)}
                 alt="Our story"
                 fill
                 style={{ objectFit: "cover", position: "absolute", top: 0, left: 0, zIndex: 1 }}
@@ -38,7 +39,7 @@ export default function StoryImageCycler({ images }: Props) {
             />
             <Image
                 key={`top-${topIndex}`}
-                src={images[topIndex]}
+                src={optimizeCloudinaryUrl(images[topIndex], 800)}
                 alt="Our story"
                 fill
                 style={{

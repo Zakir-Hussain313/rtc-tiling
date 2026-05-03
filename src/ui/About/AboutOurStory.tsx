@@ -6,6 +6,7 @@ import fallbackImage from '../../assets/images/Hero-background.webp'
 import { getAboutImages } from 'lib/getAboutImages';
 import CountUp from "@/Components/CountUp";
 import FadeIn from "@/Components/FadeIn";
+import { optimizeCloudinaryUrl } from 'lib/cloudinary';
 
 export default async function OurStory() {
     const images = await getAboutImages();
@@ -25,7 +26,7 @@ export default async function OurStory() {
                     <h1>PRECISION IN EVERY PROJECT</h1>
                 </div>
                 <div className="first-section-child-2">
-                    <CountUp  statIndex={0} />
+                    <CountUp statIndex={0} />
                 </div>
             </FadeIn>
 
@@ -33,7 +34,7 @@ export default async function OurStory() {
                 <div className="second-section-child-1">
                     <div className="second-section-image-box">
                         <Image
-                            src={image1Url ?? fallbackImage}
+                            src={image1Url ? optimizeCloudinaryUrl(image1Url, 800) : fallbackImage}
                             alt="RTC Tiling — our story image 1"
                             fill
                             className="img"
@@ -43,7 +44,7 @@ export default async function OurStory() {
                     </div>
                     <div className="second-section-image-box second-image-box">
                         <Image
-                            src={image2Url ?? fallbackImage}
+                            src={image2Url ? optimizeCloudinaryUrl(image2Url, 800) : fallbackImage}
                             alt="RTC Tiling — our story image 2"
                             fill
                             className="img"

@@ -1,5 +1,5 @@
 
-import '../../styles/About/WhyChooseUs.css'
+import '../../styles/WhyChooseUs.css'
 import { SiMaterialformkdocs } from "react-icons/si";
 import { GiStoneCrafting } from "react-icons/gi";
 import { SlCalender } from "react-icons/sl";

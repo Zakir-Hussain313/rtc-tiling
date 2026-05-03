@@ -8,6 +8,7 @@ import Mainbutton from "@/Components/Mainbutton";
 import { connectDB } from "lib/mongodb";
 import Service from "models/Service";
 import { unstable_noStore as noStore } from 'next/cache';
+import { optimizeCloudinaryUrl } from "lib/cloudinary";
 
 type ServiceDoc = {
     _id: string;
@@ -67,7 +68,7 @@ export default async function Expertise() {
                                     >
                                         <div className="image-slider-container">
                                             <Image
-                                                src={service.images?.length > 0 ? service.images[0] : fallbackImage}
+                                                src={service.images?.length > 0 ? optimizeCloudinaryUrl(service.images[0], 600) : fallbackImage}
                                                 alt={service.title}
                                                 fill
                                                 className="card-image object-cover"
