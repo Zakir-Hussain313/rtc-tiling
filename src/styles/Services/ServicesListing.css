@@ -26,6 +26,7 @@
     text-align: left;
     transition: color 0.35s ease;
     text-transform: uppercase;
+    font-size: var(--title-size, 40px);
 }
 
 .services-image {
@@ -119,6 +120,7 @@
     }
 }
 
+/* ── Large mobile (≤768px) ── */
 @media (max-width: 768px) {
     .services-div {
         flex-direction: column;
@@ -131,7 +133,7 @@
     .services-div h1 {
         width: 100%;
         min-width: unset;
-        font-size: 20px;
+        font-size: 26px;
     }
 
     .services-image {
@@ -162,7 +164,7 @@
     }
 
     .services-div h1 {
-        font-size: 13px;
+        font-size: 22px;
     }
 
     .services-image {

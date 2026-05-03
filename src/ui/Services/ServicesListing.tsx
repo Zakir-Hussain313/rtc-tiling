@@ -54,8 +54,9 @@ export default async function ServicesListing() {
                                     priority={index === 0}
                                 />
                             </div>
-                            <h1 style={{ fontSize: getTitleSize(service.title) }}>{service.title}</h1>
-                            <p className='services-description'>{service.description}</p>
+                            <h1 style={{ '--title-size': getTitleSize(service.title) } as React.CSSProperties}>
+                                {service.title}
+                            </h1>                            <p className='services-description'>{service.description}</p>
                             <div className='services-arrow'>
                                 <Image src={arrow} alt='arrow' width={27} height={27} />
                             </div>
