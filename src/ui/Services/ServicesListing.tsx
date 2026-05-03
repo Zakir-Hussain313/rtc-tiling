@@ -17,12 +17,10 @@ type ServiceDoc = {
 }
 
 function getTitleSize(title: string): string {
-    const len = title.length;
     const longestWord = Math.max(...title.split(' ').map(w => w.length));
     
-    if (longestWord > 12 || len > 40) return '20px';
-    if (longestWord > 10 || len > 30) return '26px';
-    if (longestWord > 8  || len > 20) return '32px';
+    if (longestWord > 14) return '28px';
+    if (longestWord > 11) return '34px';
     return '40px';
 }
 
