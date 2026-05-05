@@ -40,10 +40,24 @@
 }
 
 .expertise-marquee-outer {
-    width: 100vw;
+    width: 100%;
     position: relative;
     overflow: hidden;
     margin-bottom: 40px;
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        black 8%,
+        black 92%,
+        transparent 100%
+    );
 }
 
 .expertise-marquee-track {

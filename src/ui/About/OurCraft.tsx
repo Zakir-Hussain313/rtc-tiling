@@ -7,7 +7,7 @@ import { MdDiamond } from "react-icons/md"
 import { BsHouseFill } from "react-icons/bs"
 import { getAboutImages } from 'lib/getAboutImages';
 import FadeIn from "@/Components/FadeIn"
-import { optimizeCloudinaryUrl } from "lib/cloudinary"
+import { optimizeCloudinaryUrl } from "lib/cloudinaryUtils"
 
 const features = [
     {

@@ -8,7 +8,7 @@ import Mainbutton from "@/Components/Mainbutton";
 import { connectDB } from "lib/mongodb";
 import Service from "models/Service";
 import { unstable_noStore as noStore } from 'next/cache';
-import { optimizeCloudinaryUrl } from "lib/cloudinary";
+import { optimizeCloudinaryUrl } from "lib/cloudinaryUtils";
 
 type ServiceDoc = {
     _id: string;

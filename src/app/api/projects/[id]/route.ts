@@ -60,7 +60,6 @@ export async function PUT(
         if (typeof date === 'string') updates.date = date.trim();
         if (typeof featured === 'boolean') updates.featured = featured;
 
-        // Handle images — support old single image field and new array field
         const currentImages: string[] = Array.isArray(project.images)
             ? [...project.images]
             : (project as any).image
@@ -73,17 +72,26 @@ export async function PUT(
             ? [(project as any).imagePublicId]
             : [];
 
-        // Remove marked images
+        // Remove marked images — fixed splice-while-iterating bug
         if (Array.isArray(removedPublicIds) && removedPublicIds.length > 0) {
+            const toRemove: number[] = [];
+
             for (const publicId of removedPublicIds) {
                 if (typeof publicId === 'string') {
-                    await deleteImage(publicId);
-                    const idx = currentPublicIds.indexOf(publicId);
-                    if (idx !== -1) {
-                        currentImages.splice(idx, 1);
-                        currentPublicIds.splice(idx, 1);
+                    try {
+                        await deleteImage(publicId);
+                    } catch (err) {
+                        console.error('[PUT] Failed to delete image from Cloudinary:', publicId, err);
                     }
+                    const idx = currentPublicIds.indexOf(publicId);
+                    if (idx !== -1) toRemove.push(idx);
                 }
+            }
+
+            // Splice in reverse so index shifting doesn't affect remaining indexes
+            for (const idx of toRemove.sort((a, b) => b - a)) {
+                currentImages.splice(idx, 1);
+                currentPublicIds.splice(idx, 1);
             }
         }
 
@@ -91,9 +99,13 @@ export async function PUT(
         if (Array.isArray(images)) {
             for (const img of images) {
                 if (typeof img === 'string' && img.startsWith('data:image/')) {
-                    const result = await uploadImage(img, 'rtc/projects');
-                    currentImages.push(result.url);
-                    currentPublicIds.push(result.publicId);
+                    try {
+                        const result = await uploadImage(img, 'rtc/projects');
+                        currentImages.push(result.url);
+                        currentPublicIds.push(result.publicId);
+                    } catch (uploadErr) {
+                        console.error('[PUT] Image upload failed:', uploadErr);
+                    }
                 }
             }
         }
@@ -108,6 +120,7 @@ export async function PUT(
         );
 
         return NextResponse.json({ success: true, data: updated }, { status: 200 });
+
     } catch (error) {
         console.error('[PUT /api/projects/[id]]', error);
         return NextResponse.json({ error: 'Failed to update project' }, { status: 500 });
@@ -133,12 +146,14 @@ export async function DELETE(
             ? [(project as any).imagePublicId]
             : [];
 
-        for (const publicId of publicIds) {
-            if (publicId) await deleteImage(publicId);
-        }
+        // Use allSettled so one failure doesn't block the rest
+        await Promise.allSettled(
+            publicIds.filter(Boolean).map((pid: string) => deleteImage(pid))
+        );
 
         await Project.findByIdAndDelete(id);
         return NextResponse.json({ success: true }, { status: 200 });
+
     } catch (error) {
         console.error('[DELETE /api/projects/[id]]', error);
         return NextResponse.json({ error: 'Failed to delete project' }, { status: 500 });

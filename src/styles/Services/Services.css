@@ -1,23 +1,29 @@
 .services-main-section {
-    padding: 140px 24px 4px 24px;
+    padding: 140px 0px 4px 0px;
     max-width: 1600px;
     margin: 0 auto;
 }
 
+@media (max-width: 1650px) {
+    .services-main-section {
+        padding: 140px 16px 4px 16px;
+    }
+}
+
 @media (max-width: 1024px) {
     .services-main-section {
-        padding: 120px 40px 40px 40px;
+        padding: 120px 16px 4px 16px;
     }
 }
 
 @media (max-width: 768px) {
     .services-main-section {
-        padding: 100px 24px 40px 24px;
+        padding: 100px 16px 0px 16px;
     }
 }
 
 @media (max-width: 480px) {
     .services-main-section {
-        padding: 90px 16px 32px 16px;
+        padding: 90px 16px 0px 16px;
     }
 }

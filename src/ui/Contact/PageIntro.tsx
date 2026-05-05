@@ -22,7 +22,7 @@ export default function ContactPageIntro() {
                                 Contact
                             </Link>
                         </div>
-                        <h1>Every Tile. Perfectly Placed.</h1>
+                        <h1>Let&apos;s Talk about your project</h1>
                     </div>
                     <div className="first-section-child-2">
                         <CountUp statIndex={3}/>

@@ -1,24 +1,38 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-import { getTokenFromCookies } from 'lib/auth';
+import { getTokenFromCookies } from "lib/auth";
+import { NextRequest, NextResponse } from "next/server";
+
+export const config = {
+    matcher: [
+        '/admin/:path*',
+        '/api/projects/:path*',
+        '/api/services/:path*',
+        '/api/hero',
+        '/api/about',
+        '/api/stats',
+        '/api/testimonials',
+    ],
+};
 
 export function middleware(req: NextRequest) {
-    console.log('🔥 MIDDLEWARE RUNNING:', req.nextUrl.pathname);
-
     const { pathname } = req.nextUrl;
 
-    if (pathname.startsWith('/admin')) {
-        const token = getTokenFromCookies(req.headers.get('cookie'));
+    const isProtected =
+        pathname.startsWith('/admin') ||
+        pathname.startsWith('/api/projects') ||
+        pathname.startsWith('/api/services') ||
+        pathname === '/api/hero' ||
+        pathname === '/api/about' ||
+        pathname === '/api/stats' ||
+        pathname === '/api/testimonials';
 
-        // ✅ Just check existence (not verify)
+    if (isProtected) {
+        if (req.method === 'GET') return NextResponse.next();
+
+        const token = getTokenFromCookies(req.headers.get('cookie'));
         if (!token) {
-            return NextResponse.redirect(new URL('/login', req.url));
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
     }
 
     return NextResponse.next();
 }
-
-export const config = {
-    matcher: ['/admin/:path*'],
-};

@@ -6,7 +6,7 @@ import fallbackImage from '../../assets/images/Hero-background.webp'
 import { getAboutImages } from 'lib/getAboutImages';
 import CountUp from "@/Components/CountUp";
 import FadeIn from "@/Components/FadeIn";
-import { optimizeCloudinaryUrl } from 'lib/cloudinary';
+import { optimizeCloudinaryUrl } from 'lib/cloudinaryUtils';
 
 export default async function OurStory() {
     const images = await getAboutImages();

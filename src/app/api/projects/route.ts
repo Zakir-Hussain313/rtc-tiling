@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
         }
 
         const {
-            title, description, images, type, 
+            title, description, images, type,
             location, size, designStyle, client, date,
         } = body as Record<string, unknown>;
 
@@ -53,26 +53,13 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'A project with this title already exists' }, { status: 409 });
         }
 
-        const imageUrls: string[] = [];
-        const imagePublicIds: string[] = [];
-
-        if (Array.isArray(images)) {
-            for (const img of images) {
-                if (typeof img === 'string' && img.startsWith('data:image/')) {
-                    const result = await uploadImage(img, 'rtc/projects');
-                    imageUrls.push(result.url);
-                    imagePublicIds.push(result.publicId);
-                }
-            }
-        }
-
+        // 1. Create project first with empty images
         const count = await Project.countDocuments();
-
         const project = await Project.create({
             title: trimmedTitle,
             description: typeof description === 'string' ? description.trim() : '',
-            images: imageUrls,
-            imagePublicIds,
+            images: [],
+            imagePublicIds: [],
             type: typeof type === 'string' ? type.trim() : '',
             location: typeof location === 'string' ? location.trim() : '',
             size: typeof size === 'string' ? size.trim() : '',
@@ -83,7 +70,34 @@ export async function POST(req: NextRequest) {
             order: count,
         });
 
-        return NextResponse.json({ success: true, data: project }, { status: 201 });
+        // 2. Upload images after DB save
+        const imageUrls: string[] = [];
+        const imagePublicIds: string[] = [];
+
+        if (Array.isArray(images)) {
+            for (const img of images) {
+                if (typeof img === 'string' && img.startsWith('data:image/')) {
+                    try {
+                        const result = await uploadImage(img, 'rtc/projects');
+                        imageUrls.push(result.url);
+                        imagePublicIds.push(result.publicId);
+                    } catch (uploadErr) {
+                        console.error('[POST /api/projects] Image upload failed:', uploadErr);
+                    }
+                }
+            }
+        }
+
+        // 3. Update project with uploaded images
+        if (imageUrls.length > 0) {
+            await Project.findByIdAndUpdate(project._id, {
+                $set: { images: imageUrls, imagePublicIds },
+            });
+        }
+
+        const final = await Project.findById(project._id);
+        return NextResponse.json({ success: true, data: final }, { status: 201 });
+
     } catch (error) {
         console.error('[POST /api/projects]', error);
         return NextResponse.json({ error: 'Failed to create project' }, { status: 500 });

@@ -7,7 +7,7 @@ import { connectDB } from 'lib/mongodb'
 import Project from 'models/Project'
 import FadeIn from '@/Components/FadeIn'
 import { unstable_noStore as noStore } from 'next/cache';
-import { optimizeCloudinaryUrl } from 'lib/cloudinary'
+import { optimizeCloudinaryUrl } from 'lib/cloudinaryUtils'
 
 type ProjectDoc = {
     _id: string

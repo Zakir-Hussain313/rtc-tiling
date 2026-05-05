@@ -1,6 +1,7 @@
 .projectsIntro-main-section {
-    padding: 140px 24px 4px 24px;
+    padding: 140px 16px 4px 16px;
 }
+
 
 .pageIntro-first-section {
     display: flex;
@@ -31,7 +32,7 @@
 
 @media (max-width: 1024px) {
     .projectsIntro-main-section {
-        padding: 120px 50px 4px 50px;
+        padding: 120px 16px 4px 16px;
     }
 
     .first-section-child-1 h1 {
@@ -47,7 +48,7 @@
 
 @media (max-width: 768px) {
     .projectsIntro-main-section {
-        padding: 100px 24px 4px 24px;
+        padding: 100px 16px 4px 16px;
     }
 
     .pageIntro-first-section {

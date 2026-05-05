@@ -1,6 +1,5 @@
-/* ── Base styles ── */
 .our-craft-main-section {
-    padding: 50px 24px 60px 24px;
+    padding: 50px 16px 60px 16px;
 }
 
 .our-craft-heading {
@@ -98,7 +97,6 @@
     margin-top: 8px;
 }
 
-/* ── Tablet (≤1100px) ── */
 @media (max-width: 1100px) {
     .our-craft-section {
         grid-template-columns: 1fr 1fr;
@@ -110,10 +108,9 @@
     }
 }
 
-/* ── Large mobile (≤768px) ── */
 @media (max-width: 768px) {
     .our-craft-main-section {
-        padding: 48px 24px;
+        padding: 48px 16px;
     }
 
     .our-craft-section {
@@ -137,7 +134,6 @@
     }
 }
 
-/* ── Small mobile (≤480px) ── */
 @media (max-width: 480px) {
     .our-craft-main-section {
         padding: 40px 16px;

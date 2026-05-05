@@ -2,28 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '../../../../lib/mongodb';
 import Stats from '../../../../models/Stats';
 
-// ── GET /api/stats ─────────────────────────────────
-
 export async function GET() {
     try {
         await connectDB();
-
-        let stats = await Stats.findOne();
-
-        if (!stats) {
-            stats = await Stats.create({});
-        }
-
-        return NextResponse.json({ success: true, data: stats }, { status: 200 });
+        const stats = await Stats.findOne();
+        return NextResponse.json({ success: true, data: stats ?? null }, { status: 200 });
     } catch (error) {
         console.error('[GET /api/stats]', error);
         return NextResponse.json({ error: 'Failed to fetch stats' }, { status: 500 });
     }
 }
-
-// ── PUT /api/stats ─────────────────────────────────
-// Replaces the entire stats array. Expects:
-// { stats: [{ id, value, suffix, label }, ...] }
 
 export async function PUT(req: NextRequest) {
     try {
@@ -49,18 +37,18 @@ export async function PUT(req: NextRequest) {
             );
         }
 
-        // Validate each stat item
         for (const stat of stats) {
             if (
                 typeof stat !== 'object' ||
                 stat === null ||
                 typeof (stat as Record<string, unknown>).value !== 'string' ||
-                !['%', '+'].includes((stat as Record<string, unknown>).suffix as string) ||
+                typeof (stat as Record<string, unknown>).suffix !== 'string' ||
+                !(stat as Record<string, unknown>).suffix ||
                 typeof (stat as Record<string, unknown>).label !== 'string' ||
                 !(stat as Record<string, unknown>).label
             ) {
                 return NextResponse.json(
-                    { error: 'Each stat must have a value, suffix (+ or %), and label' },
+                    { error: 'Each stat must have a value, suffix, and label' },
                     { status: 400 }
                 );
             }

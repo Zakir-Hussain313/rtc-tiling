@@ -1,5 +1,5 @@
 .about-main-section {
-    padding: 140px 24px 4px 24px;
+    padding: 140px 16px 4px 16px;
 }
 
 .about-first-section {
@@ -71,10 +71,9 @@
     color: #c4a473;
 }
 
-/* ── Tablet (≤1024px) ── */
 @media (max-width: 1024px) {
     .about-main-section {
-        padding: 120px 40px 40px 40px;
+        padding: 120px 16px 40px 16px;
     }
 
     .first-section-child-1 h1 {
@@ -108,7 +107,7 @@
 /* ── Large mobile (≤768px) ── */
 @media (max-width: 768px) {
     .about-main-section {
-        padding: 100px 24px 40px 24px;
+        padding: 100px 16px 40px 16px;
     }
 
     .about-first-section {
@@ -148,7 +147,6 @@
     }
 }
 
-/* ── Small mobile (≤480px) ── */
 @media (max-width: 480px) {
     .about-main-section {
         padding: 90px 16px 32px 16px;

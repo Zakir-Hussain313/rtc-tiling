@@ -1,5 +1,5 @@
 .contact-form-main {
-    padding: 70px 24px 0 24px;
+    padding: 70px 16px 0 16px;
 }
 
 .contact-form-wrapper {
@@ -74,7 +74,6 @@
     opacity: 0.75;
 }
 
-/* ── Submit area ──────────────────────────────────── */
 .contact-form-submit {
     margin-top: 8px;
     display: flex;
@@ -89,7 +88,6 @@
     width: 100%;
 }
 
-/* native button styled to match the site's design language */
 .cf-submit-btn {
     font-family: var(--font-body);
     font-size: clamp(16px, 1.5vw, 20px);
@@ -115,7 +113,6 @@
     transform: none;
 }
 
-/* subtle pulse while sending */
 .cf-submit-btn.sending {
     animation: cf-pulse 1.2s ease-in-out infinite;
 }
@@ -132,7 +129,6 @@
     }
 }
 
-/* ── Reassurance text ─────────────────────────────── */
 .cf-reassurance {
     font-family: var(--font-body);
     font-size: 13px;
@@ -143,7 +139,6 @@
     text-align: center;
 }
 
-/* ── Status banners ───────────────────────────────── */
 .cf-status {
     display: flex;
     align-items: center;
@@ -188,7 +183,6 @@
     border: 1.5px solid #fca5a5;
 }
 
-/* ── Right: Info ── */
 .contact-form-right {
     display: flex;
     flex-direction: column;
@@ -251,10 +245,9 @@
     color: #c4a473;
 }
 
-/* ── Tablet ───────────────────────────────────────── */
 @media (max-width: 1024px) {
     .contact-form-main {
-        padding: 60px 60px 0 60px;
+        padding: 20px 16px 0 16px;
     }
 
     .contact-form-wrapper {
@@ -264,13 +257,10 @@
 
 /* ── Mobile ───────────────────────────────────────── */
 @media (max-width: 768px) {
-    .contact-form-main {
-        padding: 50px 50px 0 50px;
-    }
 
     .contact-form-wrapper {
         grid-template-columns: 1fr;
-        gap: 48px;
+        gap: 20px;
     }
 
     .contact-form-right {
@@ -282,7 +272,7 @@
 /* ── Small mobile ─────────────────────────────────── */
 @media (max-width: 480px) {
     .contact-form-main {
-        padding: 36px 16px;
+        padding: 24px 16px;
     }
 
     .contact-form-row {
@@ -323,7 +313,6 @@
     }
 }
 
-/* ── Mainbutton wrapper ────────────────────────────── */
 .cf-mainbutton-wrap {
     cursor: pointer;
     display: inline-flex;

@@ -38,7 +38,7 @@
 .image-section {
     display: grid;
     grid-template-columns: repeat(9, 1fr);
-    grid-auto-rows: 260px;
+    grid-auto-rows: 320px;
     gap: 20px;
 }
 
@@ -214,7 +214,7 @@
 
     .image-section {
         grid-template-columns: repeat(6, 1fr);
-        grid-auto-rows: 220px;
+        grid-auto-rows: 280px;
     }
 
     .image1 { grid-column: span 3; }
@@ -244,7 +244,7 @@
 
     .image-section {
         grid-template-columns: repeat(4, 1fr);
-        grid-auto-rows: 200px;
+        grid-auto-rows: 250px;
         gap: 14px;
     }
 
@@ -283,7 +283,7 @@
 
     .image-section {
         grid-template-columns: 1fr;
-        grid-auto-rows: 220px;
+        grid-auto-rows: 270px;
         gap: 12px;
     }
 
@@ -323,7 +323,7 @@
     }
 
     .image-section {
-        grid-auto-rows: 180px;
+        grid-auto-rows: 220px;
         gap: 10px;
     }
 

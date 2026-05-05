@@ -45,26 +45,13 @@ export async function POST(req: NextRequest) {
         if (existing)
             return NextResponse.json({ error: 'A service with this title already exists' }, { status: 409 });
 
-        const imageUrls: string[] = [];
-        const imagePublicIds: string[] = [];
-
-        if (Array.isArray(images)) {
-            for (const img of images) {
-                if (typeof img === 'string' && img.startsWith('data:image/')) {
-                    const result = await uploadImage(img, 'rtc/services');
-                    imageUrls.push(result.url);
-                    imagePublicIds.push(result.publicId);
-                }
-            }
-        }
-
+        // 1. Create service first with empty images
         const count = await Service.countDocuments();
-
         const service = await Service.create({
             title:             trimmedTitle,
             description:       typeof description       === 'string' ? description.trim()       : '',
-            images:            imageUrls,
-            imagePublicIds,
+            images:            [],
+            imagePublicIds:    [],
             serviceType:       typeof serviceType       === 'string' ? serviceType.trim()       : '',
             location:          typeof location          === 'string' ? location.trim()          : '',
             estimatedDuration: typeof estimatedDuration === 'string' ? estimatedDuration.trim() : '',
@@ -75,7 +62,34 @@ export async function POST(req: NextRequest) {
             order: count,
         });
 
-        return NextResponse.json({ success: true, data: service }, { status: 201 });
+        // 2. Upload images after DB save
+        const imageUrls: string[] = [];
+        const imagePublicIds: string[] = [];
+
+        if (Array.isArray(images)) {
+            for (const img of images) {
+                if (typeof img === 'string' && img.startsWith('data:image/')) {
+                    try {
+                        const result = await uploadImage(img, 'rtc/services');
+                        imageUrls.push(result.url);
+                        imagePublicIds.push(result.publicId);
+                    } catch (uploadErr) {
+                        console.error('[POST /api/services] Image upload failed:', uploadErr);
+                    }
+                }
+            }
+        }
+
+        // 3. Update service with uploaded images
+        if (imageUrls.length > 0) {
+            await Service.findByIdAndUpdate(service._id, {
+                $set: { images: imageUrls, imagePublicIds },
+            });
+        }
+
+        const final = await Service.findById(service._id);
+        return NextResponse.json({ success: true, data: final }, { status: 201 });
+
     } catch (error) {
         console.error('[POST /api/services]', error);
         return NextResponse.json({ error: 'Failed to create service' }, { status: 500 });

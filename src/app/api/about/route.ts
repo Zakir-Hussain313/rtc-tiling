@@ -6,20 +6,11 @@ import About from '../../../../models/About';
 export async function GET() {
     try {
         await connectDB();
-
-        let about = await About.findOne();
-
-        if (!about) {
-            about = await About.create({});
-        }
-
-        return NextResponse.json({ success: true, data: about }, { status: 200 });
+        const about = await About.findOne();
+        return NextResponse.json({ success: true, data: about ?? null }, { status: 200 });
     } catch (error) {
         console.error('[GET /api/about]', error);
-        return NextResponse.json(
-            { error: 'Failed to fetch about data' },
-            { status: 500 }
-        );
+        return NextResponse.json({ error: 'Failed to fetch about data' }, { status: 500 });
     }
 }
 
@@ -28,21 +19,14 @@ export async function PUT(req: NextRequest) {
         await connectDB();
 
         let body: unknown;
-
         try {
             body = await req.json();
         } catch {
-            return NextResponse.json(
-                { error: 'Invalid request body' },
-                { status: 400 }
-            );
+            return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
         }
 
         if (typeof body !== 'object' || body === null) {
-            return NextResponse.json(
-                { error: 'Invalid request body' },
-                { status: 400 }
-            );
+            return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
         }
 
         const { images } = body as Record<string, unknown>;
@@ -55,7 +39,6 @@ export async function PUT(req: NextRequest) {
         }
 
         let about = await About.findOne();
-
         if (!about) {
             about = await About.create({});
         }
@@ -71,11 +54,16 @@ export async function PUT(req: NextRequest) {
             if (slotIndex === -1) continue;
 
             if (typeof image === 'string' && image.startsWith('data:image/')) {
-                if (about.images[slotIndex].publicId) {
-                    await deleteImage(about.images[slotIndex].publicId);
-                }
-
+                // Upload first, delete old after
                 const result = await uploadImage(image, 'rtc/about');
+
+                if (about.images[slotIndex].publicId) {
+                    try {
+                        await deleteImage(about.images[slotIndex].publicId);
+                    } catch (err) {
+                        console.error('[PUT /api/about] Failed to delete old image:', err);
+                    }
+                }
 
                 about.images[slotIndex].url = result.url;
                 about.images[slotIndex].publicId = result.publicId;
@@ -85,15 +73,9 @@ export async function PUT(req: NextRequest) {
         about.markModified('images');
         await about.save();
 
-        return NextResponse.json(
-            { success: true, data: about },
-            { status: 200 }
-        );
+        return NextResponse.json({ success: true, data: about }, { status: 200 });
     } catch (error) {
         console.error('[PUT /api/about]', error);
-        return NextResponse.json(
-            { error: 'Failed to update about images' },
-            { status: 500 }
-        );
+        return NextResponse.json({ error: 'Failed to update about images' }, { status: 500 });
     }
 }
