@@ -1,4 +1,3 @@
-
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { connectDB } from 'lib/mongodb'
@@ -7,6 +6,8 @@ import ProjectHeroImage from '@/Components/ProjectHeroImage'
 import '../../../styles/DetailPages/DetailPages.css'
 import FeaturedGrid from '@/Components/FeaturedGrid'
 import ServicesCTA from '@/ui/Services/ServicesCTA'
+import { unstable_cache } from 'next/cache'
+import { getFeaturedProjects } from 'lib/getFeaturedProjects'
 
 type ProjectDetail = {
     _id: string
@@ -26,17 +27,34 @@ type Props = {
     params: Promise<{ slug: string }>
 }
 
-async function getProjectBySlug(slug: string): Promise<ProjectDetail | null> {
-    try {
-        await connectDB()
-        const project = await Project.findOne({ slug }).lean()
-        if (!project) return null
-        return JSON.parse(JSON.stringify(project))
-    } catch (err) {
-        console.error('[ProjectDetail] Failed to fetch project', err)
-        return null
-    }
-}
+const getProjectBySlug = unstable_cache(
+    async (slug: string): Promise<ProjectDetail | null> => {
+        try {
+            await connectDB()
+            const project = await Project.findOne({ slug }).lean()
+            if (!project) return null
+            const p = project as any
+            return {
+                _id: String(p._id),
+                title: p.title,
+                description: p.description,
+                images: p.images,
+                slug: p.slug,
+                date: p.date,
+                type: p.type,
+                location: p.location,
+                size: p.size,
+                designStyle: p.designStyle,
+                client: p.client,
+            }
+        } catch (err) {
+            console.error('[ProjectDetail] Failed to fetch project', err)
+            return null
+        }
+    },
+    ['project-by-slug'],
+    { revalidate: 60, tags: ['projects-data'] }
+)
 
 export async function generateStaticParams() {
     try {
@@ -52,14 +70,13 @@ export async function generateMetadata({ params }: Props) {
     const { slug } = await params
     const project = await getProjectBySlug(slug)
     if (!project) return {}
-
     return {
         title: `${project.title} | RTC Tiling & Waterproofing`,
         description: project.description || `Details about ${project.title}`,
         openGraph: {
             title: project.title,
             description: project.description || `Details about ${project.title}`,
-            images: project.images?.[0] ? [{ url: project.images?.[0] }] : [],
+            images: project.images?.[0] ? [{ url: project.images[0] }] : [],
         },
     }
 }
@@ -75,7 +92,10 @@ const DETAIL_FIELDS = [
 
 export default async function ProjectDetailPage({ params }: Props) {
     const { slug } = await params
-    const project = await getProjectBySlug(slug)
+    const [project, featuredProjects] = await Promise.all([
+        getProjectBySlug(slug),
+        getFeaturedProjects(),
+    ])
 
     if (!project) notFound()
 
@@ -84,7 +104,6 @@ export default async function ProjectDetailPage({ params }: Props) {
     return (
         <div className='detail-main-section'>
             <main className="detail-main">
-
                 <nav className="detail-breadcrumb" aria-label="Breadcrumb">
                     <Link href="/">Home</Link>
                     <span className="detail-breadcrumb-sep">/</span>
@@ -93,29 +112,20 @@ export default async function ProjectDetailPage({ params }: Props) {
                     <span className="detail-breadcrumb-current">{project.title}</span>
                 </nav>
 
-                {/* ── Hero ── */}
                 <section className="detail-hero">
-
                     <div className="detail-img-wrap">
-                        <ProjectHeroImage
-                            images={project.images}
-                            title={project.title}
-                        />
+                        <ProjectHeroImage images={project.images} title={project.title} />
                     </div>
-
                     <div className="detail-info">
                         <h1 className="detail-title">{project.title}</h1>
-
                         {project.date && (
                             <p className="detail-meta">
                                 {new Date(project.date).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}
                             </p>
                         )}
-
                         {project.description && (
                             <p className="detail-desc">{project.description}</p>
                         )}
-
                         {hasDetails && (
                             <div className="detail-table">
                                 {DETAIL_FIELDS.map(({ key, label }) =>
@@ -138,11 +148,10 @@ export default async function ProjectDetailPage({ params }: Props) {
 
                 <section className="project-gallery-in-detail-page">
                     <h1>Project Gallery</h1>
-                    <FeaturedGrid />
+                    <FeaturedGrid projects={featuredProjects} />
                 </section>
                 <ServicesCTA />
             </main>
         </div>
-
     )
 }

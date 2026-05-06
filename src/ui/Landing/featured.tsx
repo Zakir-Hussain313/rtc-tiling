@@ -2,8 +2,11 @@ import FadeIn from "@/Components/FadeIn"
 import "../../styles/Landing/featured.css"
 import FeaturedGrid from "@/Components/FeaturedGrid"
 import Mainbutton from "@/Components/Mainbutton"
+import { getFeaturedProjects } from "lib/getFeaturedProjects";
 
-export default function Featured() {
+export default async function Featured() {
+    const projects = await getFeaturedProjects();
+
     return (
         <main className="featured-main-section">
             <section className="featured-second-main-section">
@@ -11,7 +14,7 @@ export default function Featured() {
                     <h1>FEATURED</h1>
                     <p>Crafted Surfaces, Captured Moments</p>
                 </FadeIn>
-                <FeaturedGrid />
+                <FeaturedGrid projects={projects} />
                 <FadeIn as="div" className="button-section" delay={200}>
                     <Mainbutton
                         data="View Projects"
@@ -28,6 +31,6 @@ export default function Featured() {
                     />
                 </FadeIn>
             </section>
-        </main >
+        </main>
     )
 }

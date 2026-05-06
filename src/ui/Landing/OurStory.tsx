@@ -1,35 +1,26 @@
 import "../../styles/Landing/OurStory.css";
 import Mainbutton from "@/Components/Mainbutton";
 import { connectDB } from "lib/mongodb";
-import Service from "models/Service";
 import StoryImageCycler from "./StoryImageCycler";
 import FadeIn from "@/Components/FadeIn";
-import { unstable_noStore as noStore } from 'next/cache';
+import About from "models/About";
+import { unstable_cache } from 'next/cache';
 
-async function getServiceImages(): Promise<string[]> {
-    noStore();
-    try {
+const getAboutImages = unstable_cache(
+    async (): Promise<string[]> => {
         await connectDB();
-        const services = await Service.find({}, { images: 1, title: 1 }).lean();
-
-        console.log("[OurStory] raw services:", JSON.stringify(services, null, 2));
-
-        const allImages = services.flatMap((s) => (s as unknown as { images: string[] }).images).filter(Boolean);
-
-        console.log("[OurStory] services found:", services.length);
-        console.log("[OurStory] total images:", allImages.length);
-        console.log("[OurStory] sample:", allImages[0]);
-        console.log("[OurStory] collection name:", Service.collection.collectionName);
-
-        return allImages;
-    } catch (err) {
-        console.error("[OurStory] Failed to fetch images", err);
-        return [];
-    }
-}
+        const about = await About.findOne({}, { images: 1 }).lean();
+        if (!about) return [];
+        return (about as unknown as { images: { url: string }[] }).images
+            .map((s) => s.url)
+            .filter(Boolean);
+    },
+    ['about-images'],
+    { revalidate: 60 , tags: ['about-images'] }
+);
 
 export default async function OurStory() {
-    const images = await getServiceImages();
+    const images = await getAboutImages();
 
     return (
         <section className="section">
@@ -165,7 +156,7 @@ Z
                                 </svg>
                             </a>
                             <a href="#" aria-label="Facebook">
-                              <svg className="icon" viewBox="0 0 24 24" fill="currentColor">
+                                <svg className="icon" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.269h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z" />
                                 </svg>
                             </a>

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '../../../../lib/mongodb';
 import { uploadImage, deleteImage } from '../../../../lib/cloudinary';
 import About from '../../../../models/About';
+import { revalidatePath } from 'next/cache';
 
 export async function GET() {
     try {
@@ -73,6 +74,7 @@ export async function PUT(req: NextRequest) {
         about.markModified('images');
         await about.save();
 
+        revalidatePath('/', 'layout');
         return NextResponse.json({ success: true, data: about }, { status: 200 });
     } catch (error) {
         console.error('[PUT /api/about]', error);

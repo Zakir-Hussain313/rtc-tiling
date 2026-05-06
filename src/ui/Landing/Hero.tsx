@@ -26,7 +26,7 @@ const getHeroData = unstable_cache(
         return (hero as unknown as HeroDoc) ?? {};
     },
     ['hero-data'],
-    { revalidate: 60 }
+    { revalidate: 60 , tags : ['hero-data'] }
 );
 
 async function HeroSection() {
@@ -75,7 +75,7 @@ async function HeroSection() {
                     </Link>
 
                     <div className="hero-ratings">
-                        <div className="hero-left">
+                        <Link className="hero-left" target="_blank" href={'https://maps.app.goo.gl/Xie61E9UgD4N3KNM9?g_st=aw'}>
                             <div className="hero-icon-wrap">
                                 <Image src={google} alt="Google" fill style={{ objectFit: 'contain' }} />
                             </div>
@@ -85,7 +85,7 @@ async function HeroSection() {
                             <div className="hero-icon-wrap">
                                 <Image src={instagram} alt="Instagram" fill style={{ objectFit: 'contain' }} />
                             </div>
-                        </div>
+                        </Link>
                         <div className="hero-right">
                             <div className="stars">
                                 {[...Array(5)].map((_, i) => (

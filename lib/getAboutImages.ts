@@ -1,6 +1,6 @@
 import { connectDB } from './mongodb';
 import About from '../models/About';
-import { unstable_noStore as noStore } from 'next/cache';
+import { unstable_cache } from 'next/cache';
 
 export type AboutImage = {
     id: number;
@@ -8,15 +8,18 @@ export type AboutImage = {
     publicId: string;
 };
 
-export async function getAboutImages(): Promise<AboutImage[]> {
-    noStore();
-    try {
-        await connectDB();
-        let about = await About.findOne().lean();
-        if (!about) return [];
-        return about.images ?? [];
-    } catch (err) {
-        console.error('[getAboutImages]', err);
-        return [];
-    }
-}
+export const getAboutImages = unstable_cache(
+    async (): Promise<AboutImage[]> => {
+        try {
+            await connectDB();
+            const about = await About.findOne().lean();
+            if (!about) return [];
+            return (about as unknown as { images: AboutImage[] }).images ?? [];
+        } catch (err) {
+            console.error('[getAboutImages]', err);
+            return [];
+        }
+    },
+    ['about-images'],
+    { revalidate: 60, tags: ['about-images'] }
+);

@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
 import Link from 'next/link';
 import { connectDB } from 'lib/mongodb';
 import Service from 'models/Service';
@@ -7,6 +6,8 @@ import '../../../styles/DetailPages/DetailPages.css';
 import FeaturedGrid from '@/Components/FeaturedGrid';
 import ServicesCTA from '@/ui/Services/ServicesCTA';
 import StoryImageCycler from '@/ui/Landing/StoryImageCycler';
+import { unstable_cache } from 'next/cache'
+import { getFeaturedProjects } from 'lib/getFeaturedProjects';
 
 type Props = {
     params: Promise<{ slug: string }>;
@@ -26,18 +27,35 @@ type ServiceDoc = {
     slug: string;
 };
 
-async function getService(slug: string): Promise<ServiceDoc | null> {
-    try {
-        await connectDB();
-        const service = await Service.findOne({
-            slug: { $in: [slug, `/services/${slug}`] },
-        }).lean();
-        if (!service) return null;
-        return JSON.parse(JSON.stringify(service));
-    } catch {
-        return null;
-    }
-}
+const getService = unstable_cache(
+    async (slug: string): Promise<ServiceDoc | null> => {
+        try {
+            await connectDB()
+            const service = await Service.findOne({
+                slug: { $in: [slug, `/services/${slug}`] },
+            }).lean()
+            if (!service) return null
+            const s = service as any
+            return {
+                _id: String(s._id),
+                title: s.title,
+                description: s.description,
+                images: s.images,
+                serviceType: s.serviceType,
+                location: s.location,
+                estimatedDuration: s.estimatedDuration,
+                maximumArea: s.maximumArea,
+                finishStyle: s.finishStyle,
+                suitableFor: s.suitableFor,
+                slug: s.slug,
+            }
+        } catch {
+            return null
+        }
+    },
+    ['service-by-slug'],
+    { revalidate: 60, tags: ['services-data'] }
+)
 
 async function getAllSlugs(): Promise<string[]> {
     try {
@@ -85,7 +103,10 @@ const DETAIL_FIELDS = [
 
 export default async function ServiceDetailPage({ params }: Props) {
     const { slug } = await params;
-    const service = await getService(slug);
+    const [service, featuredProjects] = await Promise.all([
+        getService(slug),
+        getFeaturedProjects(),
+    ])
 
     if (!service) notFound();
 
@@ -129,7 +150,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </section>
                 <section className='project-gallery-in-detail-page'>
                     <h1>Project Gallery</h1>
-                    <FeaturedGrid />
+                    <FeaturedGrid projects={featuredProjects} />
                 </section>
                 <ServicesCTA />
             </main>

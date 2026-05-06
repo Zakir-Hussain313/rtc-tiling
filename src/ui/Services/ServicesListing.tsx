@@ -6,8 +6,8 @@ import Link from 'next/link'
 import { connectDB } from 'lib/mongodb'
 import Service from 'models/Service'
 import FadeIn from '@/Components/FadeIn'
-import { unstable_noStore as noStore } from 'next/cache';
 import { optimizeCloudinaryUrl } from 'lib/cloudinaryUtils'
+import { unstable_cache } from 'next/cache'
 
 type ServiceDoc = {
     _id: string
@@ -25,17 +25,26 @@ function getTitleSize(title: string): string {
     return '40px';
 }
 
-async function getServices(): Promise<ServiceDoc[]> {
-    noStore();
-    try {
-        await connectDB()
-        const services = await Service.find().sort({ order: 1, createdAt: -1 }).lean()
-        return services as unknown as ServiceDoc[]
-    } catch (err) {
-        console.error('[ServicesListing] Failed to fetch services', err)
-        return []
-    }
-}
+const getServices = unstable_cache(
+    async (): Promise<ServiceDoc[]> => {
+        try {
+            await connectDB()
+            const services = await Service.find().sort({ order: 1, createdAt: -1 }).lean()
+            return services.map((s: any) => ({
+                _id: String(s._id),
+                title: s.title,
+                description: s.description,
+                images: s.images,
+                slug: s.slug,
+            }))
+        } catch (err) {
+            console.error('[ServicesListing] Failed to fetch services', err)
+            return []
+        }
+    },
+    ['all-services'],
+    { revalidate: 60, tags: ['services-data'] }
+)
 
 export default async function ServicesListing() {
     const services = await getServices()

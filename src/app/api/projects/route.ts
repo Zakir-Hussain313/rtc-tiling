@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from 'lib/mongodb';
 import { uploadImage } from 'lib/cloudinary';
 import Project from 'models/Project';
+import { revalidatePath } from 'next/cache';
 
 function generateSlug(title: string): string {
     return title.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
@@ -96,6 +97,8 @@ export async function POST(req: NextRequest) {
         }
 
         const final = await Project.findById(project._id);
+
+        revalidatePath('/', 'layout');
         return NextResponse.json({ success: true, data: final }, { status: 201 });
 
     } catch (error) {

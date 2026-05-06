@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from 'lib/mongodb';
 import { uploadImage } from 'lib/cloudinary';
 import Service from 'models/Service';
+import { revalidatePath } from 'next/cache';
 
 function generateSlug(title: string): string {
     return '/services/' + title.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
@@ -62,7 +63,6 @@ export async function POST(req: NextRequest) {
             order: count,
         });
 
-        // 2. Upload images after DB save
         const imageUrls: string[] = [];
         const imagePublicIds: string[] = [];
 
@@ -80,7 +80,6 @@ export async function POST(req: NextRequest) {
             }
         }
 
-        // 3. Update service with uploaded images
         if (imageUrls.length > 0) {
             await Service.findByIdAndUpdate(service._id, {
                 $set: { images: imageUrls, imagePublicIds },
@@ -88,6 +87,7 @@ export async function POST(req: NextRequest) {
         }
 
         const final = await Service.findById(service._id);
+        revalidatePath('/', 'layout');
         return NextResponse.json({ success: true, data: final }, { status: 201 });
 
     } catch (error) {

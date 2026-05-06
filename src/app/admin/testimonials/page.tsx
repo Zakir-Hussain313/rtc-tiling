@@ -23,6 +23,7 @@ const EMPTY_FORM = {
     rating: 5,
     image: '',
     imagePublicId: '',
+    removeImage: false,
 };
 
 export default function TestimonialsAdmin() {
@@ -67,6 +68,7 @@ export default function TestimonialsAdmin() {
             rating: t.rating,
             image: t.image,
             imagePublicId: t.imagePublicId,
+            removeImage: false,
         });
         setShowModal(true);
     }
@@ -75,7 +77,11 @@ export default function TestimonialsAdmin() {
         const file = e.target.files?.[0];
         if (!file) return;
         const reader = new FileReader();
-        reader.onload = (ev) => setForm(f => ({ ...f, image: ev.target?.result as string }));
+        reader.onload = (ev) => setForm(f => ({
+            ...f,
+            image: ev.target?.result as string,
+            removeImage: false,
+        }));
         reader.readAsDataURL(file);
     }
 
@@ -83,7 +89,9 @@ export default function TestimonialsAdmin() {
         if (!form.name.trim() || !form.review.trim() || saving) return;
         setSaving(true);
         const method = editing ? 'PUT' : 'POST';
-        const body = editing ? { ...form, _id: editing._id, approved: true } : { ...form, approved: true };
+        const body = editing
+            ? { ...form, _id: editing._id, approved: true }
+            : { ...form, approved: true };
         await fetch('/api/testimonials', {
             method,
             headers: { 'Content-Type': 'application/json' },
@@ -99,7 +107,7 @@ export default function TestimonialsAdmin() {
         await fetch('/api/testimonials', {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ _id: t._id, imagePublicId: t.imagePublicId }),
+            body: JSON.stringify({ _id: t._id }),
         });
         load();
     }
@@ -146,8 +154,13 @@ export default function TestimonialsAdmin() {
                             <div key={t._id} className="testiListRow">
                                 <div className="testiListAvatar">
                                     {t.image ? (
-                                        <Image src={t.image} alt={t.name} fill style={{ objectFit: 'cover' }} />
-                                    ) : '👤'}
+                                        <Image src={t.image} alt={t.name} fill style={{ objectFit: 'cover' }} unoptimized />
+                                    ) : (
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '55%', height: '55%', stroke: '#999' }}>
+                                            <circle cx="12" cy="8" r="4" />
+                                            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                                        </svg>
+                                    )}
                                 </div>
                                 <div className="testiListInfo">
                                     <span className="testiListName">{t.name}</span>
@@ -185,6 +198,7 @@ export default function TestimonialsAdmin() {
             {showModal && (
                 <div className="testiModalOverlay" onClick={() => setShowModal(false)}>
                     <div className="testiModalBox" onClick={e => e.stopPropagation()}>
+
                         <div className="testiModalHeader">
                             <h2 className="testiModalTitle">{editing ? 'Edit Testimonial' : 'Add Testimonial'}</h2>
                             <button className="testiModalCloseBtn" onClick={() => setShowModal(false)}>
@@ -196,6 +210,7 @@ export default function TestimonialsAdmin() {
                         </div>
 
                         <div className="testiModalBody">
+
                             {/* Photo */}
                             <div className="testiModalField">
                                 <label className="testiModalLabel">Photo (optional)</label>
@@ -203,9 +218,16 @@ export default function TestimonialsAdmin() {
                                     className={`testiAvatarDropzone ${form.image ? 'hasImage' : ''}`}
                                     onClick={() => inputRef.current?.click()}
                                 >
-                                    {form.image && (
+                                    {form.image ? (
                                         <div className="testiAvatarPreview">
-                                            <Image src={form.image} alt="preview" fill style={{ objectFit: 'cover' }} />
+                                            <Image src={form.image} alt="preview" fill style={{ objectFit: 'cover' }} unoptimized />
+                                        </div>
+                                    ) : (
+                                        <div className="testiAvatarPlaceholder">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                                <circle cx="12" cy="8" r="4" />
+                                                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                                            </svg>
                                         </div>
                                     )}
                                     <div className="testiAvatarDropzoneInner">
@@ -214,7 +236,7 @@ export default function TestimonialsAdmin() {
                                             <line x1="12" y1="12" x2="12" y2="21" />
                                             <path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3" />
                                         </svg>
-                                        <span>{form.image ? 'Click to replace' : 'Drag & drop or click to upload'}</span>
+                                        <span>{form.image ? 'Click to replace' : 'Click to upload'}</span>
                                     </div>
                                     {form.image && <div className="testiAvatarOverlay">Click to replace</div>}
                                     <input
@@ -225,9 +247,32 @@ export default function TestimonialsAdmin() {
                                         onChange={handleImage}
                                     />
                                 </div>
+
+                                {form.image && (
+                                    <button
+                                        type="button"
+                                        className="testiRemoveImageBtn"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setForm(f => ({
+                                                ...f,
+                                                image: '',
+                                                imagePublicId: '',
+                                                removeImage: true,
+                                            }));
+                                        }}
+                                    >
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                            <polyline points="3 6 5 6 21 6" />
+                                            <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" />
+                                            <path d="M10 11v6M14 11v6" />
+                                            <path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" />
+                                        </svg>
+                                        Remove photo
+                                    </button>
+                                )}
                             </div>
 
-                            {/* Name */}
                             <div className="testiModalField">
                                 <label className="testiModalLabel">Name</label>
                                 <input
@@ -238,7 +283,6 @@ export default function TestimonialsAdmin() {
                                 />
                             </div>
 
-                            {/* Role */}
                             <div className="testiModalField">
                                 <label className="testiModalLabel">Role</label>
                                 <input
@@ -249,7 +293,6 @@ export default function TestimonialsAdmin() {
                                 />
                             </div>
 
-                            {/* Review */}
                             <div className="testiModalField">
                                 <label className="testiModalLabel">Review</label>
                                 <textarea
@@ -261,7 +304,6 @@ export default function TestimonialsAdmin() {
                                 />
                             </div>
 
-                            {/* Rating */}
                             <div className="testiModalField">
                                 <label className="testiModalLabel">Rating</label>
                                 <select
@@ -274,6 +316,7 @@ export default function TestimonialsAdmin() {
                                     ))}
                                 </select>
                             </div>
+
                         </div>
 
                         <div className="testiModalFooter">
@@ -282,9 +325,11 @@ export default function TestimonialsAdmin() {
                                 {saving ? 'Saving...' : editing ? 'Save Changes' : 'Add Testimonial'}
                             </button>
                         </div>
+
                     </div>
                 </div>
             )}
+
         </main>
     );
 }

@@ -4,11 +4,10 @@
     width: 100%;
 }
 .detail-main {
-    padding: 150px 24px;
+    padding: 150px 16px 0 16px;
     font-family: var(--font-body);
 }
 
-/* ── Breadcrumb ───────────────────────────────────── */
 .detail-breadcrumb {
     display: flex;
     align-items: center;
@@ -145,7 +144,6 @@
     font-family: var(--font-heading);
 }
 
-/* ── Gallery section ──────────────────────────────── */
 .project-gallery-in-detail-page {
     padding: 80px 0 0 0;
 }
@@ -159,14 +157,13 @@
 
 @media (max-width: 1400px) {
     .detail-main {
-        padding: 140px 48px 90px;
+        padding: 140px 16px 0 16px;
     }
 }
 
-/* ── Tablet landscape (1024–1200px) ───────────────── */
 @media (max-width: 1200px) {
     .detail-main {
-        padding: 130px 40px 80px;
+        padding: 130px 16px 0 16px;
     }
 
     .detail-hero {
@@ -182,7 +179,7 @@
 /* ── Tablet portrait (768–1024px) ─────────────────── */
 @media (max-width: 1024px) {
     .detail-main {
-        padding: 120px 32px 72px;
+        padding: 120px 16px 0 16px;
     }
 
     .detail-hero {
@@ -202,7 +199,7 @@
 
 @media (max-width: 768px) {
     .detail-main {
-        padding: 100px 24px 60px;
+        padding: 100px 16px 0 16px;
     }
 
     .detail-breadcrumb {
@@ -250,7 +247,7 @@
 
 @media (max-width: 600px) {
     .detail-main {
-        padding: 92px 20px 52px;
+        padding: 92px 16px 0 16px;
     }
 
     .detail-img-wrap {
@@ -274,7 +271,7 @@
 
 @media (max-width: 480px) {
     .detail-main {
-        padding: 85px 16px 48px;
+        padding: 85px 16px 0 16px;
     }
 
     .detail-breadcrumb {

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from 'lib/mongodb';
 import { uploadImage, deleteImage } from 'lib/cloudinary';
 import Testimonial from 'models/Testimonial';
+import { revalidatePath } from 'next/cache';
 
 export async function GET() {
     try {
@@ -66,6 +67,8 @@ export async function POST(req: NextRequest) {
         }
 
         const final = await Testimonial.findById(testimonial._id);
+
+        revalidatePath('/', 'layout');
         return NextResponse.json({ success: true, data: final }, { status: 201 });
 
     } catch (err) {
@@ -135,9 +138,10 @@ export async function PUT(req: NextRequest) {
         const updated = await Testimonial.findByIdAndUpdate(
             _id,
             { $set: updates },
-            { new: true }
+            { returnDocument: 'after' }
         );
 
+        revalidatePath('/', 'layout');
         return NextResponse.json({ success: true, data: updated });
 
     } catch (err) {
@@ -161,7 +165,7 @@ export async function DELETE(req: NextRequest) {
             return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
         }
 
-        const { _id, imagePublicId } = body as Record<string, unknown>;
+        const { _id } = body as Record<string, unknown>;
 
         if (!_id) {
             return NextResponse.json({ error: '_id is required' }, { status: 400 });
@@ -172,15 +176,18 @@ export async function DELETE(req: NextRequest) {
             return NextResponse.json({ error: 'Testimonial not found' }, { status: 404 });
         }
 
-        if (typeof imagePublicId === 'string' && imagePublicId) {
+        // Read publicId from DB, not from client
+        if (testimonial.imagePublicId) {
             try {
-                await deleteImage(imagePublicId);
+                await deleteImage(testimonial.imagePublicId);
             } catch (err) {
                 console.error('[DELETE /api/testimonials] Failed to delete image:', err);
             }
         }
 
         await Testimonial.findByIdAndDelete(_id);
+
+        revalidatePath('/', 'layout');
         return NextResponse.json({ success: true });
 
     } catch (err) {

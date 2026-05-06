@@ -7,7 +7,7 @@ import fallbackImage from '../../assets/images/Airport-crossville-copy.jpg.jpeg'
 import Mainbutton from "@/Components/Mainbutton";
 import { connectDB } from "lib/mongodb";
 import Service from "models/Service";
-import { unstable_noStore as noStore } from 'next/cache';
+import { unstable_cache } from 'next/cache';
 import { optimizeCloudinaryUrl } from "lib/cloudinaryUtils";
 
 type ServiceDoc = {
@@ -17,22 +17,18 @@ type ServiceDoc = {
     slug: string;
 };
 
-async function getServices(): Promise<ServiceDoc[]> {
-    noStore();
-    try {
+const getServices = unstable_cache(
+    async () => {
         await connectDB();
         const services = await Service.find(
             {},
             { title: 1, images: 1, slug: 1 }
-        )
-            .sort({ order: 1, createdAt: -1 })
-            .lean();
+        ).sort({ order: 1, createdAt: -1 }).lean();
         return services as unknown as ServiceDoc[];
-    } catch (err) {
-        console.error("[Expertise] Failed to fetch services", err);
-        return [];
-    }
-}
+    },
+    ['services-data'],
+    { revalidate: 60 , tags : ['services-data'] }
+);
 
 export default async function Expertise() {
     const services = await getServices();

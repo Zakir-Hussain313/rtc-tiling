@@ -4,6 +4,7 @@ import avatar from "../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg"
 import FadeIn from "@/Components/FadeIn"
 import { connectDB } from 'lib/mongodb'
 import Testimonial from 'models/Testimonial'
+import { unstable_cache } from "next/cache"
 
 type Review = {
     name: string
@@ -37,11 +38,10 @@ const FALLBACK_REVIEWS: Review[] = [
     },
 ]
 
-async function getTestimonials(): Promise<Review[]> {
-    try {
+const getTestimonials = unstable_cache(
+    async (): Promise<Review[]> => {
         await connectDB();
         const data = await Testimonial.find({}).sort({ order: 1, createdAt: -1 }).lean();
-        console.log('[Testimonials] fetched:', data.length, JSON.stringify(data));
         if (!data.length) return FALLBACK_REVIEWS;
         return data.map((t: any) => ({
             name: t.name,
@@ -50,11 +50,10 @@ async function getTestimonials(): Promise<Review[]> {
             review: t.review,
             rating: t.rating,
         }));
-    } catch (err) {
-        console.error('[Testimonials] DB fetch failed:', err);
-        return FALLBACK_REVIEWS;
-    }
-}
+    },
+    ['testimonials-data'],
+    { revalidate: 60, tags: ['testimonials-data'] }
+);
 
 export default async function Testimonials() {
     const reviews = await getTestimonials()

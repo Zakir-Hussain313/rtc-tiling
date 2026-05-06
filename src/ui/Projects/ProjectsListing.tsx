@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { connectDB } from 'lib/mongodb'
 import Project from 'models/Project'
 import FadeIn from '@/Components/FadeIn'
-import { unstable_noStore as noStore } from 'next/cache';
+import { unstable_cache } from 'next/cache'
 import { optimizeCloudinaryUrl } from 'lib/cloudinaryUtils'
 
 type ProjectDoc = {
@@ -18,33 +18,45 @@ type ProjectDoc = {
 }
 
 function formatDate(dateStr: string): string {
-    if (!dateStr) return '';
-    const d = new Date(dateStr);
-    if (isNaN(d.getTime())) return '';
-    return d.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+    if (!dateStr) return ''
+    const d = new Date(dateStr)
+    if (isNaN(d.getTime())) return ''
+    return d.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })
 }
 
 function getTitleSize(title: string): string {
-    const longestWord = Math.max(...title.split(' ').map(w => w.length));
-    if (longestWord > 14) return '28px';
-    if (longestWord > 11) return '34px';
-    return '40px';
+    const longestWord = Math.max(...title.split(' ').map(w => w.length))
+    if (longestWord > 14) return '28px'
+    if (longestWord > 11) return '34px'
+    return '40px'
 }
 
-async function getProjects(): Promise<ProjectDoc[]> {
-    noStore();
-    try {
-        await connectDB()
-        const projects = await Project.find().sort({ order: 1, createdAt: -1 }).lean()
-        return projects as unknown as ProjectDoc[]
-    } catch (err) {
-        console.error('[ProjectsListing] Failed to fetch projects', err)
-        return []
-    }
-}
+const getProjects = unstable_cache(
+    async (): Promise<ProjectDoc[]> => {
+        try {
+            await connectDB()
+            const projects = await Project.find()
+                .sort({ order: 1, createdAt: -1 })
+                .lean()
+            return projects.map((p: any) => ({
+                _id: String(p._id),
+                title: p.title,
+                date: p.date,
+                images: p.images,
+                slug: p.slug,
+            }))
+        } catch (err) {
+            console.error('[ProjectsListing] Failed to fetch projects', err)
+            return []
+        }
+    },
+    ['all-projects'],
+    { revalidate: 60, tags: ['projects-data'] }
+)
 
 export default async function ProjectsListing() {
     const projects = await getProjects()
+
     return (
         <section className='projectsListing-main-main-section'>
             <section className="projectsListing-main-section">
@@ -68,22 +80,14 @@ export default async function ProjectsListing() {
                                 {formatDate(project.date)}
                             </p>
                             <div className='project-arrow'>
-                                <Image
-                                    src={arrow}
-                                    alt='arrow'
-                                    width={27}
-                                    height={27}
-                                />
+                                <Image src={arrow} alt='arrow' width={27} height={27} />
                             </div>
                         </Link>
                         <hr />
                     </FadeIn>
                 ))}
-
                 {projects.length === 0 && (
-                    <p style={{ padding: '2rem', opacity: 0.5 }}>
-                        No projects available yet.
-                    </p>
+                    <p style={{ padding: '2rem', opacity: 0.5 }}>No projects available yet.</p>
                 )}
             </section>
         </section>

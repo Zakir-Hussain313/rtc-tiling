@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from 'lib/mongodb';
 import { uploadImage, deleteImage } from 'lib/cloudinary';
 import Hero from 'models/Hero';
+import { revalidatePath } from 'next/cache';
 
 export async function GET() {
     try {
@@ -55,7 +56,6 @@ export async function PUT(req: NextRequest) {
 
         const updates: Record<string, unknown> = {};
 
-        // Upload new image first, then delete old one
         if (typeof backgroundImage === 'string' && backgroundImage.startsWith('data:image/')) {
             const { url, publicId } = await uploadImage(backgroundImage, 'rtc/hero');
 
@@ -82,6 +82,8 @@ export async function PUT(req: NextRequest) {
             { $set: updates },
             { new: true, upsert: true }
         );
+
+        revalidatePath('/','layout');
 
         return NextResponse.json({ success: true, data: updated }, { status: 200 });
     } catch (error) {

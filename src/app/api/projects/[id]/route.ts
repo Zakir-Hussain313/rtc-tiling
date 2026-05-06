@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from 'lib/mongodb';
 import { uploadImage, deleteImage } from 'lib/cloudinary';
 import Project from 'models/Project';
+import { revalidatePath } from 'next/cache';
 
 function generateSlug(title: string): string {
     return title.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
@@ -116,9 +117,10 @@ export async function PUT(
         const updated = await Project.findByIdAndUpdate(
             id,
             { $set: updates },
-            { new: true }
+            { returnDocument: 'after' }
         );
 
+        revalidatePath('/', 'layout');
         return NextResponse.json({ success: true, data: updated }, { status: 200 });
 
     } catch (error) {
@@ -152,6 +154,8 @@ export async function DELETE(
         );
 
         await Project.findByIdAndDelete(id);
+
+        revalidatePath('/', 'layout');
         return NextResponse.json({ success: true }, { status: 200 });
 
     } catch (error) {
