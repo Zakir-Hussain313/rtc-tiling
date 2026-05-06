@@ -1,3 +1,5 @@
+export const runtime = 'nodejs';
+
 import { getTokenFromCookies, verifyToken } from "lib/auth";
 import { NextRequest, NextResponse } from "next/server";
 
