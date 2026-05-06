@@ -1,4 +1,4 @@
-import { getTokenFromCookies } from "lib/auth";
+import { getTokenFromCookies, verifyToken } from "lib/auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export const config = {
@@ -30,6 +30,12 @@ export function middleware(req: NextRequest) {
 
         const token = getTokenFromCookies(req.headers.get('cookie'));
         if (!token) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
+        // Actually verify the token isn't expired or tampered
+        const payload = verifyToken(token);
+        if (!payload || payload.role !== 'admin') {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
     }
