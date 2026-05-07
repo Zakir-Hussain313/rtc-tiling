@@ -24,7 +24,7 @@ function isActiveLink(href: string, pathname: string): boolean {
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
+  const [indicatorStyle, setIndicatorStyle] = useState<{ left: number; width: number } | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const pathname = usePathname();
   const navPillRef = useRef<HTMLElement>(null);
@@ -43,7 +43,12 @@ function Navbar() {
   useEffect(() => {
     const activeIndex = links.findIndex((l) => isActiveLink(l.href, pathname));
     const index = activeIndex !== -1 ? activeIndex : 0;
-    moveIndicatorTo(linkRefs.current[index]);
+
+    const raf = requestAnimationFrame(() => {
+      moveIndicatorTo(linkRefs.current[index]);
+    });
+
+    return () => cancelAnimationFrame(raf);
   }, [pathname]);
 
   const handleClick = () => setIsOpen(!isOpen);
@@ -78,13 +83,15 @@ function Navbar() {
             moveIndicatorTo(linkRefs.current[index]);
           }}
         >
-          <div
-            className="nav-indicator"
-            style={{
-              left: indicatorStyle.left,
-              width: indicatorStyle.width,
-            }}
-          />
+          {indicatorStyle && (
+            <div
+              className="nav-indicator"
+              style={{
+                left: indicatorStyle.left,
+                width: indicatorStyle.width,
+              }}
+            />
+          )}
           {links.map((link, i) => (
             <Link
               key={link.href}
