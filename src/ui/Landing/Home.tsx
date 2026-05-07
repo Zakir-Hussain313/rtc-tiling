@@ -6,6 +6,7 @@ import OurStory from "./OurStory";
 import Featured from "./featured";
 import "../../styles/Landing/Home.css";
 import Testimonials from "./Testimonials";
+import WhyChooseUs from "@/Components/WhyChooseUs";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <Hero />
       <Stats />
       <Expertise />
+      <WhyChooseUs />
       <OurStory />
       <Featured />
       <Testimonials />

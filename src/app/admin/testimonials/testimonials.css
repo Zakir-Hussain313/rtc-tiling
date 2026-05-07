@@ -127,7 +127,31 @@
     font-size: 20px;
 }
 
-/* ── Info ──────────────────────────────────────────── */
+.testiRemoveImageBtn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    background: transparent;
+    color: var(--danger);
+    border: 1px solid #f0c4c4;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 500;
+    font-family: var(--font-body);
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+.testiRemoveImageBtn svg {
+    width: 12px;
+    height: 12px;
+}
+
+.testiRemoveImageBtn:hover {
+    background: var(--danger-bg);
+}
+
 
 .testiListInfo {
     display: flex;

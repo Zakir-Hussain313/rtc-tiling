@@ -12,7 +12,7 @@ type Props = {
     title: string;
 };
 
-export default function ServicesGrid({ images, title }: Props) {
+export default function ProjectsGrid({ images, title }: Props) {
     const [lightbox, setLightbox] = useState<string | null>(null);
 
     const filtered = images.filter(Boolean);

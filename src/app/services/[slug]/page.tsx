@@ -6,7 +6,6 @@ import '../../../styles/DetailPages/DetailPages.css';
 import ServicesCTA from '@/ui/Services/ServicesCTA';
 import StoryImageCycler from '@/ui/Landing/StoryImageCycler';
 import { unstable_cache } from 'next/cache'
-import { getFeaturedServices } from 'lib/getFeaturedServices';
 import ServicesGrid from '@/Components/ServicesGrid';
 
 type Props = {
@@ -103,10 +102,7 @@ const DETAIL_FIELDS = [
 
 export default async function ServiceDetailPage({ params }: Props) {
     const { slug } = await params;
-    const [service, featuredServices] = await Promise.all([
-        getService(slug),
-        getFeaturedServices(),
-    ])
+    const service = await getService(slug);
 
     if (!service) notFound();
 
@@ -150,7 +146,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </section>
                 <section className='project-gallery-in-detail-page'>
                     <h1>Service Gallery</h1>
-                    <ServicesGrid services={featuredServices} />
+                    <ServicesGrid images={service.images ?? []} title={service.title} />
                 </section>
                 <ServicesCTA />
             </main>

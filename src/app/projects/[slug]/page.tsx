@@ -4,10 +4,9 @@ import { connectDB } from 'lib/mongodb'
 import Project from 'models/Project'
 import ProjectHeroImage from '@/Components/ProjectHeroImage'
 import '../../../styles/DetailPages/DetailPages.css'
-import FeaturedGrid from '@/Components/FeaturedGrid'
 import ServicesCTA from '@/ui/Services/ServicesCTA'
 import { unstable_cache } from 'next/cache'
-import { getFeaturedProjects } from 'lib/getFeaturedProjects'
+import ProjectsGrid from '@/Components/ProjectsGrid'
 
 type ProjectDetail = {
     _id: string
@@ -91,11 +90,8 @@ const DETAIL_FIELDS = [
 ] as const
 
 export default async function ProjectDetailPage({ params }: Props) {
-    const { slug } = await params
-    const [project, featuredProjects] = await Promise.all([
-        getProjectBySlug(slug),
-        getFeaturedProjects(),
-    ])
+    const { slug } = await params;
+    const project = await getProjectBySlug(slug);
 
     if (!project) notFound()
 
@@ -148,7 +144,7 @@ export default async function ProjectDetailPage({ params }: Props) {
 
                 <section className="project-gallery-in-detail-page">
                     <h1>Project Gallery</h1>
-                    <FeaturedGrid projects={featuredProjects} />
+                    <ProjectsGrid images={project.images ?? []} title={project.title} />
                 </section>
                 <ServicesCTA />
             </main>
