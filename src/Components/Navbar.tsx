@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -40,19 +40,10 @@ function Navbar() {
     });
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const activeIndex = links.findIndex((l) => isActiveLink(l.href, pathname));
     const index = activeIndex !== -1 ? activeIndex : 0;
-
-    const raf = requestAnimationFrame(() => {
-      if (linkRefs.current[index]) {
-        moveIndicatorTo(linkRefs.current[index]);
-      } else {
-        setTimeout(() => moveIndicatorTo(linkRefs.current[index]), 50);
-      }
-    });
-
-    return () => cancelAnimationFrame(raf);
+    moveIndicatorTo(linkRefs.current[index]);
   }, [pathname]);
 
   const handleClick = () => setIsOpen(!isOpen);
@@ -66,10 +57,10 @@ function Navbar() {
 
   const getLinkColor = (i: number) => {
     if (hoveredIndex !== null) {
-        return i === hoveredIndex ? "#111" : "#fff";
+      return i === hoveredIndex ? "#111" : "#fff";
     }
     return i === activeIndex ? "#111" : "#fff";
-};
+  };
 
   return (
     <header className="navbar">
