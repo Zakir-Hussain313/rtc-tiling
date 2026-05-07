@@ -38,12 +38,28 @@ export default function TestimonialsTrack({ items }: { items: Review[] }) {
                         <p className="testimonial-review">&quot;{review.review}&quot;</p>
                         <div className="testimonial-footer">
                             <div className="testimonial-image">
-                                <Image
-                                    src={optimizeCloudinaryUrl(review.image, 100)}
-                                    alt={review.name}
-                                    fill
-                                    style={{ borderRadius: '50%', objectFit: 'cover' }}
-                                />
+                                {review.image ? (
+                                    <Image
+                                        src={optimizeCloudinaryUrl(review.image, 100)}
+                                        alt={review.name}
+                                        fill
+                                        style={{ borderRadius: '50%', objectFit: 'cover' }}
+                                    />
+                                ) : (
+                                    <div className="testimonial-avatar-placeholder">
+                                        <svg
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="1.5"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        >
+                                            <circle cx="12" cy="8" r="4" />
+                                            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                                        </svg>
+                                    </div>
+                                )}
                             </div>
                             <div className="testimonial-meta">
                                 <h3 className="testimonial-name">{review.name}</h3>

@@ -36,7 +36,7 @@ const getProjects = unstable_cache(
         try {
             await connectDB()
             const projects = await Project.find()
-                .sort({ order: 1, createdAt: -1 })
+                .sort({ date: -1 })
                 .lean()
             return projects.map((p: any) => ({
                 _id: String(p._id),

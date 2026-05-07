@@ -111,6 +111,22 @@
     color: #f5c518;
 }
 
+.testimonial-avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #f0ede8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.testimonial-avatar-placeholder svg {
+    width: 55%;
+    height: 55%;
+    stroke: #aaa;
+}
+
 .testimonial-stars {
     font-size: 16px;
     color: #f5c518;

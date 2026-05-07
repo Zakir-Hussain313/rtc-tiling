@@ -29,7 +29,9 @@ const getServices = unstable_cache(
     async (): Promise<ServiceDoc[]> => {
         try {
             await connectDB()
-            const services = await Service.find().sort({ order: 1, createdAt: -1 }).lean()
+            const services = await Service.find()
+                .sort({ date: -1 })
+                .lean()
             return services.map((s: any) => ({
                 _id: String(s._id),
                 title: s.title,

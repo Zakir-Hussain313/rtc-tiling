@@ -46,7 +46,7 @@ const getTestimonials = unstable_cache(
         return data.map((t: any) => ({
             name: t.name,
             role: t.role,
-            image: t.image || avatar.src,
+            image: t.image || '',
             review: t.review,
             rating: t.rating,
         }));

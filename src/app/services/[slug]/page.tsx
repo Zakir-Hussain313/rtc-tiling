@@ -3,11 +3,11 @@ import Link from 'next/link';
 import { connectDB } from 'lib/mongodb';
 import Service from 'models/Service';
 import '../../../styles/DetailPages/DetailPages.css';
-import FeaturedGrid from '@/Components/FeaturedGrid';
 import ServicesCTA from '@/ui/Services/ServicesCTA';
 import StoryImageCycler from '@/ui/Landing/StoryImageCycler';
 import { unstable_cache } from 'next/cache'
-import { getFeaturedProjects } from 'lib/getFeaturedProjects';
+import { getFeaturedServices } from 'lib/getFeaturedServices';
+import ServicesGrid from '@/Components/ServicesGrid';
 
 type Props = {
     params: Promise<{ slug: string }>;
@@ -103,9 +103,9 @@ const DETAIL_FIELDS = [
 
 export default async function ServiceDetailPage({ params }: Props) {
     const { slug } = await params;
-    const [service, featuredProjects] = await Promise.all([
+    const [service, featuredServices] = await Promise.all([
         getService(slug),
-        getFeaturedProjects(),
+        getFeaturedServices(),
     ])
 
     if (!service) notFound();
@@ -149,8 +149,8 @@ export default async function ServiceDetailPage({ params }: Props) {
                     </div>
                 </section>
                 <section className='project-gallery-in-detail-page'>
-                    <h1>Project Gallery</h1>
-                    <FeaturedGrid projects={featuredProjects} />
+                    <h1>Service Gallery</h1>
+                    <ServicesGrid services={featuredServices} />
                 </section>
                 <ServicesCTA />
             </main>
