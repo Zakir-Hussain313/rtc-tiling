@@ -7,9 +7,14 @@ import { getAboutImages } from 'lib/getAboutImages';
 import CountUp from "@/Components/CountUp";
 import FadeIn from "@/Components/FadeIn";
 import { optimizeCloudinaryUrl } from 'lib/cloudinaryUtils';
+import { getStats } from "lib/getStats";
 
 export default async function OurStory() {
-    const images = await getAboutImages();
+    const [images, stats] = await Promise.all([
+        getAboutImages(),
+        getStats(),
+    ])
+    const stat = stats[0]
 
     const image1Url = images.find((img) => img.id === 1)?.url ?? null;
     const image2Url = images.find((img) => img.id === 2)?.url ?? null;
@@ -26,7 +31,7 @@ export default async function OurStory() {
                     <h1>PRECISION IN EVERY PROJECT</h1>
                 </div>
                 <div className="first-section-child-2">
-                    <CountUp statIndex={0} />
+                    {stat && <CountUp stat={stat} />}
                 </div>
             </FadeIn>
 
@@ -66,7 +71,7 @@ export default async function OurStory() {
             </FadeIn>
 
             <FadeIn as="section" className="about-third-section" delay={200}>
-                <NumBox />
+                <NumBox stats={stats}/>
             </FadeIn>
         </main>
     );

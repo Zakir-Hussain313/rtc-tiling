@@ -2,8 +2,11 @@ import Link from "next/link";
 import '../../styles/Contact/PageIntro.css'
 import CountUp from "@/Components/CountUp";
 import FadeIn from "@/Components/FadeIn";
+import { getStats } from "lib/getStats";
 
-export default function ContactPageIntro() {
+export default async function ContactPageIntro() {
+    const stats = await getStats()
+    const stat = stats[3]
     return (
         <section className="contactIntro-main-section">
             <FadeIn as={'section'} delay={100} className="pageIntro-main-section">
@@ -25,7 +28,7 @@ export default function ContactPageIntro() {
                         <h1>Let&apos;s Talk about your project</h1>
                     </div>
                     <div className="first-section-child-2">
-                        <CountUp statIndex={3}/>
+                        {stat && <CountUp stat={stat} />}
                     </div>
                 </section>
             </FadeIn>

@@ -2,8 +2,11 @@ import Link from "next/link";
 import '../../styles/Services/PageIntro.css'
 import CountUp from "@/Components/CountUp";
 import FadeIn from "@/Components/FadeIn";
+import { getStats } from "lib/getStats";
 
-export default function ServicesPageIntro() {
+export default async function ServicesPageIntro() {
+    const stats = await getStats()
+    const stat = stats[1]
     return (
         <main>
             <FadeIn as="section" className="pageIntro-first-section" delay={100}>
@@ -16,7 +19,7 @@ export default function ServicesPageIntro() {
                     <h1>Excellence in Every Detail.</h1>
                 </div>
                 <div className="first-section-child-2">
-                    <CountUp statIndex={1}/>
+                     {stat && <CountUp stat={stat} />}
                 </div>
             </FadeIn>
         </main>

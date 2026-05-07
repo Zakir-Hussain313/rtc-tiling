@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '../../../../lib/mongodb';
 import Stats from '../../../../models/Stats';
+import { revalidatePath } from 'next/cache';
 
 export async function GET() {
     try {
@@ -60,6 +61,7 @@ export async function PUT(req: NextRequest) {
             { new: true, upsert: true }
         );
 
+        revalidatePath('/', 'layout')
         return NextResponse.json({ success: true, data: updated }, { status: 200 });
     } catch (error) {
         console.error('[PUT /api/stats]', error);

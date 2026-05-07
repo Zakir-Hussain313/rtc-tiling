@@ -1,87 +1,51 @@
-'use client';
+'use client'
 
-import { useEffect, useRef, useState } from 'react';
-import '../styles/CountUp.css';
+import { useEffect, useRef, useState } from 'react'
+import '../styles/CountUp.css'
+import type { StatItem } from 'lib/getStats'
 
 interface CountUpProps {
-    statIndex?: number;   // 0-3, fetches from API
-    value?: number;       // fallback if no statIndex
-    symbol?: string;
-    label?: string;
-    duration?: number;
-    fontSize?: string;
-    symbolSize?: string;
-    labelSize?: string;
+    stat: StatItem
+    duration?: number
+    fontSize?: string
+    symbolSize?: string
+    labelSize?: string
 }
 
-function CountUp({
-    statIndex,
-    value: valueProp,
-    symbol: symbolProp = '',
-    label: labelProp = '',
+export default function CountUp({
+    stat,
     duration = 2000,
     fontSize,
     symbolSize,
     labelSize,
 }: CountUpProps) {
-    const [value, setValue] = useState(valueProp ?? 0);
-    const [symbol, setSymbol] = useState(symbolProp);
-    const [label, setLabel] = useState(labelProp);
-    const [count, setCount] = useState(0);
-    const [animated, setAnimated] = useState(false);
-    const [ready, setReady] = useState(statIndex === undefined);
-    const ref = useRef<HTMLDivElement | null>(null);
+    const [count, setCount] = useState(0)
+    const [animated, setAnimated] = useState(false)
+    const ref = useRef<HTMLDivElement | null>(null)
 
     useEffect(() => {
-        if (statIndex === undefined) return;
-        const index = statIndex;
-        async function fetchStat() {
-            try {
-                const res = await fetch('/api/stats');
-                const data = await res.json();
-                const stat = data.data?.stats?.[index];
-                if (stat) {
-                    setValue(Number(stat.value));
-                    setSymbol(stat.suffix);
-                    setLabel(stat.label);
-                }
-            } catch (err) {
-                console.error('CountUp: failed to fetch stat', err);
-            } finally {
-                setReady(true);
-            }
-        }
-        fetchStat();
-    }, [statIndex]);
-
-    useEffect(() => {
-        if (!ready) return;
-
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting && !animated) {
-                    setAnimated(true);
-                    let start = 0;
-                    const increment = value / (duration / 30);
+                    setAnimated(true)
+                    let start = 0
+                    const increment = stat.value / (duration / 30)
                     const interval = setInterval(() => {
-                        start += increment;
-                        if (start >= value) {
-                            start = value;
-                            clearInterval(interval);
+                        start += increment
+                        if (start >= stat.value) {
+                            start = stat.value
+                            clearInterval(interval)
                         }
-                        setCount(Math.floor(start));
-                    }, 30);
-                    observer.disconnect();
+                        setCount(Math.floor(start))
+                    }, 30)
+                    observer.disconnect()
                 }
             },
             { threshold: 0, rootMargin: '0px 0px -50px 0px' }
-        );
-
-        if (ref.current) observer.observe(ref.current);
-        return () => observer.disconnect();
-    }, [value, duration, animated, ready]);
-
-    if (!ready) return null;
+        )
+        if (ref.current) observer.observe(ref.current)
+        return () => observer.disconnect()
+    }, [stat.value, duration, animated])
 
     return (
         <div className="countup-wrapper" ref={ref}>
@@ -89,19 +53,17 @@ function CountUp({
                 <span className="countup-number" style={fontSize ? { fontSize } : undefined}>
                     {count}
                 </span>
-                {symbol && (
+                {stat.symbol && (
                     <span className="countup-symbol" style={symbolSize ? { fontSize: symbolSize } : undefined}>
-                        {symbol}
+                        {stat.symbol}
                     </span>
                 )}
             </div>
-            {label && (
+            {stat.label && (
                 <p className="countup-label" style={labelSize ? { fontSize: labelSize } : undefined}>
-                    {label}
+                    {stat.label}
                 </p>
             )}
         </div>
-    );
+    )
 }
-
-export default CountUp;
