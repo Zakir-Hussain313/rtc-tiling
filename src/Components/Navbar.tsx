@@ -66,7 +66,7 @@ function Navbar() {
 
   const getLinkColor = (i: number) => {
     if (hoveredIndex !== null) {
-      return i === hoveredIndex ? "#111" : "#fff";
+      return i === hoveredIndex ? "#111" : i === activeIndex ? "#111" : "#fff";
     }
     return i === activeIndex ? "#111" : "#fff";
   };
