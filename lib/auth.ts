@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import { SignJWT, jwtVerify } from 'jose';
 
 const JWT_EXPIRES_IN = '8h';
 export const COOKIE_NAME = 'rtc_admin_token';
@@ -9,46 +9,31 @@ type TokenPayload = {
     exp?: number;
 };
 
-function getJwtSecret(): string {
+function getJwtSecret(): Uint8Array {
     const secret = process.env.JWT_SECRET;
-    if (!secret) {
-        throw new Error('JWT_SECRET is not defined');
-    }
-    return secret;
+    if (!secret) throw new Error('JWT_SECRET is not defined');
+    return new TextEncoder().encode(secret);
 }
 
-/**
- * Sign JWT
- */
-export function signToken(): string {
-    return jwt.sign(
-        { role: 'admin' },
-        getJwtSecret(),
-        { expiresIn: JWT_EXPIRES_IN }
-    );
+export async function signToken(): Promise<string> {
+    return await new SignJWT({ role: 'admin' })
+        .setProtectedHeader({ alg: 'HS256' })
+        .setIssuedAt()
+        .setExpirationTime(JWT_EXPIRES_IN)
+        .sign(getJwtSecret());
 }
 
-/**
- * Verify JWT
- */
-export function verifyToken(token: string): TokenPayload | null {
+export async function verifyToken(token: string): Promise<TokenPayload | null> {
     try {
-        const decoded = jwt.verify(token, getJwtSecret());
-
-        if (typeof decoded === 'string') return null;
-
-        return decoded as TokenPayload;
+        const { payload } = await jwtVerify(token, getJwtSecret());
+        return payload as TokenPayload;
     } catch {
         return null;
     }
 }
 
-/**
- * Build auth cookie
- */
 export function buildCookieHeader(token: string): string {
     const isProduction = process.env.NODE_ENV === 'production';
-
     return [
         `${COOKIE_NAME}=${token}`,
         'HttpOnly',
@@ -61,12 +46,8 @@ export function buildCookieHeader(token: string): string {
         .join('; ');
 }
 
-/**
- * Clear auth cookie (logout)
- */
 export function clearCookieHeader(): string {
     const isProduction = process.env.NODE_ENV === 'production';
-
     return [
         `${COOKIE_NAME}=`,
         'HttpOnly',
@@ -79,19 +60,13 @@ export function clearCookieHeader(): string {
         .join('; ');
 }
 
-/**
- * Extract token from cookie header (VERY useful)
- */
 export function getTokenFromCookies(cookieHeader: string | null): string | null {
     if (!cookieHeader) return null;
-
     const cookies = cookieHeader.split(';').map(c => c.trim());
-
     for (const cookie of cookies) {
         if (cookie.startsWith(`${COOKIE_NAME}=`)) {
             return cookie.substring(COOKIE_NAME.length + 1);
         }
     }
-
     return null;
 }

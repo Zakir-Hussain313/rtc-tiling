@@ -7,7 +7,7 @@ import { verifyToken } from 'lib/auth';
 export async function POST(req: NextRequest) {
     try {
         const token = req.cookies.get('rtc_admin_token')?.value;
-        if (!token || !verifyToken(token)) {
+        if (!token || !await verifyToken(token)) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 

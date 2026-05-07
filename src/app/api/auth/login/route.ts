@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
         }
 
-        const token = signToken();
+        const token = await signToken();
         const cookie = buildCookieHeader(token);
 
         return NextResponse.json(

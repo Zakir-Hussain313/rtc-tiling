@@ -1,4 +1,3 @@
-export const runtime = 'nodejs';
 
 import { getTokenFromCookies, verifyToken } from "lib/auth";
 import { NextRequest, NextResponse } from "next/server";
@@ -15,7 +14,7 @@ export const config = {
     ],
 };
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
     const token = req.cookies.get('your-cookie-name')?.value;
     console.log('[Middleware] path:', req.nextUrl.pathname);
     console.log('[Middleware] token:', token ?? 'NO TOKEN FOUND');
@@ -39,7 +38,7 @@ export function middleware(req: NextRequest) {
         }
 
         // Actually verify the token isn't expired or tampered
-        const payload = verifyToken(token);
+        const payload = await verifyToken(token);
         if (!payload || payload.role !== 'admin') {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
