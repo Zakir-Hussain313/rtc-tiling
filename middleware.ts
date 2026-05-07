@@ -16,6 +16,9 @@ export const config = {
 };
 
 export function middleware(req: NextRequest) {
+    const token = req.cookies.get('your-cookie-name')?.value;
+    console.log('[Middleware] path:', req.nextUrl.pathname);
+    console.log('[Middleware] token:', token ?? 'NO TOKEN FOUND');
     const { pathname } = req.nextUrl;
 
     const isProtected =
