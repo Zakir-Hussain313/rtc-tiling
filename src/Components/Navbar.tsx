@@ -81,12 +81,15 @@ function Navbar() {
 
   const activeIndex = links.findIndex((l) => isActiveLink(l.href, pathname));
 
-  const getLinkColor = (i: number) => {
-    if (hoveredIndex !== null) {
-      return i === hoveredIndex ? "#111" : "#fff";
-    }
-    return i === activeIndex ? "#111" : "#fff";
-  };
+  const getLinkColor = useCallback(
+    (i: number) => {
+      if (hoveredIndex !== null) {
+        return i === hoveredIndex ? "#111" : "#fff";
+      }
+      return i === activeIndex ? "#111" : "#fff";
+    },
+    [hoveredIndex, activeIndex]
+  );
 
   return (
     <header className="navbar">
@@ -104,9 +107,6 @@ function Navbar() {
             moveIndicatorTo(linkRefs.current[index]);
           }}
         >
-          {/* FIX 1 (continued): Only render indicator once we have real measurements.
-              Previously indicatorStyle defaulted to { left: 0, width: 0 } which is
-              truthy, so the indicator would flash at position 0 on first paint. */}
           {indicatorStyle && (
             <div
               className="nav-indicator"
