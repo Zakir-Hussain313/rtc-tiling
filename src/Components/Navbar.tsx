@@ -45,7 +45,11 @@ function Navbar() {
     const index = activeIndex !== -1 ? activeIndex : 0;
 
     const raf = requestAnimationFrame(() => {
-      moveIndicatorTo(linkRefs.current[index]);
+      if (linkRefs.current[index]) {
+        moveIndicatorTo(linkRefs.current[index]);
+      } else {
+        setTimeout(() => moveIndicatorTo(linkRefs.current[index]), 50);
+      }
     });
 
     return () => cancelAnimationFrame(raf);
