@@ -24,7 +24,7 @@ function isActiveLink(href: string, pathname: string): boolean {
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [indicatorStyle, setIndicatorStyle] = useState<{ left: number; width: number } | null>(null);
+  const [indicatorStyle, setIndicatorStyle] = useState<{ left: number; width: number }>({ left: 0, width: 0 });
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const pathname = usePathname();
   const navPillRef = useRef<HTMLElement>(null);
@@ -66,10 +66,10 @@ function Navbar() {
 
   const getLinkColor = (i: number) => {
     if (hoveredIndex !== null) {
-      return i === hoveredIndex ? "#111" : i === activeIndex ? "#111" : "#fff";
+        return i === hoveredIndex ? "#111" : "#fff";
     }
     return i === activeIndex ? "#111" : "#fff";
-  };
+};
 
   return (
     <header className="navbar">
