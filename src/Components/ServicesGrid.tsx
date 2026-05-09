@@ -5,7 +5,7 @@ import '../styles/Landing/featured.css';
 import CyclingImage from './CyclingImage';
 import Image from 'next/image';
 
-const SPAN_PATTERN = [4, 2, 3, 2, 3, 4];
+const IMAGE_CLASSES = ['image1', 'image2', 'image3', 'image4', 'image5', 'image6'];
 
 type Props = {
     images: string[];
@@ -24,8 +24,7 @@ export default function ServicesGrid({ images, title }: Props) {
                 {filtered.map((src, i) => (
                     <div
                         key={i}
-                        className="image-div featured-clickable"
-                        style={{ gridColumn: `span ${SPAN_PATTERN[i % SPAN_PATTERN.length]}` }}
+                        className={`image-div featured-clickable ${IMAGE_CLASSES[i % IMAGE_CLASSES.length]}`}
                         onClick={() => setLightbox(src)}
                     >
                         <CyclingImage

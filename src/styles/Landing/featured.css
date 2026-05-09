@@ -293,7 +293,7 @@
     .image4,
     .image5,
     .image6 {
-        grid-column: span 1;
+        grid-column: span 1 !important;
     }
 
     .image-div {
