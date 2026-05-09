@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { optimizeCloudinaryUrl } from 'lib/cloudinaryUtils'
 
@@ -12,33 +12,36 @@ type Review = {
     rating?: number
 }
 
+const SPEED = 40 // px/sec
+
 export default function TestimonialsTrack({ items }: { items: Review[] }) {
-    const [paused, setPaused] = useState(false)
+    const [dragging, setDragging] = useState(false)
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
     const trackRef = useRef<HTMLDivElement>(null)
     const isDragging = useRef(false)
+    const isPaused = useRef(false)
     const startX = useRef(0)
-    const scrollLeft = useRef(0)
+    const dragStartOffset = useRef(0)
     const animationOffset = useRef(0)
     const rafId = useRef<number | null>(null)
     const lastTimestamp = useRef<number | null>(null)
-    const outerRef = useRef<HTMLDivElement>(null)
 
-    // Speed in px/sec
-    const SPEED = 40
-
-    // Sync CSS animation offset → our ref when drag starts
-    const getComputedOffset = () => {
+    const getComputedTranslateX = () => {
         const track = trackRef.current
         if (!track) return 0
-        const style = window.getComputedStyle(track)
-        const matrix = new DOMMatrixReadOnly(style.transform)
-        return matrix.m41 // translateX value
+        const matrix = new DOMMatrixReadOnly(window.getComputedStyle(track).transform)
+        return matrix.m41
     }
 
-    // Manual animation loop (takes over from CSS when dragging or paused by hold)
-    const startRAF = () => {
+    const stopRAF = useCallback(() => {
+        if (rafId.current !== null) {
+            cancelAnimationFrame(rafId.current)
+            rafId.current = null
+        }
+    }, [])
+
+    const startRAF = useCallback(() => {
         if (rafId.current !== null) return
         lastTimestamp.current = null
 
@@ -47,15 +50,18 @@ export default function TestimonialsTrack({ items }: { items: Review[] }) {
             const delta = ts - lastTimestamp.current
             lastTimestamp.current = ts
 
-            if (!isDragging.current) {
+            if (!isDragging.current && !isPaused.current) {
                 animationOffset.current -= (SPEED * delta) / 1000
             }
 
             const track = trackRef.current
             if (track) {
                 const trackWidth = track.scrollWidth / 3
+                // Wrap in both directions so dragging backwards also loops
                 if (animationOffset.current <= -trackWidth) {
                     animationOffset.current += trackWidth
+                } else if (animationOffset.current > 0) {
+                    animationOffset.current -= trackWidth
                 }
                 track.style.transform = `translateX(${animationOffset.current}px)`
             }
@@ -64,62 +70,54 @@ export default function TestimonialsTrack({ items }: { items: Review[] }) {
         }
 
         rafId.current = requestAnimationFrame(step)
-    }
+    }, [])
 
-    const stopRAF = () => {
-        if (rafId.current !== null) {
-            cancelAnimationFrame(rafId.current)
-            rafId.current = null
+    // Kill CSS animation, take over with RAF
+    const takeover = useCallback(() => {
+        const track = trackRef.current
+        if (!track) return
+        if (rafId.current === null) {
+            // First takeover — read current CSS position
+            animationOffset.current = getComputedTranslateX()
+            track.style.animation = 'none'
         }
-    }
-
-    // Pause CSS animation and hand off to RAF
-    const takeover = () => {
-        const track = trackRef.current
-        if (!track) return
-        animationOffset.current = getComputedOffset()
-        track.style.animation = 'none'
-        track.style.transform = `translateX(${animationOffset.current}px)`
         startRAF()
-    }
+    }, [startRAF])
 
-    // Hand back to CSS animation
-    const handback = () => {
-        stopRAF()
-        const track = trackRef.current
-        if (!track) return
-        track.style.animation = ''
-        track.style.transform = ''
-    }
-
-    // Mouse hover pause (desktop only, not drag)
-    const handleMouseEnter = () => {
-        if (!isDragging.current) setPaused(true)
-    }
-    const handleMouseLeave = () => {
-        if (!isDragging.current) setPaused(false)
-    }
-
-    // Drag — Mouse
-    const onMouseDown = (e: React.MouseEvent) => {
+    const onMouseDown = useCallback((e: React.MouseEvent) => {
         isDragging.current = true
+        isPaused.current = true
+        setDragging(true)
         startX.current = e.clientX
-        scrollLeft.current = animationOffset.current
+        dragStartOffset.current = animationOffset.current
         takeover()
-        setPaused(true)
-    }
+    }, [takeover])
+
+    const onMouseEnter = useCallback(() => {
+        if (!isDragging.current) {
+            isPaused.current = true
+            takeover()
+        }
+    }, [takeover])
+
+    const onMouseLeave = useCallback(() => {
+        if (!isDragging.current) {
+            isPaused.current = false
+        }
+    }, [])
 
     useEffect(() => {
         const onMouseMove = (e: MouseEvent) => {
             if (!isDragging.current) return
             const dx = e.clientX - startX.current
-            animationOffset.current = scrollLeft.current + dx
+            animationOffset.current = dragStartOffset.current + dx
         }
 
         const onMouseUp = () => {
             if (!isDragging.current) return
             isDragging.current = false
-            setPaused(false)
+            isPaused.current = false
+            setDragging(false)
         }
 
         window.addEventListener('mousemove', onMouseMove)
@@ -130,55 +128,50 @@ export default function TestimonialsTrack({ items }: { items: Review[] }) {
         }
     }, [])
 
-    // Drag — Touch
-    const onTouchStart = (e: React.TouchEvent) => {
+    // Touch
+    const onTouchStart = useCallback((e: React.TouchEvent) => {
         isDragging.current = true
+        isPaused.current = true
+        setDragging(true)
         startX.current = e.touches[0].clientX
-        scrollLeft.current = animationOffset.current
+        dragStartOffset.current = animationOffset.current
         takeover()
-        setPaused(true)
-    }
+    }, [takeover])
 
-    const onTouchMove = (e: React.TouchEvent) => {
+    const onTouchMove = useCallback((e: React.TouchEvent) => {
         if (!isDragging.current) return
         const dx = e.touches[0].clientX - startX.current
-        animationOffset.current = scrollLeft.current + dx
-    }
+        animationOffset.current = dragStartOffset.current + dx
+    }, [])
 
-    const onTouchEnd = () => {
+    const onTouchEnd = useCallback(() => {
         isDragging.current = false
-        setPaused(false)
-    }
+        isPaused.current = false
+        setDragging(false)
+    }, [])
 
-    // Sync pause state → RAF or CSS
+    // Start RAF on mount (always running, speed controlled internally)
     useEffect(() => {
-        if (paused) {
-            takeover()
-        } else if (!isDragging.current) {
-            handback()
-        }
-    }, [paused])
+        takeover()
+        return () => stopRAF()
+    }, [takeover, stopRAF])
 
     return (
         <div
-            ref={outerRef}
             className="marquee-outer"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
             onMouseDown={onMouseDown}
             onTouchStart={onTouchStart}
             onTouchMove={onTouchMove}
             onTouchEnd={onTouchEnd}
-            style={{ cursor: isDragging.current ? 'grabbing' : 'grab' }}
+            style={{ cursor: dragging ? 'grabbing' : 'grab' }}
         >
-            <div
-                ref={trackRef}
-                className={`marquee-track${paused && !isDragging.current ? ' marquee-track--paused' : ''}`}
-            >
+            <div ref={trackRef} className="marquee-track">
                 {items.map((review, index) => (
                     <div
-                        className={`testimonial-card${hoveredIndex === index ? ' testimonial-card--dark' : ''}`}
                         key={index}
+                        className={`testimonial-card${hoveredIndex === index ? ' testimonial-card--dark' : ''}`}
                         onMouseEnter={() => setHoveredIndex(index)}
                         onMouseLeave={() => setHoveredIndex(null)}
                     >
