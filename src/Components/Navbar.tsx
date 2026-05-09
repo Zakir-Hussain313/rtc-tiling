@@ -26,12 +26,28 @@ function isActiveLink(href: string, pathname: string): boolean {
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [pillReady, setPillReady] = useState(false);
   const pathname = usePathname();
   const navPillRef = useRef<HTMLElement>(null);
   const pillRef = useRef<HTMLDivElement>(null);
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
   const activeIndex = links.findIndex((l) => isActiveLink(l.href, pathname));
+
+  const snapPillInstant = useCallback(() => {
+    const index = activeIndex !== -1 ? activeIndex : 0;
+    const el = linkRefs.current[index];
+    if (!el || !navPillRef.current || !pillRef.current) return;
+    const navRect = navPillRef.current.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    if (elRect.width === 0) return; // not painted yet, skip
+    gsap.set(pillRef.current, {
+      left: elRect.left - navRect.left,
+      width: elRect.width,
+      height: elRect.height,
+    });
+    setPillReady(true);
+  }, [activeIndex]);
 
   const movePill = useCallback((el: HTMLAnchorElement | null) => {
     if (!el || !navPillRef.current || !pillRef.current) return;
@@ -46,32 +62,23 @@ function Navbar() {
     });
   }, []);
 
-  // Replace the mount useEffect with this
-useEffect(() => {
-  const index = activeIndex !== -1 ? activeIndex : 0;
+  // Mount + route change — use ResizeObserver instead of setTimeout
+  // fires exactly when the nav has real dimensions, works in SSR prod
+  useEffect(() => {
+    setPillReady(false);
+    const nav = navPillRef.current;
+    if (!nav) return;
 
-  const snapPill = () => {
-    const el = linkRefs.current[index];
-    if (!el || !navPillRef.current || !pillRef.current) return;
-    const navRect = navPillRef.current.getBoundingClientRect();
-    const elRect = el.getBoundingClientRect();
-    // If dimensions are still 0, retry
-    if (elRect.width === 0) {
-      setTimeout(snapPill, 50);
-      return;
-    }
-    gsap.set(pillRef.current, {
-      left: elRect.left - navRect.left,
-      width: elRect.width,
-      height: elRect.height,
+    const observer = new ResizeObserver(() => {
+      snapPillInstant();
     });
-  };
+    observer.observe(nav);
+    snapPillInstant(); // try immediately too
 
-  const timer = setTimeout(snapPill, 100);
-  return () => clearTimeout(timer);
-}, [pathname, activeIndex]);
+    return () => observer.disconnect();
+  }, [pathname, snapPillInstant]);
 
-  // Recalculate on resize
+  // Resize handler
   useEffect(() => {
     const handleResize = () => {
       const index = activeIndex !== -1 ? activeIndex : 0;
@@ -79,7 +86,7 @@ useEffect(() => {
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [pathname, activeIndex, movePill]);
+  }, [activeIndex, movePill]);
 
   // Body overflow lock
   useEffect(() => {
@@ -90,9 +97,9 @@ useEffect(() => {
   const getLinkColor = useCallback(
     (i: number) => {
       if (hoveredIndex !== null) {
-        return i === hoveredIndex ? "#111" : "#fff";
+        return i === hoveredIndex ? "#111" : "#cfcfcf";
       }
-      return i === activeIndex ? "#111" : "#fff";
+      return i === activeIndex ? "#111" : "#cfcfcf";
     },
     [hoveredIndex, activeIndex]
   );
@@ -116,8 +123,11 @@ useEffect(() => {
             movePill(linkRefs.current[index]);
           }}
         >
-          {/* GSAP-controlled pill — always rendered, no flash */}
-          <div ref={pillRef} className="nav-indicator" />
+          <div
+            ref={pillRef}
+            className="nav-indicator"
+            style={{ opacity: pillReady ? 1 : 0 }}
+          />
 
           {links.map((link, i) => (
             <Link
