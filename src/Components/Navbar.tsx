@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useLayoutEffect, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { gsap } from "gsap";
 import rtc from "../assets/images/Rtc.png";
 import "../styles/Navbar.css";
 import Mainbutton from "./Mainbutton";
@@ -24,62 +25,59 @@ function isActiveLink(href: string, pathname: string): boolean {
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-
-  // FIX 1: Initialize as null so the indicator doesn't flash at position 0,0
-  // before useLayoutEffect has a chance to measure the real position.
-  const [indicatorStyle, setIndicatorStyle] = useState<{ left: number; width: number } | null>(null);
-
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const pathname = usePathname();
   const navPillRef = useRef<HTMLElement>(null);
+  const pillRef = useRef<HTMLDivElement>(null);
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
-  // FIX 2: Wrap in useCallback so it has a stable reference and can be safely
-  // included in dependency arrays without causing infinite re-render loops.
-  const moveIndicatorTo = useCallback((el: HTMLAnchorElement | null) => {
-    if (!el || !navPillRef.current) return;
-    const pillRect = navPillRef.current.getBoundingClientRect();
-    const linkRect = el.getBoundingClientRect();
-    setIndicatorStyle({
-      left: linkRect.left - pillRect.left,
-      width: linkRect.width,
+  const activeIndex = links.findIndex((l) => isActiveLink(l.href, pathname));
+
+  const movePill = useCallback((el: HTMLAnchorElement | null) => {
+    if (!el || !navPillRef.current || !pillRef.current) return;
+    const navRect = navPillRef.current.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    gsap.to(pillRef.current, {
+      duration: 0.35,
+      ease: "power3.inOut",
+      left: elRect.left - navRect.left,
+      width: elRect.width,
+      height: elRect.height,
     });
   }, []);
 
-  // Move indicator on route change. moveIndicatorTo is now stable so it's
-  // safe to include in the dependency array.
-  useLayoutEffect(() => {
-    const activeIndex = links.findIndex((l) => isActiveLink(l.href, pathname));
+  useEffect(() => {
     const index = activeIndex !== -1 ? activeIndex : 0;
-    moveIndicatorTo(linkRefs.current[index]);
-  }, [pathname, moveIndicatorTo]);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const el = linkRefs.current[index];
+        if (!el || !navPillRef.current || !pillRef.current) return;
+        const navRect = navPillRef.current.getBoundingClientRect();
+        const elRect = el.getBoundingClientRect();
+        gsap.set(pillRef.current, {
+          left: elRect.left - navRect.left,
+          width: elRect.width,
+          height: elRect.height,
+        });
+      });
+    });
+  }, [pathname, activeIndex]);
 
-  // FIX 3: Recalculate indicator position on window resize.
-  // Without this, resizing the browser detaches the indicator from its link.
+  // Recalculate on resize
   useEffect(() => {
     const handleResize = () => {
-      const activeIndex = links.findIndex((l) => isActiveLink(l.href, pathname));
       const index = activeIndex !== -1 ? activeIndex : 0;
-      moveIndicatorTo(linkRefs.current[index]);
+      movePill(linkRefs.current[index]);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [pathname, moveIndicatorTo]);
+  }, [pathname, activeIndex, movePill]);
 
-  const handleClick = () => setIsOpen(!isOpen);
-  const closeMenu = () => setIsOpen(false);
-
-  // FIX 4: Cleanup overflow lock on unmount.
-  // If the component unmounts while the menu is open (e.g. fast navigation),
-  // the body would stay locked at overflow:hidden without the cleanup return.
+  // Body overflow lock
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
-    return () => {
-      document.body.style.overflow = "auto";
-    };
+    return () => { document.body.style.overflow = "auto"; };
   }, [isOpen]);
-
-  const activeIndex = links.findIndex((l) => isActiveLink(l.href, pathname));
 
   const getLinkColor = useCallback(
     (i: number) => {
@@ -90,6 +88,9 @@ function Navbar() {
     },
     [hoveredIndex, activeIndex]
   );
+
+  const handleClick = () => setIsOpen(!isOpen);
+  const closeMenu = () => setIsOpen(false);
 
   return (
     <header className="navbar">
@@ -104,26 +105,17 @@ function Navbar() {
           onMouseLeave={() => {
             setHoveredIndex(null);
             const index = activeIndex !== -1 ? activeIndex : 0;
-            moveIndicatorTo(linkRefs.current[index]);
+            movePill(linkRefs.current[index]);
           }}
         >
-          {indicatorStyle && (
-            <div
-              className="nav-indicator"
-              style={{
-                left: indicatorStyle.left,
-                width: indicatorStyle.width,
-              }}
-            />
-          )}
+          {/* GSAP-controlled pill — always rendered, no flash */}
+          <div ref={pillRef} className="nav-indicator" />
 
           {links.map((link, i) => (
             <Link
               key={link.href}
               href={link.href}
-              ref={(el) => {
-                linkRefs.current[i] = el;
-              }}
+              ref={(el) => { linkRefs.current[i] = el; }}
               className={isActiveLink(link.href, pathname) ? "active" : ""}
               style={{
                 color: getLinkColor(i),
@@ -131,7 +123,7 @@ function Navbar() {
               }}
               onMouseEnter={() => {
                 setHoveredIndex(i);
-                moveIndicatorTo(linkRefs.current[i]);
+                movePill(linkRefs.current[i]);
               }}
             >
               {link.label}

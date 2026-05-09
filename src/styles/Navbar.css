@@ -56,7 +56,6 @@ body {
   height: calc(100% - 0.7rem);
   background: #ffffff;
   border-radius: 999px;
-  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
   z-index: 0;
 }
