@@ -46,22 +46,30 @@ function Navbar() {
     });
   }, []);
 
-  useEffect(() => {
-    const index = activeIndex !== -1 ? activeIndex : 0;
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const el = linkRefs.current[index];
-        if (!el || !navPillRef.current || !pillRef.current) return;
-        const navRect = navPillRef.current.getBoundingClientRect();
-        const elRect = el.getBoundingClientRect();
-        gsap.set(pillRef.current, {
-          left: elRect.left - navRect.left,
-          width: elRect.width,
-          height: elRect.height,
-        });
-      });
+  // Replace the mount useEffect with this
+useEffect(() => {
+  const index = activeIndex !== -1 ? activeIndex : 0;
+
+  const snapPill = () => {
+    const el = linkRefs.current[index];
+    if (!el || !navPillRef.current || !pillRef.current) return;
+    const navRect = navPillRef.current.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    // If dimensions are still 0, retry
+    if (elRect.width === 0) {
+      setTimeout(snapPill, 50);
+      return;
+    }
+    gsap.set(pillRef.current, {
+      left: elRect.left - navRect.left,
+      width: elRect.width,
+      height: elRect.height,
     });
-  }, [pathname, activeIndex]);
+  };
+
+  const timer = setTimeout(snapPill, 100);
+  return () => clearTimeout(timer);
+}, [pathname, activeIndex]);
 
   // Recalculate on resize
   useEffect(() => {
