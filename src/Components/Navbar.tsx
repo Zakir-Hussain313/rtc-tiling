@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -26,81 +26,75 @@ function isActiveLink(href: string, pathname: string): boolean {
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const pillReadyRef = useRef(false);
   const pathname = usePathname();
   const navPillRef = useRef<HTMLElement>(null);
   const pillRef = useRef<HTMLDivElement>(null);
   const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const hasInitialized = useRef(false);
 
   const activeIndex = links.findIndex((l) => isActiveLink(l.href, pathname));
+  const resolvedIndex = activeIndex !== -1 ? activeIndex : 0;
 
-  const snapPillInstant = useCallback(() => {
-    const index = activeIndex !== -1 ? activeIndex : 0;
-    const el = linkRefs.current[index];
-    if (!el || !navPillRef.current || !pillRef.current) return;
+  const getRect = (el: HTMLAnchorElement | null) => {
+    if (!el || !navPillRef.current) return null;
     const navRect = navPillRef.current.getBoundingClientRect();
     const elRect = el.getBoundingClientRect();
-    if (elRect.width === 0) return;
-    gsap.set(pillRef.current, {
+    if (elRect.width === 0) return null;
+    return {
       left: elRect.left - navRect.left,
       width: elRect.width,
       height: elRect.height,
-    });
-    if (!pillReadyRef.current) {
-      pillReadyRef.current = true;
-      pillRef.current.style.opacity = "1";
-    }
-  }, [activeIndex]);
+    };
+  };
+
+  const initPill = useCallback(() => {
+    const el = linkRefs.current[resolvedIndex];
+    const rect = getRect(el);
+    if (!rect || !pillRef.current) return false;
+    gsap.set(pillRef.current, rect);
+    pillRef.current.style.opacity = "1";
+    hasInitialized.current = true;
+    return true;
+  }, [resolvedIndex]);
+
+  useEffect(() => {
+    hasInitialized.current = false;
+    if (pillRef.current) pillRef.current.style.opacity = "0";
+
+    if (initPill()) return;
+
+    const interval = setInterval(() => {
+      if (initPill()) clearInterval(interval);
+    }, 16);
+
+    return () => clearInterval(interval);
+  }, [pathname, initPill]);
 
   const movePill = useCallback((el: HTMLAnchorElement | null) => {
-    if (!el || !navPillRef.current || !pillRef.current) return;
-    const navRect = navPillRef.current.getBoundingClientRect();
-    const elRect = el.getBoundingClientRect();
+    const rect = getRect(el);
+    if (!rect || !pillRef.current) return;
     gsap.to(pillRef.current, {
       duration: 0.35,
       ease: "power3.inOut",
-      left: elRect.left - navRect.left,
-      width: elRect.width,
-      height: elRect.height,
+      ...rect,
     });
   }, []);
 
   useEffect(() => {
-    pillReadyRef.current = false;
-    if (pillRef.current) pillRef.current.style.opacity = "0";
-    const nav = navPillRef.current;
-    if (!nav) return;
-    const observer = new ResizeObserver(() => {
-      snapPillInstant();
-    });
-    observer.observe(nav);
-    snapPillInstant();
-    return () => observer.disconnect();
-  }, [pathname, snapPillInstant]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      const index = activeIndex !== -1 ? activeIndex : 0;
-      movePill(linkRefs.current[index]);
-    };
+    const handleResize = () => movePill(linkRefs.current[resolvedIndex]);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [activeIndex, movePill]);
+  }, [resolvedIndex, movePill]);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
     return () => { document.body.style.overflow = "auto"; };
   }, [isOpen]);
 
-  const getLinkColor = useCallback(
-    (i: number) => {
-      if (hoveredIndex !== null) {
-        return i === hoveredIndex ? "#111" : "#fff";
-      }
-      return i === activeIndex ? "#111" : "#fff";
-    },
-    [hoveredIndex, activeIndex]
-  );
+  const getLinkColor = useCallback((i: number) => {
+    const active = hoveredIndex !== null ? hoveredIndex : resolvedIndex;
+    return i === active ? "#111" : "#fff";
+  }, [hoveredIndex, resolvedIndex]);
 
   const handleClick = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
@@ -117,15 +111,10 @@ function Navbar() {
           ref={navPillRef}
           onMouseLeave={() => {
             setHoveredIndex(null);
-            const index = activeIndex !== -1 ? activeIndex : 0;
-            movePill(linkRefs.current[index]);
+            movePill(linkRefs.current[resolvedIndex]);
           }}
         >
-          <div
-            ref={pillRef}
-            className="nav-indicator"
-            style={{ opacity: 0 }}
-          />
+          <div ref={pillRef} className="nav-indicator" style={{ opacity: 0 }} />
 
           {links.map((link, i) => (
             <Link
