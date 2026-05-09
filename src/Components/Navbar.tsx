@@ -26,7 +26,7 @@ function isActiveLink(href: string, pathname: string): boolean {
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [pillReady, setPillReady] = useState(false);
+  const pillReadyRef = useRef(false);
   const pathname = usePathname();
   const navPillRef = useRef<HTMLElement>(null);
   const pillRef = useRef<HTMLDivElement>(null);
@@ -40,13 +40,16 @@ function Navbar() {
     if (!el || !navPillRef.current || !pillRef.current) return;
     const navRect = navPillRef.current.getBoundingClientRect();
     const elRect = el.getBoundingClientRect();
-    if (elRect.width === 0) return; // not painted yet, skip
+    if (elRect.width === 0) return;
     gsap.set(pillRef.current, {
       left: elRect.left - navRect.left,
       width: elRect.width,
       height: elRect.height,
     });
-    setPillReady(true);
+    if (!pillReadyRef.current) {
+      pillReadyRef.current = true;
+      pillRef.current.style.opacity = "1";
+    }
   }, [activeIndex]);
 
   const movePill = useCallback((el: HTMLAnchorElement | null) => {
@@ -62,23 +65,19 @@ function Navbar() {
     });
   }, []);
 
-  // Mount + route change — use ResizeObserver instead of setTimeout
-  // fires exactly when the nav has real dimensions, works in SSR prod
   useEffect(() => {
-    setPillReady(false);
+    pillReadyRef.current = false;
+    if (pillRef.current) pillRef.current.style.opacity = "0";
     const nav = navPillRef.current;
     if (!nav) return;
-
     const observer = new ResizeObserver(() => {
       snapPillInstant();
     });
     observer.observe(nav);
-    snapPillInstant(); // try immediately too
-
+    snapPillInstant();
     return () => observer.disconnect();
   }, [pathname, snapPillInstant]);
 
-  // Resize handler
   useEffect(() => {
     const handleResize = () => {
       const index = activeIndex !== -1 ? activeIndex : 0;
@@ -88,7 +87,6 @@ function Navbar() {
     return () => window.removeEventListener("resize", handleResize);
   }, [activeIndex, movePill]);
 
-  // Body overflow lock
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
     return () => { document.body.style.overflow = "auto"; };
@@ -97,9 +95,9 @@ function Navbar() {
   const getLinkColor = useCallback(
     (i: number) => {
       if (hoveredIndex !== null) {
-        return i === hoveredIndex ? "#111" : "#cfcfcf";
+        return i === hoveredIndex ? "#111" : "#fff";
       }
-      return i === activeIndex ? "#111" : "#cfcfcf";
+      return i === activeIndex ? "#111" : "#fff";
     },
     [hoveredIndex, activeIndex]
   );
@@ -126,7 +124,7 @@ function Navbar() {
           <div
             ref={pillRef}
             className="nav-indicator"
-            style={{ opacity: pillReady ? 1 : 0 }}
+            style={{ opacity: 0 }}
           />
 
           {links.map((link, i) => (
