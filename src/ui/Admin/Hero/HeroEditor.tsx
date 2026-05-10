@@ -147,9 +147,7 @@ export default function HeroEditor() {
                     <div className="heroEditorRight">
                         <HeroTextFields
                             headline={data.headline}
-                            subheading={data.subheading}
                             onHeadlineChange={(val) => setData((prev) => ({ ...prev, headline: val }))}
-                            onSubheadingChange={(val) => setData((prev) => ({ ...prev, subheading: val }))}
                         />
                     </div>
                 </div>

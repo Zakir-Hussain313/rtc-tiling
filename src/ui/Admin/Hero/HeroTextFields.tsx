@@ -4,9 +4,7 @@ import '@/styles/Admin/Hero/HeroTextFields.css';
 
 interface HeroTextFieldsProps {
     headline: string;
-    subheading: string;
     onHeadlineChange: (val: string) => void;
-    onSubheadingChange: (val: string) => void;
 }
 
 export default function HeroTextFields({
