@@ -81,6 +81,7 @@ export default function HeroEditor() {
             if (!res.ok) throw new Error('Failed to save');
 
             const json = await res.json();
+            console.log('[HeroEditor] raw response:', json);
             const updated: HeroData = {
                 backgroundImage: json.data?.backgroundImage ?? null,
                 headline: json.data?.headline ?? '',
