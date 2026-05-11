@@ -9,6 +9,7 @@ import { connectDB } from "lib/mongodb";
 import Service from "models/Service";
 import { unstable_cache } from 'next/cache';
 import { optimizeCloudinaryUrl } from "lib/cloudinaryUtils";
+import MarqueeTrack from "@/Components/MarqueeTrack"; // ← adjust path to wherever you place it
 
 type ServiceDoc = {
     _id: string;
@@ -27,7 +28,7 @@ const getServices = unstable_cache(
         return services as unknown as ServiceDoc[];
     },
     ['services-data'],
-    { revalidate: 60 , tags : ['services-data'] }
+    { revalidate: 60, tags: ['services-data'] }
 );
 
 export default async function Expertise() {
@@ -49,35 +50,40 @@ export default async function Expertise() {
                 </section>
 
                 {items.length > 0 ? (
-                    <section className="expertise-marquee-outer">
-                        <div className="expertise-marquee-track">
-                            {items.map((service, index) => {
-                                const slug = service.slug.startsWith('/services/')
-                                    ? service.slug.replace('/services/', '')
-                                    : service.slug;
+                    <MarqueeTrack
+                        outerClassName="expertise-marquee-outer"
+                        trackClassName="expertise-marquee-track"
+                        speed={40}
+                        itemCount={items.length}
+                    >
+                        {items.map((service, index) => {
+                            const slug = service.slug.startsWith('/services/')
+                                ? service.slug.replace('/services/', '')
+                                : service.slug;
 
-                                return (
-                                    <Link
-                                        key={`${service._id}-${index}`}
-                                        href={`/services/${slug}`}
-                                        className="service-card"
-                                    >
-                                        <div className="image-slider-container">
-                                            <Image
-                                                src={service.images?.length > 0 ? optimizeCloudinaryUrl(service.images[0], 600) : fallbackImage}
-                                                alt={service.title}
-                                                fill
-                                                className="card-image object-cover"
-                                                style={{ borderRadius: "30px" }}
-                                                sizes="(max-width: 768px) 50vw, 300px"
-                                            />
-                                        </div>
-                                        <h3 className="card-label">{service.title}</h3>
-                                    </Link>
-                                );
-                            })}
-                        </div>
-                    </section>
+                            return (
+                                <Link
+                                    key={`${service._id}-${index}`}
+                                    href={`/services/${slug}`}
+                                    className="service-card"
+                                    draggable={false}
+                                >
+                                    <div className="image-slider-container">
+                                        <Image
+                                            src={service.images?.length > 0 ? optimizeCloudinaryUrl(service.images[0], 600) : fallbackImage}
+                                            alt={service.title}
+                                            fill
+                                            className="card-image object-cover"
+                                            style={{ borderRadius: "30px" }}
+                                            sizes="(max-width: 768px) 50vw, 300px"
+                                            draggable={false}
+                                        />
+                                    </div>
+                                    <h3 className="card-label">{service.title}</h3>
+                                </Link>
+                            );
+                        })}
+                    </MarqueeTrack>
                 ) : (
                     <p style={{ padding: "2rem", opacity: 0.5, textAlign: "center" }}>
                         No services available yet.

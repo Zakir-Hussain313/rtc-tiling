@@ -1,3 +1,9 @@
+/* 
+  expertise.css — patched
+  Removed: animation and :hover pause from .expertise-marquee-track
+  Reason: MarqueeTrack client component now owns all motion via RAF
+*/
+
 .expertise-main-section {
     font-family: var(--font-body);
     padding-top: 20px;
@@ -58,27 +64,15 @@
         black 92%,
         transparent 100%
     );
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .expertise-marquee-track {
     display: flex;
     gap: 15px;
     width: max-content;
-    animation: expertise-marquee 10s linear infinite;
-}
-
-.expertise-marquee-track:hover {
-    animation-play-state: paused !important;
-}
-
-@keyframes expertise-marquee {
-    0% {
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(-33.333%);
-    }
+    /* ↓ animation removed — RAF drives motion now */
 }
 
 .service-card {

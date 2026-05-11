@@ -1,3 +1,9 @@
+/*
+  Testimonials.css — patched
+  Removed: @keyframes marquee, animation on .marquee-track, .marquee-track--paused
+  Reason: MarqueeTrack client component now owns all motion via RAF
+*/
+
 .testimonials-section {
     font-family: var(--font-body);
     padding: 40px 0;
@@ -66,17 +72,10 @@
     align-items: flex-start;
     gap: 16px;
     width: max-content;
-    animation: marquee 30s linear infinite;
+    /* animation removed — RAF drives motion now */
 }
 
-@keyframes marquee {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-33.333%); }
-}
-
-.marquee-track--paused {
-    animation-play-state: paused !important;
-}
+/* .marquee-track--paused removed — no longer needed */
 
 .testimonial-card {
     background-color: #ffffff;
@@ -181,116 +180,37 @@
 }
 
 @media (max-width: 1024px) {
-    .testimonials-section {
-        padding: 48px 0;
-    }
-
-    .testi-title-container {
-        margin-bottom: 32px;
-    }
-
-    .testi-title-container h1 {
-        font-size: 48px;
-    }
-
-    .testi-title-container p {
-        max-width: 75%;
-        font-size: 19px;
-    }
+    .testimonials-section { padding: 48px 0; }
+    .testi-title-container { margin-bottom: 32px; }
+    .testi-title-container h1 { font-size: 48px; }
+    .testi-title-container p { max-width: 75%; font-size: 19px; }
 }
 
 @media (max-width: 768px) {
-    .testimonials-section {
-        padding: 40px 0;
-    }
-
-    .testi-title-container {
-        padding: 0 20px;
-        margin-bottom: 24px;
-    }
-
-    .testi-title-container h1 {
-        font-size: 40px;
-    }
-
-    .testi-title-container p {
-        max-width: 90%;
-        font-size: 15px;
-    }
-
-    .testimonial-card {
-        width: 270px;
-        padding: 22px 18px;
-        gap: 18px;
-    }
-
-    .testimonial-review {
-        font-size: 14px;
-    }
-
-    .testimonial-name {
-        font-size: 15px;
-    }
+    .testimonials-section { padding: 40px 0; }
+    .testi-title-container { padding: 0 20px; margin-bottom: 24px; }
+    .testi-title-container h1 { font-size: 40px; }
+    .testi-title-container p { max-width: 90%; font-size: 15px; }
+    .testimonial-card { width: 270px; padding: 22px 18px; gap: 18px; }
+    .testimonial-review { font-size: 14px; }
+    .testimonial-name { font-size: 15px; }
 }
 
 @media (max-width: 540px) {
-    .testimonials-section {
-        padding: 32px 0;
-    }
-
-    .testi-title-container {
-        padding: 0 14px;
-        margin-bottom: 20px;
-    }
-
-    .testi-title-container h1 {
-        font-size: 36px;
-    }
-
-    .testi-title-container p {
-        max-width: 100%;
-        font-size: 13px;
-    }
-
-    .testimonial-card {
-        width: 240px;
-        padding: 18px 14px;
-        gap: 16px;
-    }
-
-    .testimonial-review {
-        font-size: 13px;
-    }
-
-    .testimonial-name {
-        font-size: 14px;
-    }
-
-    .testimonial-role {
-        font-size: 12px;
-    }
+    .testimonials-section { padding: 32px 0; }
+    .testi-title-container { padding: 0 14px; margin-bottom: 20px; }
+    .testi-title-container h1 { font-size: 36px; }
+    .testi-title-container p { max-width: 100%; font-size: 13px; }
+    .testimonial-card { width: 240px; padding: 18px 14px; gap: 16px; }
+    .testimonial-review { font-size: 13px; }
+    .testimonial-name { font-size: 14px; }
+    .testimonial-role { font-size: 12px; }
 }
 
 @media (max-width: 380px) {
-    .testimonials-section {
-        padding: 24px 0;
-    }
-
-    .testi-title-container {
-        padding: 0 12px;
-        margin-bottom: 16px;
-    }
-
-    .testi-title-container h1 {
-        font-size: 26px;
-    }
-
-    .testi-title-container p {
-        font-size: 14px;
-    }
-
-    .testimonial-card {
-        width: 210px;
-        padding: 16px 12px;
-    }
+    .testimonials-section { padding: 24px 0; }
+    .testi-title-container { padding: 0 12px; margin-bottom: 16px; }
+    .testi-title-container h1 { font-size: 26px; }
+    .testi-title-container p { font-size: 14px; }
+    .testimonial-card { width: 210px; padding: 16px 12px; }
 }
