@@ -1,8 +1,4 @@
-/* 
-  expertise.css — patched
-  Removed: animation and :hover pause from .expertise-marquee-track
-  Reason: MarqueeTrack client component now owns all motion via RAF
-*/
+
 
 .expertise-main-section {
     font-family: var(--font-body);
@@ -72,7 +68,6 @@
     display: flex;
     gap: 15px;
     width: max-content;
-    /* ↓ animation removed — RAF drives motion now */
 }
 
 .service-card {
@@ -115,7 +110,7 @@
 a.service-card {
     text-decoration: none;
     color: inherit;
-    cursor: pointer;
+    cursor: inherit;
     display: block;
 }
 

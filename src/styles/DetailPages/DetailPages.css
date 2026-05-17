@@ -50,11 +50,12 @@
 /* ── Image ────────────────────────────────────────── */
 .detail-img-wrap {
     position: relative;
-    width: 100%;
+    width: 80%;
     aspect-ratio: 4 / 4.5;
     border-radius: 50px;
     overflow: hidden;
     background: #f0f0f0;
+    margin: auto; /* keeps it centered */
 }
 
 .detail-img {

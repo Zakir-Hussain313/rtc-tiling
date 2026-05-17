@@ -92,6 +92,7 @@
     transform: translateZ(0);
     backface-visibility: hidden;
     margin-bottom: 1px;
+     cursor: inherit;
 }
 
 .testimonial-card--dark {
