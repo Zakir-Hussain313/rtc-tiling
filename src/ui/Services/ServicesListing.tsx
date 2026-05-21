@@ -30,7 +30,7 @@ const getServices = unstable_cache(
         try {
             await connectDB()
             const services = await Service.find()
-                .sort({ date: -1 })
+                .sort({ title : 1 })
                 .lean()
             return services.map((s: any) => ({
                 _id: String(s._id),

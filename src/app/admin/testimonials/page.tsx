@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import './testimonials.css';
+import { uploadToCloudinary } from 'lib/uploadToCloudinary';
 
 type Testimonial = {
     _id: string;
@@ -24,6 +25,7 @@ const EMPTY_FORM = {
     image: '',
     imagePublicId: '',
     removeImage: false,
+    _file: null as File | null,
 };
 
 export default function TestimonialsAdmin() {
@@ -69,6 +71,7 @@ export default function TestimonialsAdmin() {
             image: t.image,
             imagePublicId: t.imagePublicId,
             removeImage: false,
+            _file: null,
         });
         setShowModal(true);
     }
@@ -76,30 +79,66 @@ export default function TestimonialsAdmin() {
     function handleImage(e: React.ChangeEvent<HTMLInputElement>) {
         const file = e.target.files?.[0];
         if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (ev) => setForm(f => ({
+        setForm(f => ({
             ...f,
-            image: ev.target?.result as string,
+            image: URL.createObjectURL(file),
+            _file: file,
             removeImage: false,
         }));
-        reader.readAsDataURL(file);
     }
 
     async function handleSave() {
         if (!form.name.trim() || !form.review.trim() || saving) return;
         setSaving(true);
-        const method = editing ? 'PUT' : 'POST';
-        const body = editing
-            ? { ...form, _id: editing._id, approved: true }
-            : { ...form, approved: true };
-        await fetch('/api/testimonials', {
-            method,
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body),
-        });
-        setSaving(false);
-        setShowModal(false);
-        load();
+
+        try {
+            let imageUrl = form.image.startsWith('blob:') ? '' : form.image;
+            let imagePublicId = form.imagePublicId;
+
+            // If there's a new file selected, upload it to Cloudinary first
+            if (form._file) {
+                const uploaded = await uploadToCloudinary(form._file, 'rtc/testimonials');
+                imageUrl = uploaded.url;
+                imagePublicId = uploaded.publicId;
+            }
+
+            const method = editing ? 'PUT' : 'POST';
+            const body = editing
+                ? {
+                    _id: editing._id,
+                    name: form.name,
+                    role: form.role,
+                    review: form.review,
+                    rating: form.rating,
+                    removeImage: form.removeImage,
+                    image: imageUrl,
+                    newPublicId: imagePublicId,
+                    imagePublicId: editing.imagePublicId, // old one for deletion
+                    approved: true,
+                }
+                : {
+                    name: form.name,
+                    role: form.role,
+                    review: form.review,
+                    rating: form.rating,
+                    image: imageUrl,
+                    imagePublicId,
+                    approved: true,
+                };
+
+            await fetch('/api/testimonials', {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body),
+            });
+        } catch (err) {
+            console.error('[TestimonialsAdmin] Save failed:', err);
+            alert('Failed to save testimonial. Please try again.');
+        } finally {
+            setSaving(false);
+            setShowModal(false);
+            load();
+        }
     }
 
     async function handleDelete(t: Testimonial) {

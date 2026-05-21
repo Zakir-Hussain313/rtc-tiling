@@ -13,23 +13,28 @@ const Footer = () => {
       <div className='footerInner'>
         <div className='topSection'>
           <div className='column'>
-            <h3 className='columnHeading'>Quick Links</h3>
+            <h3 className='columnHeading'>Why RTC</h3>
             <ul className='linkList'>
-              <li><Link href="/" className='link'>Home</Link></li>
-              <li><Link href="/about" className='link'>About</Link></li>
-              <li><Link href="/services" className='link'>Services</Link></li>
-              <li><Link href="/projects" className='link'>Projects</Link></li>
-              <li><Link href="/contact" className='link'>Contact</Link></li>
+              <li className="lilink">✓ Family Owned Business</li>
+              <li className="lilink">✓ 20+ Years Industry Experience</li>
+              <li className="lilink">✓ NSW Wide Service</li>
+              <li className="lilink">✓ Residential • Commercial • Industrial</li>
+              <li className="lilink">✓ Licensed & Insured</li>
+              <li className="lilink">✓ Workmanship Warranty Certificates Issued</li>
+              <li className="lilink">✓ Up To 10-Year Warranty Coverage</li>
+              <li className="lilink">✓ Quality Work Built To Last</li>
             </ul>
           </div>
 
           <div className='column second-column'>
             <h3 className='columnHeading'>Contact Info</h3>
+            <p className="contactLabel pb-3">GET IN TOUCH <br />
+              <span>Ready to start your next project? <br /> Contact us today.</span></p>
             <ul className='contactList'>
               <li className='contactItem'>
-                <span className='contactLabel'>Email:</span>
+                <span className='contactLabel'>Email Us:</span>
                 <a href="mailto:info@rtctiling.info" className='link'>
-                  info@rtctiling.info
+                  info@rtcprojects.com.au
                 </a>
               </li>
               <li className='contactItem'>
@@ -40,20 +45,20 @@ const Footer = () => {
               </li>
               <li className='contactItem'>
                 <span className='contactLabel'>Address:</span>
-                <span className="address">38 Clyde Street, cabramatta</span>
+                <p className="address">38 Clyde Street, cabramatta</p>
               </li>
             </ul>
           </div>
 
           <div className='rightColumn'>
             <div className='socialIcons'>
-              <Link href="#" className='socialLink' aria-label="X (Twitter)">
+              <Link href="#" className='socialLink' target="_blank" aria-label="X (Twitter)">
                 <RiTwitterXFill />
               </Link>
-              <Link href="#" className='socialLink' aria-label="Facebook">
+              <Link href="https://www.facebook.com/share/1HZZjL6FTy/?mibextid=wwXIfr" target="_blank" className='socialLink' aria-label="Facebook">
                 <IoLogoFacebook />
               </Link>
-              <Link href="#" className='socialLink' aria-label="Instagram">
+              <Link href="#" className='socialLink' target="_blank" aria-label="Instagram">
                 <FaInstagram />
               </Link>
             </div>
@@ -76,12 +81,12 @@ const Footer = () => {
           <p className='copyright'>rtctiling © 2026 All Rights Reserved.</p>
           <Link href={"https://pixelmanic.dev/"} target="_blank" className='credit'>
             <span className='creditText'>Design &amp; Development</span>
-              <Image
-                src={pm}
-                alt="Pm"
-                width={44}
-                height={44}
-              />
+            <Image
+              src={pm}
+              alt="Pm"
+              width={44}
+              height={44}
+            />
           </Link>
         </div>
       </div>

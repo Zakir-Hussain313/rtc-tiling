@@ -61,17 +61,13 @@ export default async function OurStory() {
                 <div className="second-section-child-2">
                     <h1>OUR STORY</h1>
                     <p>
-                        With years of experience in the tiling industry.
-                        <span> RTC is dedicated to delivering exceptional craftsmanship and beautiful results.</span>{" "}
-                        Our team of skilled professionals is passionate about creating stunning tile installations
-                        that stand the test of time. From kitchens and bathrooms to floors and backsplashes,
-                        we take pride in transforming your spaces with precision and care.
+                        Built on generations of craftsmanship, RTC is a family owned business specialising in tiling, waterproofing, screeding, renovations, building extensions and maintenance services. With over 20 years of experience and over four decades of family industry expertise, we proudly service projects across NSW, delivering quality workmanship, reliability and lasting results for residential, commercial and industrial clients.
                     </p>
                 </div>
             </FadeIn>
 
             <FadeIn as="section" className="about-third-section" delay={200}>
-                <NumBox stats={stats}/>
+                <NumBox stats={stats} />
             </FadeIn>
         </main>
     );

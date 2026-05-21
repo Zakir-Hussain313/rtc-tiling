@@ -187,13 +187,13 @@ export default function ContactForm() {
                         <h3>Chat with us.</h3>
                         <p>Speak to us via live chat.</p>
                         <div className="contact-info-links">
+                            <p className="contact-info-link">
+                                <FaTelegramPlane />
+                                <span>Shoot us an Email</span>
+                            </p>
                             <Link href="mailto:info@rtctiling.com.au" className="contact-info-link">
                                 <FaTelegramPlane />
                                 <span>Shoot us an Email</span>
-                            </Link>
-                            <Link href="https://instagram.com" className="contact-info-link">
-                                <FaInstagram />
-                                <span>Message us on Instagram</span>
                             </Link>
                         </div>
                     </div>
@@ -202,20 +202,16 @@ export default function ContactForm() {
                         <h3>Call us</h3>
                         <p>We&apos;re here to help you.</p>
                         <div className="contact-info-links">
-                            <Link href="tel:0415456215" className="contact-info-link">
+                            <Link href="tel:0480205289" className="contact-info-link">
                                 <FaPhone />
-                                <span>0415 456 215</span>
-                            </Link>
-                            <Link href="tel:0446642345" className="contact-info-link">
-                                <FaPhone />
-                                <span>0446 642 345</span>
+                                <span>0480 205 289</span>
                             </Link>
                         </div>
                     </div>
 
                     <div className="contact-info-block">
                         <h3>Working hours</h3>
-                        <p>Monday — Saturday: 7:00 AM — 6:00 PM</p>
+                        <p>Monday — Saturday: 7:00 AM — 5:00 PM</p>
                     </div>
                 </FadeIn>
             </FadeIn>

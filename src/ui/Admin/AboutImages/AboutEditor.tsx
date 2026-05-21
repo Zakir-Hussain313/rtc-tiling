@@ -3,19 +3,21 @@
 import { useState, useRef, useEffect } from 'react';
 import '@/styles/Admin/AboutImages/AboutEditor.css';
 import Image from 'next/image';
+import { uploadToCloudinary } from 'lib/uploadToCloudinary';
 
 type ImageSlot = {
     id: number;
     label: string;
     preview: string | null;
     fileName: string | null;
-    existingUrl: string | null; // from DB
+    existingUrl: string | null;
+    file: File | null;
 };
 
 const initialSlots: ImageSlot[] = [
-    { id: 1, label: 'Image 1', preview: null, fileName: null, existingUrl: null },
-    { id: 2, label: 'Image 2', preview: null, fileName: null, existingUrl: null },
-    { id: 3, label: 'Image 3', preview: null, fileName: null, existingUrl: null },
+    { id: 1, label: 'Image 1', preview: null, fileName: null, existingUrl: null, file: null },
+    { id: 2, label: 'Image 2', preview: null, fileName: null, existingUrl: null, file: null },
+    { id: 3, label: 'Image 3', preview: null, fileName: null, existingUrl: null, file: null },
 ];
 
 export default function AboutEditor() {
@@ -53,29 +55,19 @@ export default function AboutEditor() {
 
     function handleFile(id: number, file: File) {
         if (!file.type.startsWith('image/')) return;
-
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            setSlots((prev) =>
-                prev.map((s) =>
-                    s.id === id
-                        ? {
-                            ...s,
-                            preview: e.target?.result as string,
-                            fileName: file.name,
-                        }
-                        : s
-                )
-            );
-        };
-
-        reader.readAsDataURL(file);
+        const preview = URL.createObjectURL(file);
+        setSlots((prev) =>
+            prev.map((s) =>
+                s.id === id
+                    ? { ...s, preview, fileName: file.name, file }
+                    : s
+            )
+        );
         setSaved(false);
     }
 
     async function handleSave() {
-        // Only send slots that have a NEW preview (base64) — skip unchanged ones
-        const changedSlots = slots.filter((s) => s.preview !== null);
+        const changedSlots = slots.filter((s) => s.file !== null);
 
         if (changedSlots.length === 0) {
             alert('No new images selected to save.');
@@ -85,17 +77,18 @@ export default function AboutEditor() {
         try {
             setLoading(true);
 
-            const payload = {
-                images: changedSlots.map((s) => ({
-                    id: s.id,
-                    image: s.preview,
-                })),
-            };
+            // Upload all changed slots directly to Cloudinary first
+            const uploaded = await Promise.all(
+                changedSlots.map(async (s) => {
+                    const result = await uploadToCloudinary(s.file!, 'rtc/about');
+                    return { id: s.id, image: result.url, publicId: result.publicId };
+                })
+            );
 
             const res = await fetch('/api/about', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload),
+                body: JSON.stringify({ images: uploaded }),
             });
 
             if (!res.ok) throw new Error('Failed to save images');
@@ -103,7 +96,6 @@ export default function AboutEditor() {
             const json = await res.json();
             const dbImages: { id: number; url: string }[] = json.data?.images ?? [];
 
-            // After save: clear previews, update existingUrl from DB response
             setSlots((prev) =>
                 prev.map((slot) => {
                     const match = dbImages.find((img) => img.id === slot.id);
@@ -111,6 +103,7 @@ export default function AboutEditor() {
                         ...slot,
                         preview: null,
                         fileName: null,
+                        file: null,
                         existingUrl: match?.url ?? slot.existingUrl,
                     };
                 })

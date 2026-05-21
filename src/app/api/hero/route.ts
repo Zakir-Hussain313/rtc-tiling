@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from 'lib/mongodb';
-import { uploadImage, deleteImage } from 'lib/cloudinary';
+import { deleteImage } from 'lib/cloudinary';
 import Hero from 'models/Hero';
 import { revalidatePath } from 'next/cache';
 
@@ -32,6 +32,7 @@ export async function PUT(req: NextRequest) {
 
         const {
             backgroundImage,
+            backgroundImagePublicId,
             headline,
             subheading,
             buttonText,
@@ -56,9 +57,7 @@ export async function PUT(req: NextRequest) {
 
         const updates: Record<string, unknown> = {};
 
-        if (typeof backgroundImage === 'string' && backgroundImage.startsWith('data:image/')) {
-            const { url, publicId } = await uploadImage(backgroundImage, 'rtc/hero');
-
+        if (typeof backgroundImage === 'string' && backgroundImage.startsWith('https://res.cloudinary.com')) {
             if (hero.backgroundImagePublicId) {
                 try {
                     await deleteImage(hero.backgroundImagePublicId);
@@ -67,8 +66,10 @@ export async function PUT(req: NextRequest) {
                 }
             }
 
-            updates.backgroundImage = url;
-            updates.backgroundImagePublicId = publicId;
+            updates.backgroundImage = backgroundImage;
+            updates.backgroundImagePublicId = typeof backgroundImagePublicId === 'string'
+                ? backgroundImagePublicId
+                : '';
         }
 
         if (typeof headline === 'string')   updates.headline = headline.trim();

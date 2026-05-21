@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from 'lib/mongodb';
-import { uploadImage } from 'lib/cloudinary';
 import Service from 'models/Service';
 import { revalidatePath } from 'next/cache';
 
@@ -31,7 +30,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
 
         const {
-            title, description, images,
+            title, description, images, imagePublicIds,
             serviceType, location, estimatedDuration,
             maximumArea, finishStyle, suitableFor,
         } = body as Record<string, unknown>;
@@ -46,49 +45,25 @@ export async function POST(req: NextRequest) {
         if (existing)
             return NextResponse.json({ error: 'A service with this title already exists' }, { status: 409 });
 
-        // 1. Create service first with empty images
+        // Images already uploaded to Cloudinary — just save the URLs
         const count = await Service.countDocuments();
         const service = await Service.create({
-            title:             trimmedTitle,
-            description:       typeof description       === 'string' ? description.trim()       : '',
-            images:            [],
-            imagePublicIds:    [],
-            serviceType:       typeof serviceType       === 'string' ? serviceType.trim()       : '',
-            location:          typeof location          === 'string' ? location.trim()          : '',
+            title: trimmedTitle,
+            description: typeof description === 'string' ? description.trim() : '',
+            images: Array.isArray(images) ? images : [],
+            imagePublicIds: Array.isArray(imagePublicIds) ? imagePublicIds : [],
+            serviceType: typeof serviceType === 'string' ? serviceType.trim() : '',
+            location: typeof location === 'string' ? location.trim() : '',
             estimatedDuration: typeof estimatedDuration === 'string' ? estimatedDuration.trim() : '',
-            maximumArea:       typeof maximumArea       === 'string' ? maximumArea.trim()       : '',
-            finishStyle:       typeof finishStyle       === 'string' ? finishStyle.trim()       : '',
-            suitableFor:       typeof suitableFor       === 'string' ? suitableFor.trim()       : '',
+            maximumArea: typeof maximumArea === 'string' ? maximumArea.trim() : '',
+            finishStyle: typeof finishStyle === 'string' ? finishStyle.trim() : '',
+            suitableFor: typeof suitableFor === 'string' ? suitableFor.trim() : '',
             slug,
             order: count,
         });
 
-        const imageUrls: string[] = [];
-        const imagePublicIds: string[] = [];
-
-        if (Array.isArray(images)) {
-            for (const img of images) {
-                if (typeof img === 'string' && img.startsWith('data:image/')) {
-                    try {
-                        const result = await uploadImage(img, 'rtc/services');
-                        imageUrls.push(result.url);
-                        imagePublicIds.push(result.publicId);
-                    } catch (uploadErr) {
-                        console.error('[POST /api/services] Image upload failed:', uploadErr);
-                    }
-                }
-            }
-        }
-
-        if (imageUrls.length > 0) {
-            await Service.findByIdAndUpdate(service._id, {
-                $set: { images: imageUrls, imagePublicIds },
-            });
-        }
-
-        const final = await Service.findById(service._id);
         revalidatePath('/', 'layout');
-        return NextResponse.json({ success: true, data: final }, { status: 201 });
+        return NextResponse.json({ success: true, data: service }, { status: 201 });
 
     } catch (error) {
         console.error('[POST /api/services]', error);

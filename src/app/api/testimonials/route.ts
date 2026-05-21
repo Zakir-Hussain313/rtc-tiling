@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from 'lib/mongodb';
-import { uploadImage, deleteImage } from 'lib/cloudinary';
+import { deleteImage } from 'lib/cloudinary';
 import Testimonial from 'models/Testimonial';
 import { revalidatePath } from 'next/cache';
 
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
         }
 
-        const { name, role, review, rating, image, order } = body as Record<string, unknown>;
+        const { name, role, review, rating, image, imagePublicId, order } = body as Record<string, unknown>;
 
         if (typeof name !== 'string' || !name.trim()) {
             return NextResponse.json({ error: 'Name is required' }, { status: 400 });
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'Rating must be a number between 1 and 5' }, { status: 400 });
         }
 
-        // 1. Create testimonial first with empty image
+        // Images already uploaded to Cloudinary — just save the URL
         const count = await Testimonial.countDocuments();
         const testimonial = await Testimonial.create({
             name: name.trim(),
@@ -50,26 +50,12 @@ export async function POST(req: NextRequest) {
             review: review.trim(),
             rating,
             order: typeof order === 'number' ? order : count,
-            image: '',
-            imagePublicId: '',
+            image: typeof image === 'string' ? image : '',
+            imagePublicId: typeof imagePublicId === 'string' ? imagePublicId : '',
         });
 
-        // 2. Upload image after DB save
-        if (typeof image === 'string' && image.startsWith('data:')) {
-            try {
-                const { url, publicId } = await uploadImage(image, 'testimonials');
-                await Testimonial.findByIdAndUpdate(testimonial._id, {
-                    $set: { image: url, imagePublicId: publicId },
-                });
-            } catch (uploadErr) {
-                console.error('[POST /api/testimonials] Image upload failed:', uploadErr);
-            }
-        }
-
-        const final = await Testimonial.findById(testimonial._id);
-
         revalidatePath('/', 'layout');
-        return NextResponse.json({ success: true, data: final }, { status: 201 });
+        return NextResponse.json({ success: true, data: testimonial }, { status: 201 });
 
     } catch (err) {
         console.error('[POST /api/testimonials]', err);
@@ -96,6 +82,8 @@ export async function PUT(req: NextRequest) {
             _id, name, role, review,
             rating, image, order,
             imagePublicId: existingPublicId,
+            newPublicId,
+            removeImage,
         } = body as Record<string, unknown>;
 
         if (!_id) {
@@ -109,30 +97,36 @@ export async function PUT(req: NextRequest) {
 
         const updates: Record<string, unknown> = {};
 
-        if (typeof name === 'string')   updates.name   = name.trim();
-        if (typeof role === 'string')   updates.role   = role.trim();
+        if (typeof name === 'string') updates.name = name.trim();
+        if (typeof role === 'string') updates.role = role.trim();
         if (typeof review === 'string') updates.review = review.trim();
         if (typeof rating === 'number') updates.rating = rating;
-        if (typeof order === 'number')  updates.order  = order;
+        if (typeof order === 'number') updates.order = order;
 
-        // Upload new image first, then delete old one
-        if (typeof image === 'string' && image.startsWith('data:')) {
-            try {
-                const { url, publicId } = await uploadImage(image, 'testimonials');
-
-                if (typeof existingPublicId === 'string' && existingPublicId) {
-                    try {
-                        await deleteImage(existingPublicId);
-                    } catch (err) {
-                        console.error('[PUT /api/testimonials] Failed to delete old image:', err);
-                    }
+        // New image already uploaded to Cloudinary — just swap the URL
+        if (typeof image === 'string' && image.startsWith('https://res.cloudinary.com')) {
+            if (typeof existingPublicId === 'string' && existingPublicId) {
+                try {
+                    await deleteImage(existingPublicId);
+                } catch (err) {
+                    console.error('[PUT /api/testimonials] Failed to delete old image:', err);
                 }
-
-                updates.image = url;
-                updates.imagePublicId = publicId;
-            } catch (uploadErr) {
-                console.error('[PUT /api/testimonials] Image upload failed:', uploadErr);
             }
+            updates.image = image;
+            updates.imagePublicId = typeof newPublicId === 'string' ? newPublicId : '';
+        }
+
+        // Handle image removal
+        if (removeImage === true) {
+            if (typeof existingPublicId === 'string' && existingPublicId) {
+                try {
+                    await deleteImage(existingPublicId);
+                } catch (err) {
+                    console.error('[PUT /api/testimonials] Failed to delete image on removal:', err);
+                }
+            }
+            updates.image = '';
+            updates.imagePublicId = '';
         }
 
         const updated = await Testimonial.findByIdAndUpdate(

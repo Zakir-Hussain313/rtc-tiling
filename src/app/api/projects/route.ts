@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from 'lib/mongodb';
-import { uploadImage } from 'lib/cloudinary';
 import Project from 'models/Project';
 import { revalidatePath } from 'next/cache';
 
@@ -38,7 +37,7 @@ export async function POST(req: NextRequest) {
         }
 
         const {
-            title, description, images, type,
+            title, description, images, imagePublicIds, type,
             location, size, designStyle, client, date,
         } = body as Record<string, unknown>;
 
@@ -54,13 +53,14 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'A project with this title already exists' }, { status: 409 });
         }
 
-        // 1. Create project first with empty images
         const count = await Project.countDocuments();
+
+        // Images are already uploaded to Cloudinary — just save the URLs
         const project = await Project.create({
             title: trimmedTitle,
             description: typeof description === 'string' ? description.trim() : '',
-            images: [],
-            imagePublicIds: [],
+            images: Array.isArray(images) ? images : [],
+            imagePublicIds: Array.isArray(imagePublicIds) ? imagePublicIds : [],
             type: typeof type === 'string' ? type.trim() : '',
             location: typeof location === 'string' ? location.trim() : '',
             size: typeof size === 'string' ? size.trim() : '',
@@ -71,35 +71,8 @@ export async function POST(req: NextRequest) {
             order: count,
         });
 
-        // 2. Upload images after DB save
-        const imageUrls: string[] = [];
-        const imagePublicIds: string[] = [];
-
-        if (Array.isArray(images)) {
-            for (const img of images) {
-                if (typeof img === 'string' && img.startsWith('data:image/')) {
-                    try {
-                        const result = await uploadImage(img, 'rtc/projects');
-                        imageUrls.push(result.url);
-                        imagePublicIds.push(result.publicId);
-                    } catch (uploadErr) {
-                        console.error('[POST /api/projects] Image upload failed:', uploadErr);
-                    }
-                }
-            }
-        }
-
-        // 3. Update project with uploaded images
-        if (imageUrls.length > 0) {
-            await Project.findByIdAndUpdate(project._id, {
-                $set: { images: imageUrls, imagePublicIds },
-            });
-        }
-
-        const final = await Project.findById(project._id);
-
         revalidatePath('/', 'layout');
-        return NextResponse.json({ success: true, data: final }, { status: 201 });
+        return NextResponse.json({ success: true, data: project }, { status: 201 });
 
     } catch (error) {
         console.error('[POST /api/projects]', error);

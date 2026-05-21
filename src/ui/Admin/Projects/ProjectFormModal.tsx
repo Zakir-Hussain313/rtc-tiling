@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Project, generateSlug } from './ProjectsEditor';
 import '@/styles/Admin/Projects/ProjectFormModal.css';
 import Image from 'next/image';
+import { uploadToCloudinary } from 'lib/uploadToCloudinary';
 
 interface ProjectFormModalProps {
     project: Project | null;
@@ -20,7 +21,7 @@ type ExistingImage = {
 
 type NewImage = {
     preview: string;
-    base64: string;
+    file: File;
     name: string;
 };
 
@@ -78,16 +79,10 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
 
     function handleFiles(files: FileList) {
         Array.from(files).forEach((file) => {
-            if (!file.type.startsWith('image/')) return;
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                setNewImages((prev) => [
-                    ...prev,
-                    { preview: e.target?.result as string, base64: e.target?.result as string, name: file.name },
-                ]);
-            };
-            reader.readAsDataURL(file);
-        });
+            if (!file.type.startsWith('image/')) return
+            const preview = URL.createObjectURL(file)
+            setNewImages((prev) => [...prev, { preview, file, name: file.name }])
+        })
     }
 
     function toggleRemoveExisting(idx: number) {
@@ -116,26 +111,39 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
         setDateError(validateDate(value));
     }
 
-    function handleSubmit() {
-        if (!title.trim() || saving) return;
+    async function handleSubmit() {
+        if (!title.trim() || saving) return
 
-        const dateValidationError = validateDate(date);
+        const dateValidationError = validateDate(date)
         if (dateValidationError) {
-            setDateError(dateValidationError);
-            return;
+            setDateError(dateValidationError)
+            return
+        }
+
+        // Upload new images directly to Cloudinary from the browser
+        const uploadedImages: { url: string; publicId: string }[] = []
+        for (const img of newImages) {
+            try {
+                const result = await uploadToCloudinary(img.file)
+                uploadedImages.push(result)
+            } catch (err) {
+                console.error('[ProjectFormModal] Upload failed for:', img.name, err)
+                alert(`Failed to upload image: ${img.name}. Please try again.`)
+                return
+            }
         }
 
         const removedPublicIds = existingImages
             .filter((img) => img.toRemove)
-            .map((img) => img.publicId);
+            .map((img) => img.publicId)
 
         const keptImages = existingImages
             .filter((img) => !img.toRemove)
-            .map((img) => img.url);
+            .map((img) => img.url)
 
         const keptPublicIds = existingImages
             .filter((img) => !img.toRemove)
-            .map((img) => img.publicId);
+            .map((img) => img.publicId)
 
         onSave({
             title,
@@ -147,11 +155,10 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
             client,
             date,
             featured,
-            images: newImages.map((img) => img.base64),
-            imagePublicIds: keptPublicIds,
+            images: [...keptImages, ...uploadedImages.map((i) => i.url)],
+            imagePublicIds: [...keptPublicIds, ...uploadedImages.map((i) => i.publicId)],
             removedPublicIds,
-            keptImages,
-        } as any);
+        } as any)
     }
 
     const totalImages = existingImages.filter(i => !i.toRemove).length + newImages.length;
@@ -302,7 +309,7 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
                         </div>
                         <div className="modalField">
                             <label className="modalLabel" htmlFor="proj-location">Location</label>
-                            <input id="proj-location" type="text" className="modalInput" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="e.g. Dubai, UAE" />
+                            <input id="proj-location" type="text" className="modalInput" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="e.g. Parramatta , Bondi" />
                         </div>
                         <div className="modalField">
                             <label className="modalLabel" htmlFor="proj-size">Size</label>
@@ -336,7 +343,7 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
                     <button className="modalBtnGhost" onClick={onClose} disabled={saving}>Cancel</button>
                     <button
                         className="modalBtnPrimary"
-                        onClick={handleSubmit}
+                        onClick={() => { handleSubmit() }}
                         disabled={saving || !!dateError}
                     >
                         {saving ? 'Saving...' : project ? 'Save Changes' : 'Add Project'}

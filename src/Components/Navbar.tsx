@@ -179,7 +179,7 @@ function Navbar() {
           <span onClick={closeMenu}>
             <Mainbutton
               data={"Get a free Quote"}
-              href="/contact"
+              href="mailto:qoutes@rtctiling.info"
               hoverBubbleColor="#4d3d2d"
               fontSize="clamp(15px, 2vw, 20px)"
               padding="5px 5px 5px 20px"

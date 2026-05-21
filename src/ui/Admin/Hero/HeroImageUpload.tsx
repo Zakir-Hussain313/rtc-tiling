@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 interface HeroImageUploadProps {
     value: string | null;
-    onChange: (base64: string) => void;
+    onChange: (url: string, file: File) => void;
 }
 
 export default function HeroImageUpload({ value, onChange }: HeroImageUploadProps) {
@@ -17,9 +17,8 @@ export default function HeroImageUpload({ value, onChange }: HeroImageUploadProp
     function handleFile(file: File) {
         if (!file.type.startsWith('image/')) return;
         setFileName(file.name);
-        const reader = new FileReader();
-        reader.onload = (e) => onChange(e.target?.result as string);
-        reader.readAsDataURL(file);
+        const preview = URL.createObjectURL(file);
+        onChange(preview, file);
     }
 
     function handleDrop(e: React.DragEvent) {

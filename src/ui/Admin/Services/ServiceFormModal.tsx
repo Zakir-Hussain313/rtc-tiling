@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Service, generateServiceSlug } from './ServicesEditor';
 import '@/styles/Admin/Services/ServiceFormModal.css';
 import Image from 'next/image';
+import { uploadToCloudinary } from 'lib/uploadToCloudinary';
 
 interface ServiceFormModalProps {
     service: Service | null;
@@ -20,7 +21,7 @@ type ExistingImage = {
 
 type NewImage = {
     preview: string;
-    base64: string;
+    file: File;
     name: string;
 };
 
@@ -73,14 +74,8 @@ export default function ServiceFormModal({ service, onSave, onClose, saving }: S
     function handleFiles(files: FileList) {
         Array.from(files).forEach((file) => {
             if (!file.type.startsWith('image/')) return;
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                setNewImages((prev) => [
-                    ...prev,
-                    { preview: e.target?.result as string, base64: e.target?.result as string, name: file.name },
-                ]);
-            };
-            reader.readAsDataURL(file);
+            const preview = URL.createObjectURL(file);
+            setNewImages((prev) => [...prev, { preview, file, name: file.name }]);
         });
     }
 
@@ -94,8 +89,20 @@ export default function ServiceFormModal({ service, onSave, onClose, saving }: S
         setNewImages((prev) => prev.filter((_, i) => i !== idx));
     }
 
-    function handleSubmit() {
+    async function handleSubmit() {
         if (!title.trim() || saving) return;
+
+        const uploadedImages: { url: string; publicId: string }[] = [];
+        for (const img of newImages) {
+            try {
+                const result = await uploadToCloudinary(img.file, 'rtc/services');
+                uploadedImages.push(result);
+            } catch (err) {
+                console.error('[ServiceFormModal] Upload failed for:', img.name, err);
+                alert(`Failed to upload image: ${img.name}. Please try again.`);
+                return;
+            }
+        }
 
         const removedPublicIds = existingImages
             .filter((img) => img.toRemove)
@@ -118,10 +125,9 @@ export default function ServiceFormModal({ service, onSave, onClose, saving }: S
             maximumArea,
             finishStyle,
             suitableFor,
-            images: newImages.map((img) => img.base64),
-            imagePublicIds: keptPublicIds,
+            images: [...keptImages, ...uploadedImages.map((i) => i.url)],
+            imagePublicIds: [...keptPublicIds, ...uploadedImages.map((i) => i.publicId)],
             removedPublicIds,
-            keptImages,
         });
     }
 
@@ -265,7 +271,7 @@ export default function ServiceFormModal({ service, onSave, onClose, saving }: S
                         </div>
                         <div className="svcModalField">
                             <label className="svcModalLabel" htmlFor="svc-location">Location</label>
-                            <input id="svc-location" type="text" className="svcModalInput" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="e.g. Dubai, UAE" />
+                            <input id="svc-location" type="text" className="svcModalInput" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="e.g. Parramatta , Bondi" />
                         </div>
                         <div className="svcModalField">
                             <label className="svcModalLabel" htmlFor="svc-duration">Estimated Duration</label>
@@ -288,7 +294,7 @@ export default function ServiceFormModal({ service, onSave, onClose, saving }: S
 
                 <div className="svcModalFooter">
                     <button className="svcModalBtnGhost" onClick={onClose} disabled={saving}>Cancel</button>
-                    <button className="svcModalBtnPrimary" onClick={handleSubmit} disabled={saving}>
+                    <button className="svcModalBtnPrimary" onClick={() => { handleSubmit() }} disabled={saving}>
                         {saving ? 'Saving...' : service ? 'Save Changes' : 'Add Service'}
                     </button>
                 </div>

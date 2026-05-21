@@ -5,19 +5,24 @@ import HeroImageUpload from './HeroImageUpload';
 import HeroTextFields from './HeroTextFields';
 import HeroOverlay from './HeroOverlay';
 import '@/styles/Admin/Hero/HeroEditor.css';
+import { uploadToCloudinary } from 'lib/uploadToCloudinary';
 
 type HeroData = {
     backgroundImage: string | null;
+    backgroundImagePublicId: string | null;
     headline: string;
     subheading: string;
     overlayOpacity: number;
+    _file: File | null;
 };
 
 const defaults: HeroData = {
     backgroundImage: null,
+    backgroundImagePublicId: null,
     headline: '',
     subheading: '',
     overlayOpacity: 40,
+    _file: null,
 };
 
 export default function HeroEditor() {
@@ -38,9 +43,11 @@ export default function HeroEditor() {
 
                 const loaded: HeroData = {
                     backgroundImage: d?.backgroundImage ?? null,
+                    backgroundImagePublicId: d?.backgroundImagePublicId ?? null,
                     headline: d?.headline ?? '',
                     subheading: d?.subheading ?? '',
                     overlayOpacity: d?.overlayOpacity ?? 40,
+                    _file: null,
                 };
 
                 setData(loaded);
@@ -67,9 +74,11 @@ export default function HeroEditor() {
                 overlayOpacity: data.overlayOpacity,
             };
 
-            // Only send image if it's a new base64 upload
-            if (data.backgroundImage?.startsWith('data:image/')) {
-                payload.backgroundImage = data.backgroundImage;
+            // Upload new image directly to Cloudinary first
+            if (data._file) {
+                const { url, publicId } = await uploadToCloudinary(data._file, 'rtc/hero');
+                payload.backgroundImage = url;
+                payload.backgroundImagePublicId = publicId;
             }
 
             const res = await fetch('/api/hero', {
@@ -81,12 +90,13 @@ export default function HeroEditor() {
             if (!res.ok) throw new Error('Failed to save');
 
             const json = await res.json();
-            console.log('[HeroEditor] raw response:', json);
             const updated: HeroData = {
                 backgroundImage: json.data?.backgroundImage ?? null,
+                backgroundImagePublicId: json.data?.backgroundImagePublicId ?? null,
                 headline: json.data?.headline ?? '',
                 subheading: json.data?.subheading ?? '',
                 overlayOpacity: json.data?.overlayOpacity ?? 40,
+                _file: null,
             };
 
             setData(updated);
@@ -137,7 +147,7 @@ export default function HeroEditor() {
                     <div className="heroEditorLeft">
                         <HeroImageUpload
                             value={data.backgroundImage}
-                            onChange={(img) => setData((prev) => ({ ...prev, backgroundImage: img }))}
+                            onChange={(preview, file) => setData((prev) => ({ ...prev, backgroundImage: preview, _file: file }))}
                         />
                         <HeroOverlay
                             opacity={data.overlayOpacity}

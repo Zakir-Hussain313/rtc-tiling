@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '../../../../lib/mongodb';
-import { uploadImage, deleteImage } from '../../../../lib/cloudinary';
+import { deleteImage } from '../../../../lib/cloudinary';
 import About from '../../../../models/About';
 import { revalidatePath } from 'next/cache';
 
@@ -47,17 +47,15 @@ export async function PUT(req: NextRequest) {
         for (const item of images) {
             if (typeof item !== 'object' || item === null) continue;
 
-            const { id, image } = item as Record<string, unknown>;
+            const { id, image, publicId } = item as Record<string, unknown>;
 
             if (typeof id !== 'number') continue;
 
             const slotIndex = about.images.findIndex((s) => s.id === id);
             if (slotIndex === -1) continue;
 
-            if (typeof image === 'string' && image.startsWith('data:image/')) {
-                // Upload first, delete old after
-                const result = await uploadImage(image, 'rtc/about');
-
+            // Image already uploaded to Cloudinary — just swap the URL
+            if (typeof image === 'string' && image.startsWith('https://res.cloudinary.com')) {
                 if (about.images[slotIndex].publicId) {
                     try {
                         await deleteImage(about.images[slotIndex].publicId);
@@ -66,8 +64,8 @@ export async function PUT(req: NextRequest) {
                     }
                 }
 
-                about.images[slotIndex].url = result.url;
-                about.images[slotIndex].publicId = result.publicId;
+                about.images[slotIndex].url = image;
+                about.images[slotIndex].publicId = typeof publicId === 'string' ? publicId : '';
             }
         }
 

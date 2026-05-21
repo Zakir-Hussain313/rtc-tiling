@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from 'lib/mongodb';
-import { uploadImage, deleteImage } from 'lib/cloudinary';
+import { deleteImage } from 'lib/cloudinary';
 import Service from 'models/Service';
 import { revalidatePath } from 'next/cache';
 
@@ -28,7 +28,7 @@ export async function PUT(
             return NextResponse.json({ error: 'Service not found' }, { status: 404 });
 
         const {
-            title, description, images, removedPublicIds,
+            title, description, images, imagePublicIds, removedPublicIds,
             serviceType, location, estimatedDuration,
             maximumArea, finishStyle, suitableFor,
         } = body as Record<string, unknown>;
@@ -84,17 +84,18 @@ export async function PUT(
             }
         }
 
-        // Upload new images
         if (Array.isArray(images)) {
             for (const img of images) {
-                if (typeof img === 'string' && img.startsWith('data:image/')) {
-                    try {
-                        const result = await uploadImage(img, 'rtc/services');
-                        currentImages.push(result.url);
-                        currentPublicIds.push(result.publicId);
-                    } catch (uploadErr) {
-                        console.error('[PUT] Image upload failed:', uploadErr);
-                    }
+                if (typeof img === 'string' && img.startsWith('https://res.cloudinary.com')) {
+                    if (!currentImages.includes(img)) currentImages.push(img);
+                }
+            }
+        }
+
+        if (Array.isArray(imagePublicIds)) {
+            for (const pid of imagePublicIds) {
+                if (typeof pid === 'string' && !currentPublicIds.includes(pid)) {
+                    currentPublicIds.push(pid);
                 }
             }
         }
