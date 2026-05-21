@@ -218,6 +218,12 @@
     margin-top: 6px;
 }
 
+.contact-info-p {
+    font-family: var(--font-body);
+    font-size: 18px;
+    color: #777 !important;
+}
+
 .contact-info-link {
     display: flex;
     align-items: center;

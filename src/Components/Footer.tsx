@@ -39,8 +39,8 @@ const Footer = () => {
               </li>
               <li className='contactItem'>
                 <span className='contactLabel'>Phone:</span>
-                <a href="tel:0415254236" className='link'>
-                  0415 254 236
+                <a href="tel:0480205289" className='link'>
+                  0480 205 289
                 </a>
               </li>
               <li className='contactItem'>

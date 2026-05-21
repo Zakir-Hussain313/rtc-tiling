@@ -185,15 +185,26 @@ export default function ContactForm() {
                 <FadeIn as="div" className="contact-form-right" delay={300}>
                     <div className="contact-info-block">
                         <h3>Chat with us.</h3>
-                        <p>Speak to us via live chat.</p>
                         <div className="contact-info-links">
-                            <p className="contact-info-link">
-                                <FaTelegramPlane />
+                            <p className="contact-info-p">
                                 <span>Shoot us an Email</span>
-                            </p>
+                            </p> 
                             <Link href="mailto:info@rtctiling.com.au" className="contact-info-link">
                                 <FaTelegramPlane />
-                                <span>Shoot us an Email</span>
+                                <span>info@rtctiling.com.au</span>
+                            </Link>
+                            <Link href="mailto:support@rtctiling.com.au" className="contact-info-link">
+                                <FaTelegramPlane />
+                                <span>support@rtctiling.com.au</span>
+                            </Link><Link href="mailto:qoutes@rtctiling.com.au" className="contact-info-link">
+                                <FaTelegramPlane />
+                                <span>qoutes@rtctiling.com.au</span>
+                            </Link><Link href="mailto:accounts@rtctiling.com.au" className="contact-info-link">
+                                <FaTelegramPlane />
+                                <span>accounts@rtctiling.com.au</span>
+                            </Link><Link href="mailto:matt@rtctiling.com.au" className="contact-info-link">
+                                <FaTelegramPlane />
+                                <span>matt@rtctiling.com.au</span>
                             </Link>
                         </div>
                     </div>
