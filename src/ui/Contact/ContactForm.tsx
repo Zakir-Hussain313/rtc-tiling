@@ -189,22 +189,22 @@ export default function ContactForm() {
                             <p className="contact-info-p">
                                 <span>Shoot us an Email</span>
                             </p> 
-                            <Link href="mailto:info@rtctiling.com.au" className="contact-info-link">
+                            <Link href="mailto:info@rtcprojects.com.au" className="contact-info-link">
                                 <FaTelegramPlane />
-                                <span>info@rtctiling.com.au</span>
+                                <span>info@rtcprojects.com.au</span>
                             </Link>
-                            <Link href="mailto:support@rtctiling.com.au" className="contact-info-link">
+                            <Link href="mailto:support@rtcprojects.com.au" className="contact-info-link">
                                 <FaTelegramPlane />
-                                <span>support@rtctiling.com.au</span>
-                            </Link><Link href="mailto:qoutes@rtctiling.com.au" className="contact-info-link">
+                                <span>support@rtcprojects.com.au</span>
+                            </Link><Link href="mailto:qoutes@rtcprojects.com.au" className="contact-info-link">
                                 <FaTelegramPlane />
-                                <span>qoutes@rtctiling.com.au</span>
-                            </Link><Link href="mailto:accounts@rtctiling.com.au" className="contact-info-link">
+                                <span>qoutes@rtcprojects.com.au</span>
+                            </Link><Link href="mailto:accounts@rtcprojects.com.au" className="contact-info-link">
                                 <FaTelegramPlane />
-                                <span>accounts@rtctiling.com.au</span>
-                            </Link><Link href="mailto:matt@rtctiling.com.au" className="contact-info-link">
+                                <span>accounts@rtcprojects.com.au</span>
+                            </Link><Link href="mailto:matt@rtcprojects.com.au" className="contact-info-link">
                                 <FaTelegramPlane />
-                                <span>matt@rtctiling.com.au</span>
+                                <span>matt@rtcprojects.com.au</span>
                             </Link>
                         </div>
                     </div>

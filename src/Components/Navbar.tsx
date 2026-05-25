@@ -139,7 +139,7 @@ function Navbar() {
         <div className="nav-cta">
           <Mainbutton
             data={"Get a free Quote"}
-            href="mailto:qoutes@rtctiling.com.au"
+            href="mailto:qoutes@rtcprojects.com.au"
             hoverBubbleColor="#ffffff"
             border="2px solid transparent"
             fontSize="clamp(15px, 2vw, 20px)"
@@ -179,7 +179,7 @@ function Navbar() {
           <span onClick={closeMenu}>
             <Mainbutton
               data={"Get a free Quote"}
-              href="mailto:qoutes@rtctiling.com.au"
+              href="mailto:qoutes@rtcprojects.com.au"
               hoverBubbleColor="#4d3d2d"
               fontSize="clamp(15px, 2vw, 20px)"
               padding="5px 5px 5px 20px"

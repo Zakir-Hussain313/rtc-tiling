@@ -27,13 +27,11 @@ const Footer = () => {
           </div>
 
           <div className='column second-column'>
-            <h3 className='columnHeading'>Contact Info</h3>
-            <p className="contactLabel pb-3">GET IN TOUCH <br />
-              <span>Ready to start your next project? <br /> Contact us today.</span></p>
+            <h3 className='columnHeading'>Get in Touch</h3>
             <ul className='contactList'>
               <li className='contactItem'>
                 <span className='contactLabel'>Email Us:</span>
-                <a href="mailto:info@rtctiling.info" className='link'>
+                <a href="mailto:info@rtcprojects.info" className='link'>
                   info@rtcprojects.com.au
                 </a>
               </li>
@@ -45,7 +43,7 @@ const Footer = () => {
               </li>
               <li className='contactItem'>
                 <span className='contactLabel'>Address:</span>
-                <p className="address">38 Clyde Street, cabramatta</p>
+                <p className="address">NSW Wide</p>
               </li>
             </ul>
           </div>

@@ -2,11 +2,13 @@
 import Image from 'next/image'
 import '../styles/WhyChooseUs.css'
 import FadeIn from './FadeIn'
-import image1 from '../assets/images/Sydney region icon.png'
+import image1 from '../assets/images/NSW-wide.png'
 import image2 from '../assets/images/Supply and install icon.png'
 import image3 from '../assets/images/warranty icon.png'
-import image4 from '../assets/images/work on job icon.png'
-import image5 from '../assets/images/best price icon.png'
+import image4 from '../assets/images/all-project-sizes.png'
+import image5 from '../assets/images/Competitve-Pricing.png'
+import image6 from '../assets/images/Licensed-and-Insured.png'
+import image7 from '../assets/images/Residential,commercial-and-industrial.png'
 
 const chooseItems = [
     {
@@ -16,23 +18,33 @@ const chooseItems = [
     },
     {
         image: image2,
-        title: 'Supply & Install',
-        description: 'We supply and install Tiles / Waterproofing / Silicone'
+        title: 'Complete Supply & Install',
+        description: 'We Provide End-to-End Solutions For All Your Building & Renovation Needs'
     },
     {
         image: image3,
-        title: 'Warranty',
-        description: 'We provide 10 years worksmanship warranty'
+        title: 'CERTIFIED WARRANTY',
+        description: ' We Issue Workmanship Certificates With Warranty Coverage Up To 10 Years'
     },
     {
         image: image4,
-        title: 'Work on any job',
-        description: 'We work on small, as well as large jobs'
+        title: 'ALL PROJECT SIZES',
+        description: 'From Minor Repairs To Large-Scale Residential, Commercial & Industrial Projects'
     },
     {
         image: image5,
-        title: 'Best price',
-        description: 'Best price guarenteed'
+        title: 'COMPETITIVE PRICING',
+        description: 'Premium Workmanship At Fair & Transparent Rates'
+    },
+    {
+        image: image6,
+        title: 'LICENSED & INSURED',
+        description: 'Fully Licensed And Insured'
+    },
+    {
+        image: image7,
+        title: 'RESIDENTIAL COMMERCIAL INDUSTRIAL',
+        description: 'Specialised Solutions Across Every Sector'
     },
 ]
 
