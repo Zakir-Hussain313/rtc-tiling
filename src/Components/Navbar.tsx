@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { gsap } from "gsap";
-import rtc from "../assets/images/Rtc.png";
+import rtc from "../assets/images/rtc-new-logo.jpeg";
 import "../styles/Navbar.css";
 import Mainbutton from "./Mainbutton";
 import CrossIcon from "./CrossIcon";

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import '@/styles/Sidebar.css';
 import Image from 'next/image';
-import logo from '../assets/images/Rtc.png'
+import logo from '../assets/images/rtc-new-logo.jpeg'
 
 const navItems = [
     {

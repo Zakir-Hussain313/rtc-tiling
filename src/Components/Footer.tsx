@@ -4,7 +4,7 @@ import { IoLogoFacebook } from "react-icons/io5";
 import { FaInstagram } from "react-icons/fa";
 import { RiTwitterXFill } from "react-icons/ri";
 import Image from "next/image";
-import rtc from "../assets/images/Rtc.png";
+import rtc from "../assets/images/rtc-new-logo.jpeg";
 import pm from '../assets/images/pixel-manic-logo.png'
 
 const Footer = () => {
