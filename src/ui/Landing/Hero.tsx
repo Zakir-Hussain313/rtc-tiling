@@ -70,8 +70,8 @@ async function HeroSection() {
                         {headline}
                     </h1>
 
-                    <Link href="tel:0468264894" className="hero-button">
-                        Call now: 0415 456 215
+                    <Link href="tel:0480205289" className="hero-button">
+                        Call now: 0480 205 289
                     </Link>
 
                     <div className="hero-ratings">

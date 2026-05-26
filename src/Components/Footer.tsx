@@ -4,7 +4,7 @@ import { IoLogoFacebook } from "react-icons/io5";
 import { FaInstagram } from "react-icons/fa";
 import { RiTwitterXFill } from "react-icons/ri";
 import Image from "next/image";
-import rtc from "../assets/images/rtc-new-logo.jpeg";
+import rtc from "../assets/images/rtc-logo.png";
 import pm from '../assets/images/pixel-manic-logo.png'
 
 const Footer = () => {
@@ -76,7 +76,7 @@ const Footer = () => {
         <hr className='divider' />
 
         <div className='bottomBar'>
-          <p className='copyright'>rtctiling © 2026 All Rights Reserved.</p>
+          <p className='copyright'>rtcprojects © 2026 All Rights Reserved.</p>
           <Link href={"https://pixelmanic.dev/"} target="_blank" className='credit'>
             <span className='creditText'>Design &amp; Development</span>
             <Image

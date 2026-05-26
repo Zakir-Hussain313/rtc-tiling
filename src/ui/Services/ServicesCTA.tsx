@@ -10,7 +10,7 @@ export default function ServicesCTA() {
             <div className="ServicesCTA-button">
                 <Mainbutton
                     data="Call Now"
-                    href="tel:0468 264 894"
+                    href="tel:0480205289"
                     fontSize="clamp(15px, 2vw, 20px)"
                     padding="5px 5px 5px 20px"
                     arrowSize="clamp(38px, 4vw, 50px)"

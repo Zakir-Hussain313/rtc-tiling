@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import './login.css';
 import Image from 'next/image';
-import logo from '../../assets/images/rtc-new-logo.jpeg';
+import logo from '../../assets/images/rtc-logo.png';
 
 export default function LoginPage() {
     const router = useRouter();
