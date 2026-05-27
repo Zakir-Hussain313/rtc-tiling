@@ -104,13 +104,13 @@ export default function ContactForm() {
 
                     <div className="contact-form-group">
                         <label htmlFor="phone">
-                            Phone number<span className="required">*</span>
+                            Phone number
                         </label>
                         <input
                             id="phone"
                             name="phone"
                             type="tel"
-                            placeholder="0416 684 156"
+                            placeholder="0400 000 000"
                             value={fields.phone}
                             onChange={handleChange}
                             disabled={disabled}
@@ -187,7 +187,7 @@ export default function ContactForm() {
                         <h3>Chat with us.</h3>
                         <div className="contact-info-links">
                             <p className="contact-info-p">
-                                <span>Shoot us an Email</span>
+                                <span>Send us an Email</span>
                             </p> 
                             <Link href="mailto:info@rtcprojects.com.au" className="contact-info-link">
                                 <FaTelegramPlane />

@@ -44,8 +44,7 @@ export default async function Expertise() {
                 <section className="title-container">
                     <h1>OUR EXPERTISE</h1>
                     <p>
-                        Explore a curated range of interior design styles — from clean
-                        minimalism to bold luxury. Find the aesthetic that speaks to you.
+                        Transform your home with renovation styles that suit your taste — from modern simplicity to premium luxury finishes. Create a space that feels truly yours.
                     </p>
                 </section>
 

@@ -61,7 +61,7 @@ export default async function OurStory() {
                 <div className="second-section-child-2">
                     <h1>OUR STORY</h1>
                     <p>
-                        Built on generations of craftsmanship, RTC is a family owned business specialising in tiling, waterproofing, screeding, renovations, building extensions and maintenance services. With over 20 years of experience and over four decades of family industry expertise, we proudly service projects across NSW, delivering quality workmanship, reliability and lasting results for residential, commercial and industrial clients.
+                        Built on generations of craftsmanship, RTC is a family owned business specialising in tiling, waterproofing, screeding, renovations, building extensions and maintenance services. With over <span className="text-[#c4a473]">20 years of experience</span> and over four decades of family industry expertise, we proudly service projects across NSW, delivering quality workmanship, reliability and lasting results for residential, commercial and industrial clients.
                     </p>
                 </div>
             </FadeIn>

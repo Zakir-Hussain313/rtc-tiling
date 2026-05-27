@@ -2,6 +2,7 @@ import { jost, playfair } from 'lib/fonts';
 import './globals.css';
 import LayoutWrapper from '@/Components/LayoutWrapper';
 import type { Metadata } from 'next';
+import ScrollToTop from '@/Components/ScrollToTop';
 
 export const metadata: Metadata = {
   title: 'RTC Tiling — Precision Tile Installation',
@@ -26,6 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${jost.variable} ${playfair.variable}`}>
       <body className="min-h-full flex flex-col">
+        <ScrollToTop />
         <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>

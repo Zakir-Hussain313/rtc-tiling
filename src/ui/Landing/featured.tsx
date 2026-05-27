@@ -12,7 +12,7 @@ export default async function Featured() {
             <section className="featured-second-main-section">
                 <FadeIn as="section" className="title-section" delay={100}>
                     <h1>FEATURED</h1>
-                    <p>Crafted Surfaces, Captured Moments</p>
+                    <p>Crafted Spaces, Captured Moments</p>
                 </FadeIn>
                 <FeaturedGrid projects={projects} />
                 <FadeIn as="div" className="button-section" delay={200}>

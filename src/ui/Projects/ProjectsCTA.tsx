@@ -10,7 +10,7 @@ export default function ProjectsCTA() {
                     <h1>let&apos;s work together to transform your space</h1>
                 </FadeIn>
                 <FadeIn delay={150}>
-                    <p>Reach out today, and let&apos;s discuss your tiling project.</p>
+                    <p>Reach out today, and let&apos;s discuss project.</p>
                 </FadeIn>
                 <FadeIn className="projectsCTA-button" delay={300}>
                     <Mainbutton

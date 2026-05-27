@@ -7,7 +7,7 @@ export default function ContactCTA() {
         <div className="ContactCTA-wrapper">
             <FadeIn as={'section'} delay={100} className="ContactCTA-main-section">
                 <h1>Let&apos;s Explore Our Recent Projects</h1>
-                <p>See how our tiling work transforms real spaces.</p>
+                <p>See how our work transforms real spaces.</p>
                 <div className="ContactCTA-button">
                     <Mainbutton
                         data="View Our Projects"

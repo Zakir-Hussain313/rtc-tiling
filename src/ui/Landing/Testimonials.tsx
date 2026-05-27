@@ -26,7 +26,7 @@ const FALLBACK_REVIEWS: Review[] = [
         name: "Jane Smith",
         role: "Google Review",
         image: avatar.src,
-        review: "Professional, creative, and attentive. Highly recommend their tiling services.",
+        review: "Professional, creative, and attentive. Highly recommend their services.",
         rating: 5,
     },
     {

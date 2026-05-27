@@ -55,7 +55,7 @@
     border-radius: 50px;
     overflow: hidden;
     background: #f0f0f0;
-    margin: auto; /* keeps it centered */
+    margin: auto; 
 }
 
 .detail-img {
@@ -216,6 +216,7 @@
 
     .detail-img-wrap {
         aspect-ratio: 16 / 10;
+        width: 90%;
     }
 
     .detail-info {
@@ -253,6 +254,7 @@
 
     .detail-img-wrap {
         aspect-ratio: 4 / 3;
+        width: 90%;
     }
 
     .detail-title {
@@ -283,6 +285,7 @@
 
     .detail-img-wrap {
         aspect-ratio: 1 / 1;
+        width: 90%;
     }
 
     .detail-info {

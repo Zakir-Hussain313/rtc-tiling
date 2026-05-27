@@ -6,7 +6,7 @@ export default function ServicesCTA() {
     return (
         <FadeIn as="main" className="ServicesCTA-main-section" delay={100}>
             <h1>let&apos;s work together to transform your space</h1>
-            <p>Reach out today, and let&apos;s discuss your tiling project.</p>
+            <p>Reach out today, and let&apos;s discuss your project.</p>
             <div className="ServicesCTA-button">
                 <Mainbutton
                     data="Call Now"

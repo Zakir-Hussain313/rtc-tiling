@@ -13,8 +13,8 @@ import image7 from '../assets/images/Residential,commercial-and-industrial.png'
 const chooseItems = [
     {
         image: image1,
-        title: 'Sydney Region',
-        description: 'We service All the sydney region'
+        title: 'NSW WIDE SERVICE',
+        description: 'Servicing Residential, Commercial & Industrial Projects Across NSW'
     },
     {
         image: image2,

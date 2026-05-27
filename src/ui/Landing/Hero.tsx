@@ -75,7 +75,7 @@ async function HeroSection() {
                     </Link>
 
                     <div className="hero-ratings">
-                        <Link className="hero-left" target="_blank" href={'https://maps.app.goo.gl/Xie61E9UgD4N3KNM9?g_st=aw'}>
+                        <Link className="hero-left" target="_blank" href={'https://maps.app.goo.gl/G9GbPG4CrkNN9ZE19?g_st=aw'}>
                             <div className="hero-icon-wrap">
                                 <Image src={google} alt="Google" fill style={{ objectFit: 'contain' }} />
                             </div>

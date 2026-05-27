@@ -262,6 +262,10 @@
     .button-section {
         margin-top: 24px;
     }
+    
+    .featured-image-overlay {
+        opacity: 1;
+    }
 }
 
 @media (max-width: 540px) {
