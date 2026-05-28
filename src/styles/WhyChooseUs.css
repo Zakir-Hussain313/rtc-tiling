@@ -21,7 +21,7 @@
 }
 
 .choose-item {
-    width: 300px;
+    width: 330px;
     border-radius: 50px;
     border: 1px solid #555;
     display: flex;
@@ -91,7 +91,6 @@
 
     .choose-item {
         width: 100%;
-        max-width: 100%;
         border-radius: 24px;
     }
 }
