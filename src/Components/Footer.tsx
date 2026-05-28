@@ -38,10 +38,6 @@ const Footer = () => {
                   0480 205 289
                 </a>
               </li>
-              <li className='contactItem'>
-                <span className='contactLabel'>Address:</span>
-                <p className="address">NSW Wide</p>
-              </li>
             </ul>
           </div>
 
@@ -53,7 +49,7 @@ const Footer = () => {
               <Link href="https://www.facebook.com/share/1HZZjL6FTy/?mibextid=wwXIfr" target="_blank" className='socialLink' aria-label="Facebook">
                 <FaFacebook />
               </Link>
-              <Link href="#" className='socialLink' target="_blank" aria-label="Instagram">
+              <Link href="https://www.instagram.com/rtcprojectsau/" className='socialLink' target="_blank" aria-label="Instagram">
                 <FaInstagram />
               </Link>
             </div>

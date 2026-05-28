@@ -43,7 +43,7 @@ const chooseItems = [
     },
     {
         image: image7,
-        title: 'RESIDENTIAL COMMERCIAL INDUSTRIAL',
+        title: 'RESIDENTIAL,COMMERCIAL and INDUSTRIAL',
         description: 'Specialised Solutions Across Every Sector'
     },
 ]
