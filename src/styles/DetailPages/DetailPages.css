@@ -216,7 +216,7 @@
 
     .detail-img-wrap {
         aspect-ratio: 16 / 10;
-        width: 90%;
+        width: 100%;
     }
 
     .detail-info {
@@ -254,7 +254,7 @@
 
     .detail-img-wrap {
         aspect-ratio: 4 / 3;
-        width: 90%;
+        width: 100%;
     }
 
     .detail-title {
@@ -285,7 +285,7 @@
 
     .detail-img-wrap {
         aspect-ratio: 1 / 1;
-        width: 90%;
+        width: 100%;
     }
 
     .detail-info {
