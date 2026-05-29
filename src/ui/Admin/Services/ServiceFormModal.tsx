@@ -152,8 +152,8 @@ export default function ServiceFormModal({ service, onSave, onClose, saving }: S
                     {/* Images */}
                     <div className="svcModalField">
                         <label className="svcModalLabel">
-                            Service Images
-                            <span className="svcModalLabelCount">{totalImages} image{totalImages !== 1 ? 's' : ''}</span>
+                            Service Images |
+                            <span className="svcModalLabelCount"> {totalImages} image{totalImages !== 1 ? 's' : ''}</span>
                         </label>
 
                         {existingImages.length > 0 && (

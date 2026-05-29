@@ -120,7 +120,6 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
             return
         }
 
-        // Upload new images directly to Cloudinary from the browser
         const uploadedImages: { url: string; publicId: string }[] = []
         for (const img of newImages) {
             try {
@@ -182,8 +181,8 @@ export default function ProjectFormModal({ project, onSave, onClose, saving }: P
                     {/* Images */}
                     <div className="modalField">
                         <label className="modalLabel">
-                            Project Images
-                            <span className="modalLabelCount">{totalImages} image{totalImages !== 1 ? 's' : ''}</span>
+                            Project Images |
+                            <span className="modalLabelCount"> {totalImages} image{totalImages !== 1 ? 's' : ''}</span>
                         </label>
 
                         {/* Existing images */}

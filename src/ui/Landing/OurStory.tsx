@@ -174,10 +174,7 @@ Z
 
                     <FadeIn as="div" className="textCol" delay={200}>
                         <p className="body">
-                            SPECIALISING IN PROFESSIONAL{" "}
-                            <span className="highlight">TILING SOLUTIONS</span>, WE
-                            COMBINE SKILL, EXPERIENCE, AND PREMIUM MATERIALS TO CREATE CLEAN,
-                            DURABLE FINISHES YOU&apos;LL LOVE.
+                           As a family-owned business backed by more than <span className="text-[#c4a473]">four decades</span> of industry expertise, RTC combines craftsmanship, reliability and professional service on every project.
                         </p>
                         <Mainbutton
                             data="About Us"

@@ -4,7 +4,7 @@ import { useState, useRef } from 'react'
 import emailjs from '@emailjs/browser'
 import '../../styles/Contact/ContactForm.css'
 import Mainbutton from '@/Components/Mainbutton'
-import { FaTelegramPlane, FaInstagram, FaPhone } from 'react-icons/fa'
+import { FaTelegramPlane,  FaPhone } from 'react-icons/fa'
 import Link from 'next/link'
 import FadeIn from '@/Components/FadeIn'
 
@@ -54,8 +54,6 @@ export default function ContactForm() {
     return (
         <main className="contact-form-main">
             <FadeIn as="section" className="contact-form-wrapper" delay={100}>
-
-                {/* ── Left: Form ── */}
                 <form className="contact-form-left" ref={formRef} noValidate>
 
                     <div className="contact-form-row">
