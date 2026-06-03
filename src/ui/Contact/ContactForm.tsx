@@ -4,7 +4,7 @@ import { useState, useRef } from 'react'
 import emailjs from '@emailjs/browser'
 import '../../styles/Contact/ContactForm.css'
 import Mainbutton from '@/Components/Mainbutton'
-import { FaTelegramPlane,  FaPhone } from 'react-icons/fa'
+import { FaTelegramPlane, FaPhone } from 'react-icons/fa'
 import Link from 'next/link'
 import FadeIn from '@/Components/FadeIn'
 
@@ -32,24 +32,42 @@ export default function ContactForm() {
     }
 
     const handleSubmit = async () => {
-        if (disabled) return
-        if (!fields.firstName || !fields.email || !fields.phone) return
+    if (disabled) return
+    if (!fields.firstName || !fields.email || !fields.phone) return
 
-        setStatus('sending')
+    // 🔍 ADD THIS BLOCK TEMPORARILY
+    console.log('ENV CHECK:', {
+        serviceId: EMAILJS_SERVICE_ID,
+        templateId: EMAILJS_TEMPLATE_ID,
+        publicKey: EMAILJS_PUBLIC_KEY,
+    })
 
-        try {
-            await emailjs.sendForm(
-                EMAILJS_SERVICE_ID,
-                EMAILJS_TEMPLATE_ID,
-                formRef.current!,
-                EMAILJS_PUBLIC_KEY
-            )
-            setStatus('success')
-        } catch (err) {
-            console.error('[ContactForm] EmailJS error:', err)
-            setStatus('error')
-        }
+    setStatus('sending')
+
+    try {
+        await emailjs.send(
+            EMAILJS_SERVICE_ID,
+            EMAILJS_TEMPLATE_ID,
+            {
+                firstName: fields.firstName,
+                lastName: fields.lastName,
+                email: fields.email,
+                phone: fields.phone,
+                message: fields.message,
+            },
+            EMAILJS_PUBLIC_KEY
+        )
+        setStatus('success')
+    } catch (err: unknown) {
+        const ejsErr = err as Record<string, unknown>
+        console.error('[ContactForm] EmailJS error details:', 
+            JSON.stringify(ejsErr),           // force-serialize the object
+            'status:', ejsErr?.status,
+            'text:', ejsErr?.text,
+        )
+        setStatus('error')
     }
+}
 
     return (
         <main className="contact-form-main">
@@ -186,7 +204,7 @@ export default function ContactForm() {
                         <div className="contact-info-links">
                             <p className="contact-info-p">
                                 <span>Send us an Email</span>
-                            </p> 
+                            </p>
                             <Link href="mailto:info@rtcprojects.com.au" className="contact-info-link">
                                 <FaTelegramPlane />
                                 <span>info@rtcprojects.com.au</span>
