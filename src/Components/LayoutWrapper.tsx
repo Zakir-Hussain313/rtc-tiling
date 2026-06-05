@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import Navbar from '@/Components/Navbar';
 import Footer from '@/Components/Footer';
 import { usePathname } from 'next/navigation';
-import { refreshScroll } from 'lib/gsap';
+import { refreshScroll } from '../../lib/gsap';
 
 export default function LayoutWrapper({
   children,

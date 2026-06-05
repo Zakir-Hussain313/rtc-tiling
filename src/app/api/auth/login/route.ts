@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import { buildCookieHeader, signToken } from 'lib/auth';
-import { connectDB } from 'lib/mongodb';
-import Admin from 'models/Admin';
+import { connectDB } from '../../../../../lib/mongodb';
+import Admin from '../../../../../models/Admin';
+import { buildCookieHeader, signToken } from '../../../../../lib/auth';
 
 const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
 const MAX_ATTEMPTS = 5;

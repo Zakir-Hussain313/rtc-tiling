@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { optimizeCloudinaryUrl } from 'lib/cloudinaryUtils'
 import MarqueeTrack from '@/Components/MarqueeTrack' // adjust path if needed
+import { optimizeCloudinaryUrl } from '../../../lib/cloudinaryUtils'
 
 type Review = {
     name: string

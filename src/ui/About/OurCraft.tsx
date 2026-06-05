@@ -5,9 +5,9 @@ import Mainbutton from "@/Components/Mainbutton"
 import { GiTrowel } from "react-icons/gi"
 import { FaTools } from "react-icons/fa"
 import { MdVerified } from "react-icons/md"
-import { getAboutImages } from 'lib/getAboutImages';
 import FadeIn from "@/Components/FadeIn"
-import { optimizeCloudinaryUrl } from "lib/cloudinaryUtils"
+import { getAboutImages } from "../../../lib/getAboutImages"
+import { optimizeCloudinaryUrl } from "../../../lib/cloudinaryUtils"
 
 const features = [
     {
@@ -18,7 +18,7 @@ const features = [
     {
         icon: <FaTools />,
         title: "Complete Project Solutions",
-        desc: "Specialising in tiling, waterproofing, screeding, renovations, maintenance, and building extensions for residential, commercial, and industrial projects across NSW.",
+        desc: "Specialising in , waterproofing, screeding, renovations, maintenance, and building extensions for residential, commercial, and industrial projects across NSW.",
     },
     {
         icon: <MdVerified />,
@@ -53,7 +53,7 @@ export default async function OurCraft() {
                                 ? optimizeCloudinaryUrl(craftImageUrl, 800)
                                 : fallbackImage
                         }
-                        alt="RTC Tiling craftsmanship"
+                        alt="RTC Projects craftsmanship"
                         fill
                         className="object-cover"
                         sizes="(max-width: 768px) 100vw, 50vw"

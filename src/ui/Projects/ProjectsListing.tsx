@@ -3,11 +3,11 @@ import '../../styles/Projects/ProjectsListing.css'
 import arrow from "../../assets/icons/Arrow.svg"
 import fallbackImage from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
 import Link from 'next/link'
-import { connectDB } from 'lib/mongodb'
-import Project from 'models/Project'
 import FadeIn from '@/Components/FadeIn'
 import { unstable_cache } from 'next/cache'
-import { optimizeCloudinaryUrl } from 'lib/cloudinaryUtils'
+import { optimizeCloudinaryUrl } from '../../../lib/cloudinaryUtils'
+import { connectDB } from '../../../lib/mongodb'
+import Project from '../../../models/Project'
 
 type ProjectDoc = {
     _id: string
@@ -87,7 +87,7 @@ export default async function ProjectsListing() {
                     </FadeIn>
                 ))}
                 {projects.length === 0 && (
-                    <p style={{ padding: '2rem', opacity: 0.5 }}>No projects available yet.</p>
+                    <p style={{ padding: '2rem', opacity: 0.5 }}>No projects available yet. Try reloading the page.</p>
                 )}
             </section>
         </section>

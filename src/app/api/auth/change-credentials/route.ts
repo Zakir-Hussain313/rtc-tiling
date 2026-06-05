@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import { connectDB } from 'lib/mongodb';
-import Admin from 'models/Admin';
-import { verifyToken } from 'lib/auth';
+import { verifyToken } from '../../../../../lib/auth';
+import { connectDB } from '../../../../../lib/mongodb';
+import Admin from '../../../../../models/Admin';
 
 export async function POST(req: NextRequest) {
     try {

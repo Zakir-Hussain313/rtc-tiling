@@ -2,7 +2,7 @@ import Link from "next/link";
 import '../../styles/Services/PageIntro.css'
 import CountUp from "@/Components/CountUp";
 import FadeIn from "@/Components/FadeIn";
-import { getStats } from "lib/getStats";
+import { getStats } from "../../../lib/getStats";
 
 export default async function ServicesPageIntro() {
     const stats = await getStats()

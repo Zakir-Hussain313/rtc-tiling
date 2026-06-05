@@ -1,21 +1,22 @@
-import { jost, playfair } from 'lib/fonts';
+
 import './globals.css';
 import LayoutWrapper from '@/Components/LayoutWrapper';
 import type { Metadata } from 'next';
 import ScrollToTop from '@/Components/ScrollToTop';
+import { jost, playfair } from '../../lib/fonts';
 
 export const metadata: Metadata = {
-  title: 'RTC Tiling — Precision Tile Installation',
-  description: 'RTC Tiling delivers premium tile installations for homes and businesses. Kitchens, bathrooms, floors, pools and more. Get a free quote today.',
-  metadataBase: new URL('https://rtc-tiling.vercel.app'),
+  title: 'RTC Projects — Precision Tile Installation',
+  description: 'RTC Projects delivers premium tile installations for homes and businesses. Kitchens, bathrooms, floors, pools and more. Get a free quote today.',
+  metadataBase: new URL('https://rtc-Projects.vercel.app'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: 'RTC Tiling — Precision Tile Installation',
+    title: 'RTC Projects — Precision Tile Installation',
     description: 'Premium tile installations for homes and businesses.',
-    url: 'https://rtc-tiling.vercel.app',
-    siteName: 'RTC Tiling',
+    url: 'https://rtc-Projects.vercel.app',
+    siteName: 'RTC Projects',
     type: 'website',
   },
 };

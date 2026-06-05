@@ -3,11 +3,11 @@ import '../../styles/About/AboutOurStory.css'
 import Image from "next/image";
 import NumBox from "@/Components/NumBox";
 import fallbackImage from '../../assets/images/Hero-background.webp'
-import { getAboutImages } from 'lib/getAboutImages';
+import { getAboutImages } from '../../../lib/getAboutImages';
 import CountUp from "@/Components/CountUp";
 import FadeIn from "@/Components/FadeIn";
-import { optimizeCloudinaryUrl } from 'lib/cloudinaryUtils';
-import { getStats } from "lib/getStats";
+import { getStats } from "../../../lib/getStats";
+import { optimizeCloudinaryUrl } from "../../../lib/cloudinaryUtils";
 
 export default async function OurStory() {
     const [images, stats] = await Promise.all([
@@ -40,7 +40,7 @@ export default async function OurStory() {
                     <div className="second-section-image-box">
                         <Image
                             src={image1Url ? optimizeCloudinaryUrl(image1Url, 800) : fallbackImage}
-                            alt="RTC Tiling — our story image 1"
+                            alt="RTC Projects — our story image 1"
                             fill
                             className="img"
                             sizes="(max-width: 768px) 100vw, 50vw"
@@ -50,7 +50,7 @@ export default async function OurStory() {
                     <div className="second-section-image-box second-image-box">
                         <Image
                             src={image2Url ? optimizeCloudinaryUrl(image2Url, 800) : fallbackImage}
-                            alt="RTC Tiling — our story image 2"
+                            alt="RTC Projects — our story image 2"
                             fill
                             className="img"
                             sizes="(max-width: 768px) 100vw, 50vw"

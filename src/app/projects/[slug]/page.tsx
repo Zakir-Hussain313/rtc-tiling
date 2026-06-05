@@ -1,12 +1,12 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { connectDB } from 'lib/mongodb'
-import Project from 'models/Project'
 import ProjectHeroImage from '@/Components/ProjectHeroImage'
 import '../../../styles/DetailPages/DetailPages.css'
 import ServicesCTA from '@/ui/Services/ServicesCTA'
 import { unstable_cache } from 'next/cache'
 import ProjectsGrid from '@/Components/ProjectsGrid'
+import { connectDB } from '../../../../lib/mongodb'
+import Project from '../../../../models/Project'
 
 type ProjectDetail = {
     _id: string
@@ -70,7 +70,7 @@ export async function generateMetadata({ params }: Props) {
     const project = await getProjectBySlug(slug)
     if (!project) return {}
     return {
-        title: `${project.title} | RTC Tiling & Waterproofing`,
+        title: `${project.title} | RTC Projects & Waterproofing`,
         description: project.description || `Details about ${project.title}`,
         openGraph: {
             title: project.title,

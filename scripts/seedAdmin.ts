@@ -3,7 +3,7 @@ import { loadEnvConfig } from '@next/env'
 loadEnvConfig(process.cwd())
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
-import { connectDB } from 'lib/mongodb';
+import { connectDB } from '../lib/mongodb';
 
 const USERNAME = 'admin13579';
 const PASSWORD = 'admin13579';

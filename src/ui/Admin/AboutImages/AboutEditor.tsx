@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import '@/styles/Admin/AboutImages/AboutEditor.css';
 import Image from 'next/image';
-import { uploadToCloudinary } from 'lib/uploadToCloudinary';
+import { uploadToCloudinary } from '../../../../lib/uploadToCloudinary';
 
 type ImageSlot = {
     id: number;

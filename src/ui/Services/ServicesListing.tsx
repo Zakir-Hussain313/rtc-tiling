@@ -3,11 +3,11 @@ import '../../styles/Services/ServicesListing.css'
 import arrow from "../../assets/icons/Arrow.svg"
 import fallbackImage from '../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg'
 import Link from 'next/link'
-import { connectDB } from 'lib/mongodb'
-import Service from 'models/Service'
 import FadeIn from '@/Components/FadeIn'
-import { optimizeCloudinaryUrl } from 'lib/cloudinaryUtils'
 import { unstable_cache } from 'next/cache'
+import { connectDB } from '../../../lib/mongodb'
+import Service from '../../../models/Service'
+import { optimizeCloudinaryUrl } from '../../../lib/cloudinaryUtils'
 
 type ServiceDoc = {
     _id: string
@@ -79,7 +79,7 @@ export default async function ServicesListing() {
                 ))}
 
                 {services.length === 0 && (
-                    <p style={{ padding: '2rem', opacity: 0.5 }}>No services available yet.</p>
+                    <p style={{ padding: '2rem', opacity: 0.5 }}>No services available yet. Try reloading the page.</p>
                 )}
             </section>
         </main>

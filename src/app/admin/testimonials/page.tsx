@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import './testimonials.css';
-import { uploadToCloudinary } from 'lib/uploadToCloudinary';
+import { uploadToCloudinary } from '../../../../lib/uploadToCloudinary';
 
 type Testimonial = {
     _id: string;

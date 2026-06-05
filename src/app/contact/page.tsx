@@ -4,24 +4,24 @@ import Contact from "@/ui/Contact/Contact";
 export async function generateMetadata(): Promise<Metadata> {
     try {
         return {
-            title: "Contact Us | RTC Tiling — Get in Touch",
-            description: "Get in touch with RTC Tiling for a free consultation. We specialise in precision tile installation for homes and businesses across the area.",
-            keywords: ["contact", "RTC Tiling", "tile installation", "free consultation", "tiling quote"],
+            title: "Contact Us | RTC Projects — Get in Touch",
+            description: "Get in touch with RTC Projects for a free consultation. We specialise in precision tile installation for homes and businesses across the area.",
+            keywords: ["contact", "RTC Projects", "tile installation", "free consultation", "Projects quote"],
             robots: {
                 index: true,
                 follow: true,
             },
             openGraph: {
-                title: "Contact Us | RTC Tiling",
-                description: "Reach out to RTC Tiling today for a free quote on your next tiling project.",
+                title: "Contact Us | RTC Projects",
+                description: "Reach out to RTC Projects today for a free quote on your next Projects project.",
                 url: `${process.env.NEXT_PUBLIC_APP_URL}/contact`,
-                siteName: "RTC Tiling",
+                siteName: "RTC Projects",
                 type: "website",
             },
             twitter: {
                 card: "summary_large_image",
-                title: "Contact Us | RTC Tiling",
-                description: "Reach out to RTC Tiling today for a free quote on your next tiling project.",
+                title: "Contact Us | RTC Projects",
+                description: "Reach out to RTC Projects today for a free quote on your next Projects project.",
             },
             alternates: {
                 canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/contact`,
@@ -29,8 +29,8 @@ export async function generateMetadata(): Promise<Metadata> {
         };
     } catch {
         return {
-            title: "Contact Us | RTC Tiling — Get in Touch",
-            description: "Get in touch with RTC Tiling for a free consultation.",
+            title: "Contact Us | RTC Projects — Get in Touch",
+            description: "Get in touch with RTC Projects for a free consultation.",
         };
     }
 }

@@ -3,24 +3,24 @@ import type { Metadata } from "next";
 export async function generateMetadata(): Promise<Metadata> {
     try {
         return {
-            title: "Admin | RTC Tiling — Dashboard",
-            description: "Admin dashboard for managing RTC Tiling website content.",
-            keywords: ["admin", "dashboard", "RTC Tiling"],
+            title: "Admin | RTC Projects — Dashboard",
+            description: "Admin dashboard for managing RTC Projects website content.",
+            keywords: ["admin", "dashboard", "RTC Projects"],
             robots: {
                 index: false,
                 follow: false,
             },
             openGraph: {
-                title: "Admin | RTC Tiling",
-                description: "Admin dashboard for managing RTC Tiling website content.",
+                title: "Admin | RTC Projects",
+                description: "Admin dashboard for managing RTC Projects website content.",
                 url: `${process.env.NEXT_PUBLIC_APP_URL}/admin`,
-                siteName: "RTC Tiling",
+                siteName: "RTC Projects",
                 type: "website",
             },
             twitter: {
                 card: "summary_large_image",
-                title: "Admin | RTC Tiling",
-                description: "Admin dashboard for managing RTC Tiling website content.",
+                title: "Admin | RTC Projects",
+                description: "Admin dashboard for managing RTC Projects website content.",
             },
             alternates: {
                 canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/admin`,
@@ -28,8 +28,8 @@ export async function generateMetadata(): Promise<Metadata> {
         };
     } catch {
         return {
-            title: "Admin | RTC Tiling",
-            description: "Admin dashboard for managing RTC Tiling website content.",
+            title: "Admin | RTC Projects",
+            description: "Admin dashboard for managing RTC Projects website content.",
         };
     }
 }

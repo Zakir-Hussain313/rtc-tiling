@@ -4,24 +4,24 @@ import StatsEditor from '@/ui/Admin/Stats/StatsEditor';
 export async function generateMetadata(): Promise<Metadata> {
     try {
         return {
-            title: "Stats Editor | RTC Tiling — Admin",
-            description: "Edit and manage the Stats section content for RTC Tiling website.",
-            keywords: ["admin", "stats editor", "RTC Tiling"],
+            title: "Stats Editor | RTC Projects — Admin",
+            description: "Edit and manage the Stats section content for RTC Projects website.",
+            keywords: ["admin", "stats editor", "RTC Projects"],
             robots: {
                 index: false,
                 follow: false,
             },
             openGraph: {
-                title: "Stats Editor | RTC Tiling",
-                description: "Edit and manage the Stats section content for RTC Tiling website.",
+                title: "Stats Editor | RTC Projects",
+                description: "Edit and manage the Stats section content for RTC Projects website.",
                 url: `${process.env.NEXT_PUBLIC_APP_URL}/admin/stats`,
-                siteName: "RTC Tiling",
+                siteName: "RTC Projects",
                 type: "website",
             },
             twitter: {
                 card: "summary_large_image",
-                title: "Stats Editor | RTC Tiling",
-                description: "Edit and manage the Stats section content for RTC Tiling website.",
+                title: "Stats Editor | RTC Projects",
+                description: "Edit and manage the Stats section content for RTC Projects website.",
             },
             alternates: {
                 canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/admin/stats`,
@@ -29,8 +29,8 @@ export async function generateMetadata(): Promise<Metadata> {
         };
     } catch {
         return {
-            title: "Stats Editor | RTC Tiling — Admin",
-            description: "Edit and manage the Stats section content for RTC Tiling website.",
+            title: "Stats Editor | RTC Projects — Admin",
+            description: "Edit and manage the Stats section content for RTC Projects website.",
         };
     }
 }

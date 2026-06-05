@@ -28,7 +28,7 @@ const Footer = () => {
             <ul className='contactList'>
               <li className='contactItem'>
                 <span className='contactLabel'>Email Us:</span>
-                <a href="mailto:info@rtcprojects.info" className='link'>
+                <a href="mailto:info@rtcprojects.com.au" className='link'>
                   info@rtcprojects.com.au
                 </a>
               </li>
@@ -57,7 +57,7 @@ const Footer = () => {
             <div className='footer-logo'>
               <Image
                 src={rtc}
-                alt="RTC Tiling & Waterproofing"
+                alt="RTC Projects & Waterproofing"
                 width={250}
                 height={180}
                 style={{ width: '100%', height: 'auto' }}

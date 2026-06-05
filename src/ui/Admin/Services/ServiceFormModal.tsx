@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Service, generateServiceSlug } from './ServicesEditor';
 import '@/styles/Admin/Services/ServiceFormModal.css';
 import Image from 'next/image';
-import { uploadToCloudinary } from 'lib/uploadToCloudinary';
+import { uploadToCloudinary } from '../../../../lib/uploadToCloudinary';
 
 interface ServiceFormModalProps {
     service: Service | null;

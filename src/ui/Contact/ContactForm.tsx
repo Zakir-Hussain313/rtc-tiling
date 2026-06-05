@@ -35,13 +35,6 @@ export default function ContactForm() {
     if (disabled) return
     if (!fields.firstName || !fields.email || !fields.phone) return
 
-    // 🔍 ADD THIS BLOCK TEMPORARILY
-    console.log('ENV CHECK:', {
-        serviceId: EMAILJS_SERVICE_ID,
-        templateId: EMAILJS_TEMPLATE_ID,
-        publicKey: EMAILJS_PUBLIC_KEY,
-    })
-
     setStatus('sending')
 
     try {
@@ -61,7 +54,7 @@ export default function ContactForm() {
     } catch (err: unknown) {
         const ejsErr = err as Record<string, unknown>
         console.error('[ContactForm] EmailJS error details:', 
-            JSON.stringify(ejsErr),           // force-serialize the object
+            JSON.stringify(ejsErr),
             'status:', ejsErr?.status,
             'text:', ejsErr?.text,
         )

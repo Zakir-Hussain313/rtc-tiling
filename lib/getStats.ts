@@ -1,5 +1,5 @@
+import Stats from '../models/Stats'
 import { connectDB } from './mongodb'
-import Stats from 'models/Stats'
 import { unstable_cache } from 'next/cache'
 
 export type StatItem = {

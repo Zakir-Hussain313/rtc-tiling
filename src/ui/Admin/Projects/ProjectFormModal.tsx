@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Project, generateSlug } from './ProjectsEditor';
 import '@/styles/Admin/Projects/ProjectFormModal.css';
 import Image from 'next/image';
-import { uploadToCloudinary } from 'lib/uploadToCloudinary';
+import { uploadToCloudinary } from '../../../../lib/uploadToCloudinary';
 
 interface ProjectFormModalProps {
     project: Project | null;

@@ -5,7 +5,7 @@ import HeroImageUpload from './HeroImageUpload';
 import HeroTextFields from './HeroTextFields';
 import HeroOverlay from './HeroOverlay';
 import '@/styles/Admin/Hero/HeroEditor.css';
-import { uploadToCloudinary } from 'lib/uploadToCloudinary';
+import { uploadToCloudinary } from '../../../../lib/uploadToCloudinary';
 
 type HeroData = {
     backgroundImage: string | null;

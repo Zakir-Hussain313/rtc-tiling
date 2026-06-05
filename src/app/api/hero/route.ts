@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { connectDB } from 'lib/mongodb';
-import { deleteImage } from 'lib/cloudinary';
-import Hero from 'models/Hero';
 import { revalidatePath } from 'next/cache';
+import { connectDB } from '../../../../lib/mongodb';
+import Hero from '../../../../models/Hero';
+import { deleteImage } from '../../../../lib/cloudinary';
 
 export async function GET() {
     try {

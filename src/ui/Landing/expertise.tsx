@@ -5,11 +5,11 @@ import Link from "next/link";
 import "../../styles/Landing/expertise.css";
 import fallbackImage from '../../assets/images/Airport-crossville-copy.jpg.jpeg';
 import Mainbutton from "@/Components/Mainbutton";
-import { connectDB } from "lib/mongodb";
-import Service from "models/Service";
 import { unstable_cache } from 'next/cache';
-import { optimizeCloudinaryUrl } from "lib/cloudinaryUtils";
 import MarqueeTrack from "@/Components/MarqueeTrack"; // ← adjust path to wherever you place it
+import { connectDB } from "../../../lib/mongodb";
+import Service from "../../../models/Service";
+import { optimizeCloudinaryUrl } from "../../../lib/cloudinaryUtils";
 
 type ServiceDoc = {
     _id: string;

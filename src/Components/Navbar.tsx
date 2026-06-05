@@ -103,7 +103,7 @@ function Navbar() {
     <header className="navbar">
       <div className="navbar-inner">
         <Link href={"/"} className="logo" onClick={closeMenu}>
-          <Image src={rtc} alt="RTC tiling" />
+          <Image src={rtc} alt="RTC Projects" />
         </Link>
 
         <nav
@@ -162,7 +162,7 @@ function Navbar() {
 
       <div className={`menu ${isOpen ? "" : "closed"}`}>
         <Link href={"/"} className="menu-logo" onClick={closeMenu}>
-          <Image src={rtc} alt="RTC tiling" />
+          <Image src={rtc} alt="RTC Projects" />
         </Link>
 
         <div className="menu-links">

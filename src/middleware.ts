@@ -1,5 +1,6 @@
-import { getTokenFromCookies, verifyToken } from "lib/auth";
+
 import { NextRequest, NextResponse } from "next/server";
+import { getTokenFromCookies, verifyToken } from "../lib/auth";
 
 export const config = {
     matcher: [

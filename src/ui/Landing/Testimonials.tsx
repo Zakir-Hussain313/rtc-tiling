@@ -2,9 +2,9 @@ import "../../styles/Landing/Testimonials.css"
 import TestimonialsTrack from "./TestimonialStrack"
 import avatar from "../../assets/images/porcelain-floor-tiles-copy.jpg.jpeg"
 import FadeIn from "@/Components/FadeIn"
-import { connectDB } from 'lib/mongodb'
-import Testimonial from 'models/Testimonial'
 import { unstable_cache } from "next/cache"
+import { connectDB } from "../../../lib/mongodb"
+import Testimonial from "../../../models/Testimonial"
 
 type Review = {
     name: string

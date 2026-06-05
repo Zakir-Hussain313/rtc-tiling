@@ -1,12 +1,12 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { connectDB } from 'lib/mongodb';
-import Service from 'models/Service';
 import '../../../styles/DetailPages/DetailPages.css';
 import ServicesCTA from '@/ui/Services/ServicesCTA';
 import StoryImageCycler from '@/ui/Landing/StoryImageCycler';
 import { unstable_cache } from 'next/cache'
 import ServicesGrid from '@/Components/ServicesGrid';
+import { connectDB } from '../../../../lib/mongodb';
+import Service from '../../../../models/Service';
 
 type Props = {
     params: Promise<{ slug: string }>;
@@ -81,7 +81,7 @@ export async function generateMetadata({ params }: Props) {
     if (!service) return { title: 'Service Not Found' };
 
     return {
-        title: `${service.title} | RTC Tiling & Waterproofing`,
+        title: `${service.title} | RTC Projects & Waterproofing`,
         description: service.description || `Learn more about our ${service.title} service.`,
         openGraph: {
             title: service.title,

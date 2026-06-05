@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import '../styles/NumBox.css'
-import type { StatItem } from 'lib/getStats'
+import { StatItem } from '../../lib/getStats'
 
 export default function NumBox({ stats }: { stats: StatItem[] }) {
     const [counts, setCounts] = useState<number[]>(stats.map(() => 0))

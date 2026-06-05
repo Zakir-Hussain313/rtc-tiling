@@ -1,5 +1,5 @@
+import Project from '../models/Project'
 import { connectDB } from './mongodb'
-import Project from 'models/Project'
 import { unstable_cache } from 'next/cache'
 
 export type FeaturedProject = {

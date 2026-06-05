@@ -6,11 +6,11 @@ import facebook from "../../assets/images/Facebook.webp";
 import instagram from '../../assets/images/instagram.jpg';
 import star from "../../assets/icons/star.svg";
 import Link from "next/link";
-import { connectDB } from "lib/mongodb";
-import Hero from "models/Hero";
 import FadeIn from "@/Components/FadeIn";
 import { unstable_cache } from 'next/cache';
-import { optimizeCloudinaryUrl } from "lib/cloudinaryUtils";
+import { optimizeCloudinaryUrl } from "../../../lib/cloudinaryUtils";
+import { connectDB } from "../../../lib/mongodb";
+import Hero from "../../../models/Hero";
 
 type HeroDoc = {
     backgroundImage: string | null;

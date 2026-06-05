@@ -2,7 +2,7 @@ import FadeIn from "@/Components/FadeIn"
 import "../../styles/Landing/featured.css"
 import FeaturedGrid from "@/Components/FeaturedGrid"
 import Mainbutton from "@/Components/Mainbutton"
-import { getFeaturedProjects } from "lib/getFeaturedProjects";
+import { getFeaturedProjects } from "../../../lib/getFeaturedProjects";
 
 export default async function Featured() {
     const projects = await getFeaturedProjects();

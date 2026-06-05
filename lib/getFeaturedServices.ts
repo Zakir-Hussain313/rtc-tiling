@@ -1,6 +1,6 @@
 import { unstable_cache } from 'next/cache';
-import { connectDB } from 'lib/mongodb';
-import Service from 'models/Service';
+import { connectDB } from './mongodb';
+import Service from '../models/Service';
 
 export const getFeaturedServices = unstable_cache(
     async () => {

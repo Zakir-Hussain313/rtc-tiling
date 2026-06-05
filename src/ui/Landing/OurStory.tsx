@@ -1,11 +1,11 @@
 import "../../styles/Landing/OurStory.css";
 import Mainbutton from "@/Components/Mainbutton";
-import { connectDB } from "lib/mongodb";
 import StoryImageCycler from "./StoryImageCycler";
 import FadeIn from "@/Components/FadeIn";
-import About from "models/About";
 import { unstable_cache } from 'next/cache';
 import Link from "next/link";
+import About from "../../../models/About";
+import { connectDB } from "../../../lib/mongodb";
 
 const getAboutImages = unstable_cache(
     async (): Promise<string[]> => {

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import '../styles/CountUp.css'
-import type { StatItem } from 'lib/getStats'
+import { StatItem } from '../../lib/getStats'
 
 interface CountUpProps {
     stat: StatItem

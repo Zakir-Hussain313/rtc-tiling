@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { connectDB } from 'lib/mongodb';
-import { deleteImage } from 'lib/cloudinary';
-import Service from 'models/Service';
 import { revalidatePath } from 'next/cache';
+import { connectDB } from '../../../../../lib/mongodb';
+import Service from '../../../../../models/Service';
+import { deleteImage } from '../../../../../lib/cloudinary';
 
 function generateSlug(title: string): string {
     return '/services/' + title.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');

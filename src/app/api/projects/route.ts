@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { connectDB } from 'lib/mongodb';
-import Project from 'models/Project';
 import { revalidatePath } from 'next/cache';
+import { connectDB } from '../../../../lib/mongodb';
+import Project from '../../../../models/Project';
 
 function generateSlug(title: string): string {
     return title.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');

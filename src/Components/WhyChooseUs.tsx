@@ -51,25 +51,27 @@ const chooseItems = [
 export default function WhyChooseUs() {
     return (
         <main className='choose-main-section'>
-            <FadeIn className='choose-heading' delay={150}>
-                <h1>Why Choose Us</h1>
-            </FadeIn>
-            <FadeIn className='choose-body' delay={150}>
-                {chooseItems.map((item, index) => (
-                    <div className='choose-item' key={index}>
-                        <div className='item-image'>
-                            <Image
-                                src={item.image}
-                                alt=''
-                                fill
-                                className='object-cover img'
-                            />
+            <section className='choose-section'>
+                <FadeIn className='choose-heading' delay={150}>
+                    <h1>Why Choose Us</h1>
+                </FadeIn>
+                <FadeIn className='choose-body' delay={150}>
+                    {chooseItems.map((item, index) => (
+                        <div className='choose-item' key={index}>
+                            <div className='item-image'>
+                                <Image
+                                    src={item.image}
+                                    alt=''
+                                    fill
+                                    className='object-cover img'
+                                />
+                            </div>
+                            <h1 className='item-h1'>{item.title}</h1>
+                            <p className='item-description'>{item.description}</p>
                         </div>
-                        <h1 className='item-h1'>{item.title}</h1>
-                        <p className='item-description'>{item.description}</p>
-                    </div>
-                ))}
-            </FadeIn>
+                    ))}
+                </FadeIn>
+            </section>
         </main>
     )
 }
