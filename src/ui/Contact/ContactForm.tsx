@@ -33,7 +33,7 @@ export default function ContactForm() {
 
     const handleSubmit = async () => {
     if (disabled) return
-    if (!fields.firstName || !fields.email || !fields.phone) return
+    if (!fields.firstName || !fields.email ) return
 
     setStatus('sending')
 
