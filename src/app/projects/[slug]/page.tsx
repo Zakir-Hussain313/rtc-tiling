@@ -1,9 +1,8 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import ProjectHeroImage from '@/Components/ProjectHeroImage'
 import '../../../styles/DetailPages/DetailPages.css'
 import ServicesCTA from '@/ui/Services/ServicesCTA'
-import { unstable_cache } from 'next/cache'
 import ProjectsGrid from '@/Components/ProjectsGrid'
 import { connectDB } from '../../../../lib/mongodb'
 import Project from '../../../../models/Project'
@@ -26,34 +25,30 @@ type Props = {
     params: Promise<{ slug: string }>
 }
 
-const getProjectBySlug = unstable_cache(
-    async (slug: string): Promise<ProjectDetail | null> => {
-        try {
-            await connectDB()
-            const project = await Project.findOne({ slug }).lean()
-            if (!project) return null
-            const p = project as any
-            return {
-                _id: String(p._id),
-                title: p.title,
-                description: p.description,
-                images: p.images,
-                slug: p.slug,
-                date: p.date,
-                type: p.type,
-                location: p.location,
-                size: p.size,
-                designStyle: p.designStyle,
-                client: p.client,
-            }
-        } catch (err) {
-            console.error('[ProjectDetail] Failed to fetch project', err)
-            return null
+async function getProjectBySlug(slug: string): Promise<ProjectDetail | null> {
+    try {
+        await connectDB()
+        const project = await Project.findOne({ slug }).lean()
+        if (!project) return null
+        const p = project as any
+        return {
+            _id: String(p._id),
+            title: p.title,
+            description: p.description,
+            images: p.images,
+            slug: p.slug,
+            date: p.date,
+            type: p.type,
+            location: p.location,
+            size: p.size,
+            designStyle: p.designStyle,
+            client: p.client,
         }
-    },
-    ['project-by-slug'],
-    { revalidate: 60, tags: ['projects-data'] }
-)
+    } catch (err) {
+        console.error('[ProjectDetail] Failed to fetch project', err)
+        return null
+    }
+}
 
 export async function generateStaticParams() {
     try {
@@ -110,7 +105,15 @@ export default async function ProjectDetailPage({ params }: Props) {
 
                 <section className="detail-hero">
                     <div className="detail-img-wrap">
-                        <ProjectHeroImage images={project.images} title={project.title} />
+                        {project.images?.[0] && (
+                            <Image
+                                src={project.images[0]}
+                                alt={project.title}
+                                fill
+                                className="detail-hero-img"
+                                priority
+                            />
+                        )}
                     </div>
                     <div className="detail-info">
                         <h1 className="detail-title">{project.title}</h1>

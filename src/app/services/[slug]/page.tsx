@@ -1,9 +1,8 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import '../../../styles/DetailPages/DetailPages.css';
 import ServicesCTA from '@/ui/Services/ServicesCTA';
-import StoryImageCycler from '@/ui/Landing/StoryImageCycler';
-import { unstable_cache } from 'next/cache'
 import ServicesGrid from '@/Components/ServicesGrid';
 import { connectDB } from '../../../../lib/mongodb';
 import Service from '../../../../models/Service';
@@ -26,35 +25,31 @@ type ServiceDoc = {
     slug: string;
 };
 
-const getService = unstable_cache(
-    async (slug: string): Promise<ServiceDoc | null> => {
-        try {
-            await connectDB()
-            const service = await Service.findOne({
-                slug: { $in: [slug, `/services/${slug}`] },
-            }).lean()
-            if (!service) return null
-            const s = service as any
-            return {
-                _id: String(s._id),
-                title: s.title,
-                description: s.description,
-                images: s.images,
-                serviceType: s.serviceType,
-                location: s.location,
-                estimatedDuration: s.estimatedDuration,
-                maximumArea: s.maximumArea,
-                finishStyle: s.finishStyle,
-                suitableFor: s.suitableFor,
-                slug: s.slug,
-            }
-        } catch {
-            return null
+async function getService(slug: string): Promise<ServiceDoc | null> {
+    try {
+        await connectDB()
+        const service = await Service.findOne({
+            slug: { $in: [slug, `/services/${slug}`] },
+        }).lean()
+        if (!service) return null
+        const s = service as any
+        return {
+            _id: String(s._id),
+            title: s.title,
+            description: s.description,
+            images: s.images,
+            serviceType: s.serviceType,
+            location: s.location,
+            estimatedDuration: s.estimatedDuration,
+            maximumArea: s.maximumArea,
+            finishStyle: s.finishStyle,
+            suitableFor: s.suitableFor,
+            slug: s.slug,
         }
-    },
-    ['service-by-slug'],
-    { revalidate: 60, tags: ['services-data'] }
-)
+    } catch {
+        return null
+    }
+}
 
 async function getAllSlugs(): Promise<string[]> {
     try {
@@ -122,7 +117,15 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </nav>
                 <section className="detail-hero">
                     <div className="detail-img-wrap">
-                        <StoryImageCycler images={service.images ?? []} />
+                        {service.images?.[0] && (
+                            <Image
+                                src={service.images[0]}
+                                alt={service.title}
+                                fill
+                                className="detail-hero-img"
+                                priority
+                            />
+                        )}
                     </div>
                     <div className="detail-info">
                         <h1 className="detail-title">{service.title}</h1>
